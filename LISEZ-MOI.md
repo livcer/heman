@@ -5,6 +5,18 @@ Domaine temporaire : **heman.website**
 
 ---
 
+## Mise en ligne automatique (depuis GitHub)
+
+Le code du site est sur https://github.com/livcer/heman. Chaque modification de la
+branche `main` est envoyée automatiquement sur Infomaniak (onglet **Actions** du dépôt
+pour suivre les envois). FileZilla ne sert plus que pour `config.php`, qui n'est jamais
+envoyé par GitHub car il contient les mots de passe.
+
+Identifiants FTP : GitHub → **Settings → Secrets and variables → Actions**
+(`FTP_SERVEUR`, `FTP_UTILISATEUR`, `FTP_MOT_DE_PASSE`).
+
+Les étapes ci-dessous décrivent l'installation initiale.
+
 ## 1. Créer le site dans l'hébergement
 
 Manager Infomaniak → **Hébergement Web 1** → **Ajouter un site**.
