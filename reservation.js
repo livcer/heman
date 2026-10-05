@@ -193,6 +193,11 @@
     '.hr-recap strong{font-family:Montserrat,system-ui,sans-serif;font-size:1.25rem;color:#4d0780;}',
     '.hr-case-a-cocher{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;line-height:1.5;color:#514860;}',
     '.hr-case-a-cocher input{margin-top:4px;width:18px;height:18px;accent-color:#7b2cbf;flex:0 0 auto;}',
+    '.hr-recurrence{display:grid;gap:12px;background:#f6f2fa;border-radius:12px;padding:14px 16px;}',
+    '.hr-jours{display:flex;flex-wrap:wrap;gap:6px;}',
+    '.hr-jours button{border:1.5px solid #d9cbe6;background:#FFFFFF;color:#4d0780;border-radius:9999px;padding:7px 12px;font-weight:600;font-size:.84rem;cursor:pointer;}',
+    '.hr-jours button[aria-pressed=true]{background:#4d0780;border-color:#4d0780;color:#FFFFFF;}',
+    '.hr-recap-serie{margin:0;font-size:.86rem;color:#514860;line-height:1.5;}',
     '.hr-piege{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}',
     '.hr-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}',
     '.hr-fiche{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin-top:16px;font-size:.92rem;}',
@@ -282,6 +287,10 @@
       var _e = useState(false), envoi = _e[0], setEnvoi = _e[1];
       var _er = useState(''), erreur = _er[0], setErreur = _er[1];
       var _ex = useState(null), existants = _ex[0], setExistants = _ex[1];
+      // Récurrence (admin) : jours ISO 1 = lundi … 7 = dimanche
+      var _rc = useState(false), repeter = _rc[0], setRepeter = _rc[1];
+      var _rj = useState(null), joursChoisis = _rj[0], setJoursChoisis = _rj[1];
+      var _ru = useState(ajouterJours(c.date, 91)), jusquau = _ru[0], setJusquau = _ru[1];
 
       // Créneaux occupés pour la date choisie (elle peut sortir de la période affichée)
       useEffect(function () {
@@ -305,6 +314,21 @@
       var dateMax = ajouterJours(regles.aujourdhui, regles.joursMax);
       var dateHorsDelai = !admin && (date < dateMin || date > dateMax);
 
+      var jourIso = (versDate(date).getDay() + 6) % 7 + 1;
+      var jours = joursChoisis || [jourIso];
+      var datesSerie = [];
+      if (admin && repeter && jusquau >= date) {
+        for (var dj = date; dj <= jusquau && datesSerie.length < 400; dj = ajouterJours(dj, 1)) {
+          if (jours.indexOf((versDate(dj).getDay() + 6) % 7 + 1) !== -1) datesSerie.push(dj);
+        }
+      }
+      var limiteSerie = ajouterJours(date, 365);
+      var serieInvalide = admin && repeter && (jusquau < date || jusquau > limiteSerie || !datesSerie.length);
+      function basculerJour(j) {
+        var liste = jours.indexOf(j) === -1 ? jours.concat([j]) : jours.filter(function (x) { return x !== j; });
+        setJoursChoisis(liste.sort());
+      }
+
       function changerDebut(v) {
         var d = +v;
         setDebut(d);
@@ -313,7 +337,7 @@
 
       function envoyer(e) {
         e.preventDefault();
-        if (conflit || dateHorsDelai) return;
+        if ((conflit && !(admin && repeter)) || dateHorsDelai || serieInvalide) return;
         var form = e.currentTarget;
         var lire = function (nom) { var el = form.elements[nom]; return el ? (el.type === 'checkbox' ? el.checked : el.value) : ''; };
         var charge = {
@@ -322,6 +346,7 @@
         };
         if (admin) {
           charge.libelle = lire('libelle');
+          if (repeter) charge.recurrence = { jours: jours, jusquau: jusquau };
         } else {
           charge.nom = lire('nom');
           charge.email = lire('email');
@@ -336,7 +361,7 @@
         setEnvoi(true);
         setErreur('');
         appel('POST', API, charge).then(function (j) {
-          props.onEnvoye(j.reservation || null, { salle: salle, date: date, debut: debut, fin: fin, email: charge.email });
+          props.onEnvoye(j.reservation || null, { salle: salle, date: date, debut: debut, fin: fin, email: charge.email, crees: j.crees, ignorees: j.ignorees });
         }).catch(function (err) {
           setEnvoi(false);
           setErreur(err.message);
@@ -372,13 +397,32 @@
             date < dateMin
               ? 'Les réservations pour le jour même ne sont pas possibles : choisissez une date à partir de demain.'
               : 'Les réservations sont ouvertes jusqu’à ' + regles.joursMax + ' jours à l’avance.') : null,
-          conflit ? h('div', { className: 'hr-message hr-erreur', role: 'alert' },
+          conflit && !(admin && repeter) ? h('div', { className: 'hr-message hr-erreur', role: 'alert' },
             'Ce créneau chevauche ' + (conflit.statut === 'attente' ? 'une demande en attente' : 'une réservation') +
             ' (' + heure(conflit.debut) + ' – ' + heure(conflit.fin) + '). Choisissez un autre horaire ou une autre salle.') : null,
 
           admin
-            ? h(Champ, { libelle: 'Libellé (visible par l’équipe uniquement)' },
-                h('input', { name: 'libelle', required: true, maxLength: 120, placeholder: 'Cours de hip-hop, stage, location par téléphone…' }))
+            ? [
+              h(Champ, { libelle: 'Libellé (visible par l’équipe uniquement)', key: 'lib' },
+                h('input', { name: 'libelle', required: true, maxLength: 120, placeholder: 'Cours de hip-hop, stage, location par téléphone…' })),
+              h('label', { className: 'hr-case-a-cocher', key: 'rep' },
+                h('input', { type: 'checkbox', checked: repeter, onChange: function (e) { setRepeter(e.target.checked); } }),
+                h('span', null, h('strong', null, 'Répéter chaque semaine'), ' (cours à l’année, stage sur plusieurs jours…)')),
+              repeter ? h('div', { className: 'hr-recurrence', key: 'rec' },
+                h('div', { className: 'hr-jours', role: 'group', 'aria-label': 'Jours de la semaine' },
+                  ['lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.', 'dim.'].map(function (nom, i) {
+                    var j = i + 1, actif = jours.indexOf(j) !== -1;
+                    return h('button', { key: j, type: 'button', 'aria-pressed': actif, onClick: function () { basculerJour(j); } }, nom);
+                  })),
+                h(Champ, { libelle: 'Jusqu’au (inclus)' },
+                  h('input', { type: 'date', required: true, value: jusquau, min: date, max: limiteSerie,
+                    onChange: function (e) { if (e.target.value) setJusquau(e.target.value); } })),
+                h('p', { className: 'hr-recap-serie' },
+                  serieInvalide
+                    ? (jusquau > limiteSerie ? 'Une récurrence ne peut pas dépasser un an.' : 'Aucune date ne correspond : vérifiez les jours cochés et la date de fin.')
+                    : datesSerie.length + ' créneau' + (datesSerie.length > 1 ? 'x' : '') + ', du ' + dateLongue(datesSerie[0]) + ' au ' + dateLongue(datesSerie[datesSerie.length - 1]) +
+                      '. Les dates déjà occupées seront sautées.')) : null
+            ]
             : [
               h('div', { className: 'hr-ligne', key: 'l1' },
                 h(Champ, { libelle: 'Nom et prénom *' }, h('input', { name: 'nom', required: true, maxLength: 100, autoComplete: 'name' })),
@@ -401,8 +445,8 @@
 
           erreur ? h('div', { className: 'hr-message hr-erreur', role: 'alert' }, erreur) : null,
           h('div', { className: 'hr-actions' },
-            h('button', { type: 'submit', className: 'hr-btn hr-btn-plein', disabled: envoi || !!conflit || dateHorsDelai },
-              envoi ? 'Envoi…' : (admin ? 'Bloquer le créneau' : 'Envoyer la demande')),
+            h('button', { type: 'submit', className: 'hr-btn hr-btn-plein', disabled: envoi || (!!conflit && !(admin && repeter)) || dateHorsDelai || serieInvalide },
+              envoi ? 'Envoi…' : (admin ? (repeter && datesSerie.length > 1 ? 'Bloquer les ' + datesSerie.length + ' créneaux' : 'Bloquer le créneau') : 'Envoyer la demande')),
             h('button', { type: 'button', className: 'hr-btn', onClick: props.onFermer }, 'Annuler'))));
     }
 
@@ -433,7 +477,7 @@
         ['Salle', infoSalle.nom],
         ['Date', dateLongue(r.date)],
         ['Horaire', heure(r.debut) + ' – ' + (r.fin === 1440 ? 'minuit' : heure(r.fin))],
-        ['Statut', r.statut === 'attente' ? 'En attente de validation' : (r.interne ? 'Créneau bloqué par l’équipe' : 'Validée')]
+        ['Statut', r.statut === 'attente' ? 'En attente de validation' : (r.interne ? 'Créneau bloqué par l’équipe' + (r.serie ? ' (récurrent)' : '') : 'Validée')]
       ];
       if (!r.interne) {
         lignes.push(['Montant', r.prix || '']);
@@ -478,7 +522,13 @@
             onClick: function () {
               if (window.confirm('Supprimer ce créneau du calendrier ?' + (r.interne ? '' : ' Aucun e-mail n’est envoyé : prévenez le client vous-même.'))) agir('supprimer');
             }
-          }, r.interne ? 'Supprimer le créneau' : 'Annuler la réservation') : null));
+          }, r.interne ? (r.serie ? 'Supprimer ce créneau seulement' : 'Supprimer le créneau') : 'Annuler la réservation') : null,
+          r.statut === 'validee' && r.serie ? h('button', {
+            type: 'button', className: 'hr-btn hr-btn-danger', disabled: envoi,
+            onClick: function () {
+              if (window.confirm('Supprimer ce créneau et tous les suivants de la série « ' + r.nom + ' » ? Les séances passées restent affichées.')) agir('supprimer', { serie: true });
+            }
+          }, 'Supprimer la série à partir d’ici') : null));
     }
 
     /* ---------------- Grille du calendrier ---------------- */
@@ -567,7 +617,7 @@
             var attente = r.statut === 'attente';
             var top = (r.debut / 30) * LIGNE, haut = ((r.fin - r.debut) / 30) * LIGNE - 2;
             var horaire = heure(r.debut) + '–' + (r.fin === 1440 ? '0h' : heure(r.fin));
-            var titre = admin ? (r.nom || '') : (attente ? 'En attente' : 'Réservé');
+            var titre = admin ? (r.serie ? '\u21bb ' : '') + (r.nom || '') : (attente ? 'En attente' : 'Réservé');
             var style = {
               top: top + 1, height: haut, background: col.fond, color: col.texte,
               borderColor: attente ? col.fond : 'transparent'
@@ -750,7 +800,9 @@
             }
             var nomSalle = (salles.filter(function (s) { return s.id === c.salle; })[0] || {}).nom;
             setSucces(admin
-              ? 'Créneau bloqué : ' + nomSalle + ', ' + dateLongue(c.date) + ', ' + heure(c.debut) + ' – ' + heure(c.fin) + '.'
+              ? ((c.crees > 1 ? c.crees + ' créneaux bloqués' : 'Créneau bloqué') + ' : ' + nomSalle + ', ' + heure(c.debut) + ' – ' + heure(c.fin) +
+                 (c.crees > 1 ? ', à partir du ' : ', ') + dateLongue(c.date) + '.' +
+                 (c.ignorees && c.ignorees.length ? ' Dates sautées car déjà occupées : ' + c.ignorees.map(dateLongue).join(', ') + '.' : ''))
               : 'Merci ! Votre demande pour ' + nomSalle + ', le ' + dateLongue(c.date) + ' de ' + heure(c.debut) + ' à ' + heure(c.fin) +
                 ', est enregistrée. Elle apparaît en semi-transparent jusqu’à notre validation ; un e-mail de confirmation vous a été envoyé' + (c.email ? ' à ' + c.email : '') + '.');
             allerA(c.date);

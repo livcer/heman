@@ -13,8 +13,10 @@
  *        deconnexion  → fermeture de la session admin
  *        valider      → admin : le créneau passe en « validee »
  *        refuser      → admin : le créneau est retiré du calendrier
- *        bloquer      → admin : ajoute directement un créneau validé (cours, stage…)
- *        supprimer    → admin : retire un créneau validé (annulation)
+ *        bloquer      → admin : ajoute directement un créneau validé (cours, stage…),
+ *                       éventuellement répété chaque semaine jusqu'à une date
+ *        supprimer    → admin : retire un créneau validé (annulation), ou la suite
+ *                       d'une série à partir de ce créneau
  *
  * Les données sont stockées dans donnees/reservations.php : un fichier PHP qui
  * s'arrête dès sa première ligne, donc illisible depuis le web, doublé d'un
@@ -574,42 +576,112 @@ if ($action === 'bloquer') {
     if ($libelle === '') {
         erreur('Indiquez un libellé (ex. « Cours de hip-hop », « Stage »).');
     }
-    avec_donnees(function ($liste) use ($salle, $date, $debut, $fin, $libelle) {
-        if (conflit($liste, $salle, $date, $debut, $fin)) {
-            erreur('Ce créneau chevauche une demande ou une réservation existante.', 409);
+
+    // Récurrence facultative : jours de la semaine (1 = lundi … 7 = dimanche) jusqu'à une date
+    $dates = array($date);
+    $recurrence = isset($data['recurrence']) && is_array($data['recurrence']) ? $data['recurrence'] : null;
+    if ($recurrence) {
+        $jusquau = texte(isset($recurrence['jusquau']) ? $recurrence['jusquau'] : '', 10);
+        $jours = array();
+        foreach ((isset($recurrence['jours']) && is_array($recurrence['jours']) ? $recurrence['jours'] : array()) as $j) {
+            $j = intval($j);
+            if ($j >= 1 && $j <= 7) {
+                $jours[$j] = true;
+            }
         }
-        $liste[] = array(
-            'id'       => bin2hex(random_bytes(8)),
-            'salle'    => $salle,
-            'date'     => $date,
-            'debut'    => $debut,
-            'fin'      => $fin,
-            'statut'   => 'validee',
-            'interne'  => true,
-            'nom'      => $libelle,
-            'email'    => '',
-            'tel'      => '',
-            'activite' => $libelle,
-            'creeLe'   => date('c'),
-        );
-        return array('liste' => $liste);
+        if (!date_valide($jusquau) || $jusquau < $date) {
+            erreur('Indiquez une date de fin de récurrence postérieure au premier créneau.');
+        }
+        if (!$jours) {
+            erreur('Cochez au moins un jour de la semaine.');
+        }
+        $limite = (new DateTime($date))->modify('+1 year')->format('Y-m-d');
+        if ($jusquau > $limite) {
+            erreur('Une récurrence ne peut pas dépasser un an.');
+        }
+        $dates = array();
+        $jour = DateTime::createFromFormat('!Y-m-d', $date);
+        while ($jour->format('Y-m-d') <= $jusquau) {
+            if (isset($jours[intval($jour->format('N'))])) {
+                $dates[] = $jour->format('Y-m-d');
+            }
+            $jour->modify('+1 day');
+        }
+        if (!$dates) {
+            erreur('Aucune date ne correspond aux jours cochés sur cette période.');
+        }
+    }
+
+    $resultat = avec_donnees(function ($liste) use ($salle, $dates, $debut, $fin, $libelle) {
+        $serie = count($dates) > 1 ? bin2hex(random_bytes(8)) : '';
+        $crees = array();
+        $ignorees = array();
+        foreach ($dates as $d) {
+            // Une date déjà occupée est sautée, les autres sont créées
+            if (conflit($liste, $salle, $d, $debut, $fin)) {
+                $ignorees[] = $d;
+                continue;
+            }
+            $r = array(
+                'id'       => bin2hex(random_bytes(8)),
+                'salle'    => $salle,
+                'date'     => $d,
+                'debut'    => $debut,
+                'fin'      => $fin,
+                'statut'   => 'validee',
+                'interne'  => true,
+                'nom'      => $libelle,
+                'email'    => '',
+                'tel'      => '',
+                'activite' => $libelle,
+                'creeLe'   => date('c'),
+            );
+            if ($serie !== '') {
+                $r['serie'] = $serie;
+            }
+            $liste[] = $r;
+            $crees[] = $d;
+        }
+        if (!$crees) {
+            erreur(count($dates) > 1
+                ? 'Toutes les dates de la récurrence chevauchent une demande ou une réservation existante.'
+                : 'Ce créneau chevauche une demande ou une réservation existante.', 409);
+        }
+        return array('liste' => $liste, 'retour' => array('crees' => $crees, 'ignorees' => $ignorees));
     });
-    repondre(array('ok' => true));
+    repondre(array('ok' => true, 'crees' => count($resultat['crees']), 'ignorees' => $resultat['ignorees']));
 }
 
 if ($action === 'supprimer') {
     $id = texte(isset($data['id']) ? $data['id'] : '', 32);
-    avec_donnees(function ($liste) use ($id) {
-        foreach ($liste as $i => $r) {
+    $toute = !empty($data['serie']);
+    $nombre = avec_donnees(function ($liste) use ($id, $toute) {
+        $cible = null;
+        foreach ($liste as $r) {
             if ($r['id'] === $id && $r['statut'] === 'validee') {
-                $liste[$i]['statut'] = 'annulee';
-                $liste[$i]['traiteLe'] = date('c');
-                return array('liste' => $liste);
+                $cible = $r;
             }
         }
-        erreur('Réservation introuvable.', 404);
+        if (!$cible) {
+            erreur('Réservation introuvable.', 404);
+        }
+        $nombre = 0;
+        foreach ($liste as $i => $r) {
+            $viser = $r['id'] === $id;
+            // Toute la série à partir de ce créneau : les séances passées restent
+            if ($toute && !empty($cible['serie']) && isset($r['serie']) && $r['serie'] === $cible['serie']
+                && $r['date'] >= $cible['date'] && $r['statut'] === 'validee') {
+                $viser = true;
+            }
+            if ($viser) {
+                $liste[$i]['statut'] = 'annulee';
+                $liste[$i]['traiteLe'] = date('c');
+                $nombre++;
+            }
+        }
+        return array('liste' => $liste, 'retour' => $nombre);
     });
-    repondre(array('ok' => true));
+    repondre(array('ok' => true, 'supprimees' => $nombre));
 }
 
 erreur('Action inconnue.', 400);

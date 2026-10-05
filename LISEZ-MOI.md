@@ -128,6 +128,9 @@ sans message d'erreur.
   (motif facultatif).
 - **Créneaux de l'école** : en admin, cliquer sur un horaire libre permet de bloquer un créneau
   (cours, stage, location prise par téléphone). Il apparaît comme « Réservé » côté public.
+  En cochant « Répéter chaque semaine », on choisit les jours et une date de fin (un an
+  maximum) : tous les créneaux sont créés d'un coup, les dates déjà occupées sont sautées.
+  Une série se supprime d'un clic à partir d'une séance (les séances passées restent).
 - **Règles** : pas de réservation pour le jour même, durée minimale 1 h, par pas de 30 min,
   jusqu'à 180 jours à l'avance. Les visiteurs ne voient jamais le nom des autres clients.
 - **Tarifs et salles** : modifiables dans `config.php` (tableau `$SALLES`).
