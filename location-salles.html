@@ -7,6 +7,7 @@
 <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png">
+<script src="./reservation.js"></script>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -91,10 +92,10 @@
         <p style="margin-top: 22px; font-size: 1.06rem; line-height: 1.75; color: rgba(250,248,252,0.86); max-width: 38rem;">À Neuilly-Plaisance, à 20 minutes de Paris. Sono à disposition, parking privé et fermé, arrêt de bus 114 en face et RER à 5 minutes. Danse, répétitions, castings, yoga, théâtre, arts martiaux ou ateliers associatifs.</p>
         <div style="margin-top: 34px; display: inline-flex; align-items: baseline; gap: 12px; background: #f5c310; color: #1A1225; padding: 16px 30px; border-radius: 16px;">
           <span style="font-family: 'Montserrat', sans-serif; font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 800; line-height: 1;">25 €</span>
-          <span style="font-size: 1rem; font-weight: 600;">/ heure — tarif unique</span>
+          <span style="font-size: 1rem; font-weight: 600;">/ heure — Héman 1 et Héman 2</span>
         </div>
         <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px;">
-          <a href="mailto:contact@heman.fr?subject=Demande%20de%20location%20de%20salle" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1rem; padding: 16px 36px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">Réserver par e-mail</a>
+          <a href="#reserver" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1rem; padding: 16px 36px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">Voir les disponibilités</a>
           <a href="#reglement" style="color: #f5c310; font-weight: 600; font-size: 1rem; padding: 14px 30px; border: 2px solid #f5c310; border-radius: 9999px;" style-hover="background: #f5c310; color: #1A1225;">Lire le règlement</a>
         </div>
       </div>
@@ -140,11 +141,20 @@
                   <li style="font-size: 0.82rem; color: #0b4f6c; background: rgba(245,195,16,0.14); padding: 7px 14px; border-radius: 9999px;">{{ eq }}</li>
                 </sc-for>
               </ul>
-              <a href="mailto:contact@heman.fr?subject=Demande%20de%20location%20de%20salle" style="margin-top: auto; align-self: start; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.94rem; padding: 13px 28px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.3);" style-hover="transform: translateY(-2px); color: #1A1225;">Demander cette salle</a>
+              <a href="#reserver" style="margin-top: auto; align-self: start; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.94rem; padding: 13px 28px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.3);" style-hover="transform: translateY(-2px); color: #1A1225;">Demander cette salle</a>
             </div>
           </article>
         </sc-for>
       </div>
+    </div>
+  </section>
+
+  <!-- Calendrier de réservation -->
+  <section id="reserver" style="padding: 0 0 96px; scroll-margin-top: 24px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: clamp(1.85rem, 4.4vw, 2.5rem); font-weight: 700; color: #1A1225;">Réserver un créneau</h2>
+      <p style="margin-top: 14px; margin-bottom: 30px; font-size: 1.02rem; line-height: 1.75; color: #514860; max-width: 46rem;">Les trois salles sont affichées côte à côte. Choisissez un horaire libre : votre demande apparaît aussitôt en semi-transparent, puis en couleur pleine dès que nous l'avons validée. Réponse par e-mail sous 24 heures.</p>
+      <div>{{ calendrier }}</div>
     </div>
   </section>
 
@@ -153,9 +163,17 @@
     <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: start;">
       <div>
         <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 700; color: #FAF8FC;">Tarif</h2>
-        <p style="margin-top: 40px; font-family: 'Montserrat', sans-serif; font-size: clamp(3.4rem, 10vw, 5.2rem); font-weight: 800; color: #f5c310; line-height: 1;">25 €</p>
-        <p style="margin-top: 8px; font-size: 1.2rem; font-weight: 600; color: #FAF8FC;">de l'heure</p>
-        <p style="margin-top: 20px; font-size: 0.98rem; line-height: 1.75; color: rgba(250,248,252,0.8); max-width: 30rem;">Tarif unique : pas de dégressif à la journée ni à l'année. Le règlement se fait à l'avance, la réservation n'est confirmée qu'une fois réglée.</p>
+        <div style="margin-top: 36px; display: grid; gap: 22px;">
+          <div>
+            <p style="font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 9vw, 4.6rem); font-weight: 800; color: #f5c310; line-height: 1;">25 €</p>
+            <p style="margin-top: 8px; font-size: 1.1rem; font-weight: 600; color: #FAF8FC;">de l'heure — Héman 1 et Héman 2</p>
+          </div>
+          <div>
+            <p style="font-family: 'Montserrat', sans-serif; font-size: clamp(3rem, 9vw, 4.6rem); font-weight: 800; color: #f5c310; line-height: 1;">35 €</p>
+            <p style="margin-top: 8px; font-size: 1.1rem; font-weight: 600; color: #FAF8FC;">de l'heure — Galilée</p>
+          </div>
+        </div>
+        <p style="margin-top: 24px; font-size: 0.98rem; line-height: 1.75; color: rgba(250,248,252,0.8); max-width: 30rem;">Pas de dégressif à la journée ni à l'année. Le règlement se fait à l'avance, la réservation n'est confirmée qu'une fois réglée.</p>
       </div>
       <div>
         <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 700; color: #FAF8FC;">Venir aux studios</h2>
@@ -200,8 +218,8 @@
 
       <div style="margin-top: 56px; background: #FFFFFF; border-radius: 16px; padding: clamp(26px, 4vw, 40px); box-shadow: 0 10px 34px rgba(77,7,128,0.13); display: grid; gap: 16px;">
         <h3 style="font-size: 1.4rem; font-weight: 700; color: #1A1225;">Réserver une salle</h3>
-        <p style="font-size: 1rem; line-height: 1.75; color: #514860;">Les réservations se font uniquement par e-mail. Indiquez la date, l'horaire précis, la salle souhaitée et le type d'activité.</p>
-        <a href="mailto:contact@heman.fr?subject=Demande%20de%20location%20de%20salle" style="justify-self: start; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1rem; padding: 16px 36px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">contact@heman.fr</a>
+        <p style="font-size: 1rem; line-height: 1.75; color: #514860;">Faites votre demande directement dans le calendrier : choisissez la salle, la date et l'horaire, nous la validons sous 24 heures. Une question avant de réserver ? Écrivez-nous à <a href="mailto:contact@heman.fr">contact@heman.fr</a>.</p>
+        <a href="#reserver" style="justify-self: start; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1rem; padding: 16px 36px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">Ouvrir le calendrier</a>
       </div>
     </div>
   </section>
@@ -212,8 +230,15 @@
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{}">
 class Component extends DCLogic {
+  // Calendrier défini dans reservation.js (chargé avant support.js)
+  calendrier() {
+    const fabrique = window.HemanReservation;
+    return fabrique ? React.createElement(fabrique(React), { mode: 'public' }) : null;
+  }
+
   renderVals() {
     return {
+      calendrier: this.calendrier(),
       atouts: [
         { titre: '2 salles de 100 m²', detail: 'Deux studios de danse indépendants, miroirs et sol adapté.' },
         { titre: 'Ouvert 24h/24', detail: 'Créneaux possibles de jour comme de nuit, selon disponibilité.' },
@@ -226,14 +251,14 @@ class Component extends DCLogic {
 
       salles: [
         {
-          nom: 'Salle 1', image: './assets/salle-1.png',
-          alt: 'Salle 1 : 100 m², parquet clair, mur de miroirs et bancs aux couleurs de l\u2019école',
+          nom: 'Héman 1', image: './assets/salle-1.png',
+          alt: 'Salle Héman 1 : 100 m², parquet clair, mur de miroirs et bancs aux couleurs de l\u2019école',
           description: 'Parquet clair, mur de miroirs sur toute la longueur et espace d\u2019accueil attenant. Le studio historique de l\u2019école.',
           equipements: ['100 m²', 'Sono CD + Bluetooth + clé USB', 'Bancs', 'Vestiaire', 'WC']
         },
         {
-          nom: 'Salle 2', image: './assets/salle-2.png',
-          alt: 'Salle 2 : 100 m², sol gris en bois, miroirs pleine hauteur, enceintes sur pied',
+          nom: 'Héman 2', image: './assets/salle-2.png',
+          alt: 'Salle Héman 2 : 100 m², sol gris en bois, miroirs pleine hauteur, enceintes sur pied',
           description: 'Sol gris en bois, grand mur de miroirs, rideaux blancs et enceintes sur pied. Adaptée aux répétitions, tournages et cours collectifs.',
           equipements: ['100 m²', 'Sono CD + Bluetooth + clé USB', 'Bancs', 'Vestiaire', 'WC', 'Rideau blanc']
         }
@@ -250,7 +275,7 @@ class Component extends DCLogic {
         {
           titre: 'Réservations',
           points: [
-            "Les réservations de salle se font uniquement par e-mail : contact@heman.fr. Aucune réservation par téléphone ne sera acceptée. Veuillez nous contacter suffisamment à l'avance pour réserver vos salles (les réservations de dernière minute ou pour le jour même ne peuvent être accordées).",
+            "Les réservations de salle se font via le calendrier en ligne de cette page, ou par e-mail : contact@heman.fr. Aucune réservation par téléphone ne sera acceptée. Veuillez nous contacter suffisamment à l'avance pour réserver vos salles (les réservations de dernière minute ou pour le jour même ne peuvent être accordées).",
             "Les réservations de salle ne sont confirmées que réglées à l'avance. Les retards de règlement ne sont pas acceptés, l'école ne fait pas crédit. Toute réservation est due en intégralité, selon l'horaire défini (même en cas de retard ou répétition plus courte que prévue).",
             "Toute répétition décommandée moins de 48h à l'avance est due. Pour les cours et stages, ce délai est porté à une semaine."
           ]

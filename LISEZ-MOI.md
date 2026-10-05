@@ -51,10 +51,31 @@ Infomaniak → Mail Service → noreply → **Appareil connecté**.
 
 Ne renseignez ce mot de passe que sur le serveur : il ne doit figurer dans aucune copie locale.
 
+## 4 bis. Renseigner le mot de passe admin des réservations
+
+Toujours dans `config.php` sur le serveur, remplacez :
+
+    define('ADMIN_MOT_DE_PASSE', 'A_REMPLIR_SUR_LE_SERVEUR');
+
+par un mot de passe long, choisi pour l'occasion. C'est lui qui ouvre
+**heman.website/admin-reservations.html**, où l'équipe valide ou refuse les demandes.
+Comme pour SMTP_PASS : ne l'écrivez que sur le serveur.
+
+Vérifiez aussi que le dossier `donnees` a bien été déposé avec son fichier `.htaccess`
+(fichier caché : activez l'affichage des fichiers cachés dans FileZilla). Le site y
+enregistre les réservations dans `donnees/reservations.php`, créé automatiquement à
+la première demande. **Ne supprimez jamais ce fichier** : il contient tout le planning.
+Pensez à le télécharger de temps en temps pour en garder une copie.
+
 ## 5. Vérifier
 
 Ouvrez **heman.website**. Puis testez un formulaire de contact avec votre propre adresse :
 vous devez recevoir l'accusé de réception, et `contact@heman.fr` la demande.
+
+Testez ensuite le calendrier de la page Location de salles : faites une demande, elle doit
+apparaître en semi-transparent ; `contact@heman.fr` reçoit un e-mail avec le lien vers la page
+admin. Validez-la depuis **admin-reservations.html** : elle passe en couleur pleine, et le
+demandeur reçoit la confirmation. Refusez-en une autre : elle disparaît du calendrier.
 
 Si rien n'arrive, vérifiez dans Infomaniak → Hébergement → **Journaux d'erreurs** :
 les échecs SMTP y sont consignés avec la mention « Héman/SMTP ».
@@ -71,7 +92,7 @@ Transmettez l'adresse **heman.website**.
 |---|---|
 | Contact (accueil et page Contact) | contact@heman.fr |
 | Boutique | contact@schimea.com |
-| Location de salle | contact@heman.fr (lien e-mail direct) |
+| Location de salle (calendrier) | contact@heman.fr, avec lien vers la page admin |
 | Presse | oriental.danikarp@gmail.com (lien e-mail direct) |
 
 Les demandes partent de `noreply@heman.website`, avec l'adresse du visiteur en
@@ -82,6 +103,22 @@ Héman ne reçoit pas de copie des demandes boutique.
 
 Un champ invisible piège les robots : les envois automatisés sont ignorés
 sans message d'erreur.
+
+## Calendrier de réservation des salles
+
+- **Page publique** : section « Réserver un créneau » de `location-salles.html`. Les trois salles
+  (Héman 1, Héman 2, Galilée) sont côte à côte, en vue jour ou semaine.
+- **Demande** : le visiteur clique sur un horaire libre et remplit le formulaire. Le créneau
+  s'affiche aussitôt en semi-transparent et ne peut plus être demandé par quelqu'un d'autre.
+  Héman reçoit un e-mail, le visiteur un accusé de réception.
+- **Validation** : sur `admin-reservations.html`, « Valider » passe le créneau en couleur pleine et
+  envoie la confirmation au client. « Refuser » le retire du calendrier et prévient le client
+  (motif facultatif).
+- **Créneaux de l'école** : en admin, cliquer sur un horaire libre permet de bloquer un créneau
+  (cours, stage, location prise par téléphone). Il apparaît comme « Réservé » côté public.
+- **Règles** : pas de réservation pour le jour même, durée minimale 1 h, par pas de 30 min,
+  jusqu'à 180 jours à l'avance. Les visiteurs ne voient jamais le nom des autres clients.
+- **Tarifs et salles** : modifiables dans `config.php` (tableau `$SALLES`).
 
 ## Points à savoir
 
