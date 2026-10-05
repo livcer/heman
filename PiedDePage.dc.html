@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+  <footer style="background: #1A1225; padding: 68px 0 34px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 44px;">
+        <div>
+          <img src="./assets/logo-heman.png" alt="Héman Danse, Neuilly Plaisance — Hip Hop Family" style="height: 92px; width: auto;" />
+          <p style="margin-top: 12px; font-size: 0.92rem; line-height: 1.7; color: rgba(250,248,252,0.6); max-width: 22rem;">Centre de Danses Urbaines. Fondé en 2002 par les frères M'Passi, à Neuilly-Plaisance depuis 2007.</p>
+          <p style="margin-top: 16px; font-family: 'Permanent Marker', cursive; font-size: 1.1rem; color: #13b8ad;">Rejoins la famille !</p>
+        </div>
+        <nav aria-label="Navigation du site">
+          <h3 style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #f5c310; margin-bottom: 16px; font-family: 'Poppins', sans-serif;">Le site</h3>
+          <ul style="display: grid; gap: 10px;">
+            <li><a href="./disciplines.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Disciplines</a></li>
+            <li><a href="./planning.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Planning &amp; inscription</a></li>
+            <li><a href="./histoire-equipe.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Notre histoire &amp; équipe</a></li>
+            <li><a href="./heman-family.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Héman Family</a></li>
+            <li><a href="./presse.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Presse &amp; médias</a></li>
+            <li><a href="./contact.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Contact</a></li>
+            <li><a href="./location-salles.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Location de salles</a></li>
+            <li><a href="./boutique.html" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Boutique</a></li>
+            <li><a href="./index.html#partenaires" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">Partenaires</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h3 style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #f5c310; margin-bottom: 16px; font-family: 'Poppins', sans-serif;">Nous trouver</h3>
+          <p style="font-size: 0.92rem; line-height: 1.7; color: rgba(250,248,252,0.72);">ZI des Renouillères<br />3 rue Marcel Dassault<br />93360 Neuilly-Plaisance<br />Bus 114 — G. Pompidou</p>
+        </div>
+        <div>
+          <h3 style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #f5c310; margin-bottom: 16px; font-family: 'Poppins', sans-serif;">Nous joindre</h3>
+          <ul style="display: grid; gap: 12px;">
+            <li><a href="tel:+33680778548" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">06 80 77 85 48</a></li>
+            <li>
+              <span style="display: block; font-size: 0.74rem; color: rgba(250,248,252,0.45);">Inscriptions</span>
+              <a href="mailto:inscription@heman.fr" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">inscription@heman.fr</a>
+            </li>
+            <li>
+              <span style="display: block; font-size: 0.74rem; color: rgba(250,248,252,0.45);">Renseignements &amp; locations</span>
+              <a href="mailto:contact@heman.fr" style="font-size: 0.92rem; color: rgba(250,248,252,0.72);" style-hover="color: #13b8ad;">contact@heman.fr</a>
+            </li>
+            <li>
+              <span style="display: block; font-size: 0.74rem; color: rgba(250,248,252,0.45);">Presse — Dorkas Agency</span>
+              <a href="mailto:oriental.danikarp@gmail.com" style="font-size: 0.92rem; color: rgba(250,248,252,0.72); overflow-wrap: anywhere;" style-hover="color: #13b8ad;">oriental.danikarp@gmail.com</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div style="margin-top: 52px; padding: 30px 0; border-top: 1px solid rgba(250,248,252,0.12); border-bottom: 1px solid rgba(250,248,252,0.12); display: flex; flex-wrap: wrap; gap: 22px; align-items: center; justify-content: space-between;">
+        <p style="font-family: 'Permanent Marker', cursive; font-size: 1.15rem; color: #f5c310;">Suivez la famille Héman</p>
+        <ul style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <sc-for list="{{ reseaux }}" as="r" hint-placeholder-count="4">
+            <li>
+              <a href="{{ r.href }}" target="_blank" rel="noopener" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 11px 20px; background: rgba(250,248,252,0.06); border: 1px solid rgba(250,248,252,0.16); border-radius: 9999px; font-size: 0.88rem; color: rgba(250,248,252,0.85);" style-hover="background: #13b8ad; border-color: #13b8ad; color: #1A1225;">
+                <span style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; color: #13b8ad;">{{ r.reseau }}</span>
+                <span>{{ r.pseudo }}</span>
+              </a>
+            </li>
+          </sc-for>
+        </ul>
+      </div>
+
+      <div style="margin-top: 26px; display: flex; flex-wrap: wrap; gap: 18px; justify-content: space-between; align-items: center;">
+        <p style="font-size: 0.82rem; color: rgba(250,248,252,0.45);">© 2026 Centre de Danses Urbaines Héman. Tous droits réservés.</p>
+        <ul style="display: flex; flex-wrap: wrap; gap: 22px;">
+          <li><a href="./mentions-legales.html" style="font-size: 0.82rem; color: rgba(250,248,252,0.6);" style-hover="color: #13b8ad;">Mentions légales</a></li>
+          <li><a href="./mentions-legales.html#donnees" style="font-size: 0.82rem; color: rgba(250,248,252,0.6);" style-hover="color: #13b8ad;">Données personnelles</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bandeau cookies (RGPD) — choix mémorisé localement -->
+  <sc-if value="{{ cookiesVisible }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-label="Gestion des cookies" style="position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 90; max-width: 640px; margin: 0 auto; background: #FAF8FC; border-radius: 16px; padding: 24px 26px; box-shadow: 0 18px 48px rgba(26,18,37,0.4); display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between;">
+      <p style="font-size: 0.88rem; line-height: 1.6; color: #1A1225; flex: 1 1 260px;">Ce site n'utilise que des cookies nécessaires à son fonctionnement. Aucun traceur publicitaire, aucune mesure d'audience sans votre accord.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button type="button" onClick="{{ refuseCookies }}" style="background: transparent; color: #7b2cbf; font-weight: 600; font-size: 0.88rem; padding: 11px 22px; border: 2px solid rgba(123,44,191,0.3); border-radius: 9999px; cursor: pointer;" style-hover="border-color: #7b2cbf;">Refuser</button>
+        <button type="button" onClick="{{ acceptCookies }}" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.88rem; padding: 11px 24px; border: none; border-radius: 9999px; cursor: pointer;" style-hover="transform: translateY(-2px);">Accepter</button>
+      </div>
+    </div>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:420}}">
+class Component extends DCLogic {
+  state = { cookiesVisible: false };
+
+  componentDidMount() {
+    try {
+      if (!localStorage.getItem('heman-cookies')) this.setState({ cookiesVisible: true });
+    } catch (e) { this.setState({ cookiesVisible: true }); }
+  }
+
+  choix(valeur) {
+    try { localStorage.setItem('heman-cookies', valeur); } catch (e) {}
+    this.setState({ cookiesVisible: false });
+  }
+
+  renderVals() {
+    return {
+      reseaux: [
+        { reseau: 'Instagram', pseudo: 'heman_danceschool', href: 'https://www.instagram.com/heman_danceschool/' },
+        { reseau: 'Facebook', pseudo: 'HemanDanse', href: 'https://www.facebook.com/HemanDanse' },
+        { reseau: 'YouTube', pseudo: '@HemanDanse', href: 'https://www.youtube.com/@HemanDanse' },
+        { reseau: 'TikTok', pseudo: 'hdanse', href: 'https://www.tiktok.com/@hdanse' }
+      ],
+      cookiesVisible: this.state.cookiesVisible,
+      acceptCookies: () => this.choix('accepte'),
+      refuseCookies: () => this.choix('refuse')
+    };
+  }
+}
+</script>
+</body>
+</html>

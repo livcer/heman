@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png" />
+
+<meta name="robots" content="noindex, nofollow" />
+<title>Presse &amp; médias — Ils parlent d'Héman | Centre de Danses Urbaines</title>
+<meta name="description" content="M6, W9, Le Parisien, actu.fr, Sortir à Paris, Casting.fr : la revue de presse du Centre de Danses Urbaines Héman et de le Battle H Quality. Contacts presse et booking artiste." />
+<meta name="keywords" content="Héman presse, H Quality médias, école danse urbaine Neuilly-Plaisance presse, booking danseurs hip hop" />
+<link rel="canonical" href="https://www.heman.fr/presse" />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:site_name" content="Héman — Centre de Danses Urbaines" />
+<meta property="og:title" content="Presse &amp; médias — Ils parlent d'Héman" />
+<meta property="og:description" content="Reportages TV, interviews et articles consacrés à l'école Héman et à le Battle H Quality." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Poppins', system-ui, sans-serif; color: #1A1225; background: #FAF8FC; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  img { max-width: 100%; display: block; }
+  a { color: #7b2cbf; text-decoration: none; }
+  a:hover { color: #4d0780; }
+  h1, h2, h3 { font-family: 'Montserrat', system-ui, sans-serif; margin: 0; line-height: 1.1; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  button { font-family: inherit; }
+  :focus-visible { outline: 3px solid #13b8ad; outline-offset: 3px; }
+  html { scroll-behavior: smooth; }
+  @keyframes hemanDefile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #FAF8FC;">
+  <dc-import name="Entete" active="presse" hint-size="100%,140px"></dc-import>
+
+  <!-- Titre de page -->
+  <section style="background: #1A1225; padding: 80px 0 88px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <p style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #13b8ad; margin-bottom: 14px;">Presse &amp; médias</p>
+      <h1 style="font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 800; color: #FAF8FC; max-width: 34rem;">Ils parlent d'Héman</h1>
+      <p style="margin-top: 20px; font-size: 1.06rem; line-height: 1.8; color: rgba(250,248,252,0.82); max-width: 44rem;">Depuis vingt ans, l'école et le Battle H Quality sont suivies par la télévision, la presse locale et les médias spécialisés. Voici la sélection des reportages et articles qui nous sont consacrés.</p>
+      <ul style="margin-top: 44px; display: flex; flex-wrap: wrap; gap: 12px;">
+        <sc-for list="{{ enseignes }}" as="e" hint-placeholder-count="9">
+          <li style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(250,248,252,0.72); border: 1px solid rgba(250,248,252,0.28); border-radius: 8px; padding: 10px 18px;">{{ e }}</li>
+        </sc-for>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Reportages vidéo -->
+  <section style="padding: 88px 0 0;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 800; color: #1A1225;">Reportages et interviews</h2>
+      <ul style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px;">
+        <sc-for list="{{ videos }}" as="v" hint-placeholder-count="5">
+          <li style="display: flex;">
+            <article style="background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 26px rgba(77,7,128,0.12); display: flex; flex-direction: column; width: 100%; transition: transform 0.2s ease, box-shadow 0.2s ease;" style-hover="transform: translateY(-5px); box-shadow: 0 16px 38px rgba(77,7,128,0.2);">
+              <a href="{{ v.href }}" target="_blank" rel="noopener" aria-label="{{ v.aria }}" style="position: relative; display: block; aspect-ratio: 16 / 9; background: #1A1225;">
+                <img src="{{ v.vignette }}" alt="{{ v.alt }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" />
+                <span aria-hidden="true" style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(26,18,37,0.28);">
+                  <span style="width: 62px; height: 62px; display: flex; align-items: center; justify-content: center; background: rgba(19,184,173,0.94); border-radius: 9999px;">
+                    <span style="display: block; width: 0; height: 0; margin-left: 6px; border-left: 18px solid #1A1225; border-top: 11px solid transparent; border-bottom: 11px solid transparent;"></span>
+                  </span>
+                </span>
+              </a>
+              <div style="padding: 24px 26px 28px; display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                <span style="font-family: 'Montserrat', sans-serif; font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #0b4f6c;">{{ v.media }}</span>
+                <h3 style="font-size: 1.18rem; font-weight: 700; color: #1A1225; line-height: 1.35;">{{ v.titre }}</h3>
+                <a href="{{ v.href }}" target="_blank" rel="noopener" style="margin-top: auto; padding-top: 12px; font-size: 0.9rem; font-weight: 600; color: #7b2cbf;" style-hover="color: #4d0780;">Voir la vidéo →</a>
+              </div>
+            </article>
+          </li>
+        </sc-for>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Articles -->
+  <section style="padding: 80px 0 96px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 800; color: #1A1225;">Dans la presse</h2>
+      <ul style="margin-top: 36px; display: grid; gap: 14px;">
+        <sc-for list="{{ articles }}" as="a" hint-placeholder-count="5">
+          <li>
+            <a href="{{ a.href }}" target="_blank" rel="noopener" style="display: grid; grid-template-columns: {{ colonnesArticle }}; gap: 10px 24px; align-items: center; background: #FFFFFF; border-radius: 14px; padding: 24px 28px; box-shadow: 0 5px 18px rgba(77,7,128,0.1); transition: transform 0.18s ease, box-shadow 0.18s ease;" style-hover="transform: translateX(4px); box-shadow: 0 10px 28px rgba(77,7,128,0.18); color: #1A1225;">
+              <span style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.96rem; letter-spacing: 0.04em; text-transform: uppercase; color: #4d0780;">{{ a.media }}</span>
+              <span style="font-size: 1rem; line-height: 1.55; color: #514860;">{{ a.titre }}</span>
+              <span aria-hidden="true" style="display: {{ flecheArticle }}; font-size: 1.2rem; color: #13b8ad;">→</span>
+            </a>
+          </li>
+        </sc-for>
+      </ul>
+      <p style="margin-top: 26px; font-size: 0.94rem; color: #7a7089;">{{ mentionAutres }}</p>
+    </div>
+  </section>
+
+  <!-- Contacts presse -->
+  <section style="background: #0b4f6c; padding: 88px 0;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <p style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #f5c310; margin-bottom: 12px;">Contacts</p>
+      <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 800; color: #FAF8FC;">Vous êtes journaliste ou programmateur ?</h2>
+      <div style="margin-top: 44px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px;">
+        <div style="background: rgba(250,248,252,0.07); border: 1px solid rgba(250,248,252,0.18); border-radius: 16px; padding: 32px; display: grid; gap: 12px; align-content: start;">
+          <h3 style="font-size: 1.3rem; font-weight: 700; color: #FAF8FC;">Interviews et reportages</h3>
+          <p style="font-size: 0.96rem; line-height: 1.65; color: rgba(250,248,252,0.8);">Dorkas Agency coordonne les demandes médias, les tournages et les partenariats de marque.</p>
+          <a href="tel:+33624843326" style="justify-self: start; margin-top: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.24rem; color: #f5c310;" style-hover="color: #13b8ad;">06 24 84 33 26</a>
+        </div>
+        <div style="background: rgba(250,248,252,0.07); border: 1px solid rgba(250,248,252,0.18); border-radius: 16px; padding: 32px; display: grid; gap: 12px; align-content: start;">
+          <h3 style="font-size: 1.3rem; font-weight: 700; color: #FAF8FC;">Booking artiste</h3>
+          <p style="font-size: 0.96rem; line-height: 1.65; color: rgba(250,248,252,0.8);">Prestations scéniques, chorégraphie, jury de battle et masterclasses : contactez directement l'école.</p>
+          <div style="display: grid; gap: 4px; margin-top: 8px;">
+            <a href="tel:+33680778548" style="justify-self: start; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.24rem; color: #f5c310;" style-hover="color: #13b8ad;">06 80 77 85 48</a>
+            <a href="tel:+33143001773" style="justify-self: start; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.24rem; color: #f5c310;" style-hover="color: #13b8ad;">01 43 00 17 73</a>
+          </div>
+        </div>
+        <div style="background: rgba(250,248,252,0.07); border: 1px solid rgba(250,248,252,0.18); border-radius: 16px; padding: 32px; display: grid; gap: 12px; align-content: start;">
+          <h3 style="font-size: 1.3rem; font-weight: 700; color: #FAF8FC;">Par écrit</h3>
+          <p style="font-size: 0.96rem; line-height: 1.65; color: rgba(250,248,252,0.8);">Dossier de presse, visuels haute définition et accréditations H Quality sur demande.</p>
+          <a href="mailto:oriental.danikarp@gmail.com?subject=Demande%20presse" style="justify-self: start; margin-top: 8px; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.24rem; color: #f5c310;" style-hover="color: #13b8ad;">oriental.danikarp@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="PiedDePage" hint-size="100%,420px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { largeur: 1280 };
+
+  componentDidMount() {
+    this.mesurer = () => this.setState({ largeur: window.innerWidth || 1280 });
+    this.mesurer();
+    window.addEventListener('resize', this.mesurer);
+  }
+
+  componentWillUnmount() {
+    if (this.mesurer) window.removeEventListener('resize', this.mesurer);
+  }
+
+  renderVals() {
+    const compact = this.state.largeur < 640;
+    const videos = [
+      { media: 'Freeze Paris', titre: "Interview de Claise M'Passi, pionnier du Hip-Hop en France", id: '_FvDtss0DCw' },
+      { media: 'M6 — 19:45', titre: "Le Centre de Danses Urbaines Héman au journal de M6", id: 'I4DPJyO_CT8' },
+      { media: 'W9 — La Meilleure Danse', titre: 'La compagnie AZARIA finaliste de « La Meilleure Danse »', id: 'Hoyk3ZnQJh0' },
+      { media: 'Delanight Médias', titre: "Interview de Richard MP'Style, créateur du Jazz-Rock MP'STYLE", id: 'aKs_49hDeTs' },
+      { media: 'Casting.fr', titre: 'H Quality Revelation, le tremplin des danseurs de demain', id: '9S4oE_zCn7w' }
+    ];
+
+    return {
+      enseignes: ['M6', 'W9', 'Le Parisien 93', 'actu.fr', 'Casting.fr', 'Sortir à Paris', 'Project X Paris', 'Freeze Paris', 'Delanight Médias'],
+
+      videos: videos.map(v => Object.assign({}, v, {
+        href: 'https://www.youtube.com/watch?v=' + v.id,
+        vignette: 'https://img.youtube.com/vi/' + v.id + '/hqdefault.jpg',
+        alt: v.media + ' — ' + v.titre,
+        aria: 'Voir la vidéo : ' + v.titre + ' (' + v.media + ')'
+      })),
+
+      articles: [
+        { media: 'actu.fr', titre: 'Seine-Saint-Denis : inscrivez-vous au grand concours hip-hop de Neuilly-Plaisance', href: 'https://actu.fr/ile-de-france/neuilly-plaisance_93049/seine-saint-denis-inscrivez-vous-grand-concours-hip-hop-neuilly-plaisance_29686160.html' },
+        { media: 'Sortir à Paris', titre: 'H Quality, le festival de danses urbaines avec battles et chorégraphies à Neuilly-Plaisance', href: 'https://www.sortiraparis.com/loisirs/sport/articles/339528-h-quality-le-festival-de-danses-urbaines-avec-battles-et-choregraphies-a-neuilly-plaisance' },
+        { media: 'Casting.fr', titre: "L'incontournable concours de danse urbaine H Quality est de retour pour sa 6e édition", href: 'https://www.casting.fr/les-actualites/9210-lincontournable-concours-de-danse-urbane-h-quality-est-de-retour-pour-sa-6eme-edition' },
+        { media: 'Project X Paris', titre: "Project X Paris partenaire de l'événement hip-hop H Quality", href: 'https://www.projectxparis.com/blogs/le-radar/project-x-paris-partenaire-de-l-evenement-hip-hop-h-quality' },
+        { media: 'Ville de Neuilly-Plaisance', titre: "L'école Héman dans le journal de la ville", href: 'https://www.tiktok.com/@ville.de.neuilly/photo/7509126132566986006?image_index=3' }
+      ],
+
+      // Empilé sur mobile, trois colonnes au-delà
+      colonnesArticle: compact ? '1fr' : 'minmax(0, 200px) minmax(0, 1fr) auto',
+      flecheArticle: compact ? 'none' : 'block',
+      mentionAutres: "Également parus : Le Parisien 93 et Freestyle en Aparté by Richard."
+    };
+  }
+}
+</script>
+</body>
+</html>

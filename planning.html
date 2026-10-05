@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png" />
+
+<meta name="robots" content="noindex, nofollow" />
+<title>Planning des cours &amp; inscription 2026-2027 | Héman Neuilly-Plaisance</title>
+<meta name="description" content="Planning des cours de danse urbaine à Neuilly-Plaisance, saison 2026-2027 : horaires par jour et par âge, du lundi au samedi. Inscription en ligne pour hip hop, breakdance, afro, éveil danse." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Poppins', system-ui, sans-serif; color: #1A1225; background: #FAF8FC; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  img { max-width: 100%; display: block; }
+  a { color: #7b2cbf; text-decoration: none; }
+  a:hover { color: #4d0780; }
+  h1, h2, h3 { font-family: 'Montserrat', system-ui, sans-serif; margin: 0; line-height: 1.1; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  button { font-family: inherit; }
+  table { border-collapse: collapse; width: 100%; }
+  :focus-visible { outline: 3px solid #13b8ad; outline-offset: 3px; }
+  html { scroll-behavior: smooth; }
+  @keyframes hemanDefile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #FAF8FC;">
+  <dc-import name="Entete" active="planning" hint-size="100%,140px"></dc-import>
+
+  <section style="background: linear-gradient(140deg, #4d0780 0%, #7b2cbf 100%); padding: 80px 0 88px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 56px; align-items: end;">
+      <div>
+        <p style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #f5c310; margin-bottom: 14px;">Saison 2026-2027</p>
+        <h1 style="font-size: clamp(2.3rem, 7vw, 3.6rem); font-weight: 800; color: #FAF8FC;">Planning &amp; inscription</h1>
+        <p style="margin-top: 22px; font-size: 1.08rem; line-height: 1.75; color: rgba(250,248,252,0.85); max-width: 40rem;">Filtrez le planning par jour ou par tranche d'âge pour trouver le créneau qui vous correspond, puis finalisez l'inscription en ligne en quelques minutes.</p>
+      </div>
+      <div style="background: rgba(250,248,252,0.08); border: 2px solid rgba(245,195,16,0.4); border-radius: 16px; padding: 28px;">
+        <p style="font-family: 'Permanent Marker', cursive; font-size: 1.2rem; color: #13b8ad; margin-bottom: 12px;">Prêt à sauter le pas ?</p>
+        <p style="font-size: 0.92rem; line-height: 1.6; color: rgba(250,248,252,0.82); margin-bottom: 20px;">L'inscription se fait directement sur notre plateforme sécurisée : dossier d'inscription, règlement et attestations, tout est centralisé au même endroit.</p>
+        <a href="{{ inscriptionUrl }}" target="_blank" rel="noopener" style="display: block; text-align: center; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1rem; padding: 15px 28px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">Je m'inscris en ligne</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filtres + planning -->
+  <section style="padding: 88px 0;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 700; color: #1A1225;">Le planning de la semaine</h2>
+      <p style="margin-top: 14px; font-size: 1rem; color: #514860; line-height: 1.7; max-width: 42rem;">{{ nbCoursTexte }}</p>
+
+      <div style="margin-top: 34px; display: grid; gap: 20px;">
+        <div>
+          <p style="font-size: 0.76rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7b2cbf; margin-bottom: 12px;">Filtrer par jour</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <sc-for list="{{ filtresJour }}" as="f" hint-placeholder-count="7">
+              <button type="button" onClick="{{ f.onClick }}" aria-pressed="{{ f.actif }}" style="background: {{ f.bg }}; color: {{ f.fg }}; border: 2px solid {{ f.bordure }}; font-weight: 500; font-size: 0.88rem; padding: 10px 22px; border-radius: 9999px; cursor: pointer; transition: all 0.18s ease;">{{ f.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+        <div>
+          <p style="font-size: 0.76rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #7b2cbf; margin-bottom: 12px;">Filtrer par âge</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+            <sc-for list="{{ filtresAge }}" as="f" hint-placeholder-count="4">
+              <button type="button" onClick="{{ f.onClick }}" aria-pressed="{{ f.actif }}" style="background: {{ f.bg }}; color: {{ f.fg }}; border: 2px solid {{ f.bordure }}; font-weight: 500; font-size: 0.88rem; padding: 10px 22px; border-radius: 9999px; cursor: pointer; transition: all 0.18s ease;">{{ f.label }}</button>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tableau du planning -->
+      <div style="margin-top: 40px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 8px 30px rgba(77,7,128,0.13); overflow: hidden;">
+        <div style="overflow-x: auto;">
+          <table>
+            <caption style="text-align: left; padding: 24px 26px 0; font-size: 0.86rem; color: #514860;">Planning des cours à l'année, saison 2026-2027. Les cours marqués <strong style="font-weight: 700; color: #4d0780;">Complet</strong> n'accueillent plus d'inscription cette saison ; contactez-nous pour être placé sur liste d'attente.</caption>
+            <thead>
+              <tr style="background: #4d0780;">
+                <th scope="col" style="text-align: left; padding: 16px 26px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FAF8FC;">Jour</th>
+                <th scope="col" style="text-align: left; padding: 16px 20px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FAF8FC;">Horaire</th>
+                <th scope="col" style="text-align: left; padding: 16px 20px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FAF8FC;">Cours</th>
+                <th scope="col" style="text-align: left; padding: 16px 20px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FAF8FC;">Professeur</th>
+                <th scope="col" style="text-align: left; padding: 16px 26px; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FAF8FC;">Niveau</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ coursFiltres }}" as="c" hint-placeholder-count="0">
+                <tr style="border-top: 1px solid rgba(123,44,191,0.12);" style-hover="background: rgba(245,195,16,0.06);">
+                  <td style="padding: 15px 26px; font-size: 0.92rem; font-weight: 500; color: #1A1225; white-space: nowrap;">{{ c.jour }}</td>
+                  <td style="padding: 15px 20px; font-size: 0.95rem; font-weight: 600; color: #4d0780; white-space: nowrap;">{{ c.heure }}</td>
+                  <td style="padding: 15px 20px; font-size: 1rem; font-weight: 700; color: #0b4f6c;">{{ c.discipline }}<sc-if value="{{ c.complet }}" hint-placeholder-val="{{ false }}"><span style="display: inline-block; margin-left: 10px; vertical-align: middle; background: #4d0780; color: #FAF8FC; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 9999px;">Complet</span></sc-if></td>
+                  <td style="padding: 15px 20px; font-size: 0.92rem; font-weight: 500; color: #1A1225; white-space: nowrap;">{{ c.prof }}</td>
+                  <td style="padding: 15px 26px; font-size: 0.9rem; font-style: italic; color: #514860;">{{ c.niveau }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <sc-if value="{{ aucunResultat }}" hint-placeholder-val="{{ false }}">
+          <p style="padding: 34px 26px; font-size: 0.95rem; color: #514860;">Aucun cours ne correspond à ces filtres. Élargissez la sélection ou contactez-nous, un créneau peut être ouvert à la demande.</p>
+        </sc-if>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inscriptions & tarifs -->
+  <section id="tarifs" style="background: #FAF8FC; padding: 0 0 96px;">
+    <div style="max-width: 900px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 800; color: #4d0780; letter-spacing: -0.01em; text-align: center;">Inscriptions &amp; Tarifs 2026–2027</h2>
+
+      <!-- Adhésion -->
+      <div style="margin-top: 34px; background: #13b8ad; border-radius: 16px; padding: 20px 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; box-shadow: 0 6px 22px rgba(19,184,173,0.28);">
+        <div style="flex: 1 1 220px;">
+          <p style="font-family: 'Montserrat', sans-serif; font-size: 0.9rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: #4d0780;">Adhésion obligatoire</p>
+          <p style="margin-top: 4px; font-size: 0.82rem; color: #1A1225;">à ajouter aux tarifs indiqués ci-dessous</p>
+        </div>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 1.9rem; font-weight: 800; color: #4d0780; white-space: nowrap;">50 €</p>
+      </div>
+
+      <!-- Grille tarifaire -->
+      <div style="margin-top: 18px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+        <div style="background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 22px rgba(77,7,128,0.13);">
+          <p style="background: rgba(19,184,173,0.16); color: #4d0780; padding: 13px 22px; font-family: 'Montserrat', sans-serif; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;">Enfants</p>
+          <div style="padding: 8px 22px 16px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 0; border-bottom: 1px solid rgba(123,44,191,0.12);">
+              <span style="font-size: 0.86rem; font-weight: 500; color: #514860;">Cours 45 min – 1h</span>
+              <span style="font-family: 'Montserrat', sans-serif; font-size: 1.25rem; font-weight: 800; color: #4d0780;">220 €</span>
+            </div>
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 0;">
+              <span style="font-size: 0.86rem; font-weight: 500; color: #514860;">Cours 1h – 1h30</span>
+              <span style="font-family: 'Montserrat', sans-serif; font-size: 1.25rem; font-weight: 800; color: #4d0780;">235 €</span>
+            </div>
+          </div>
+        </div>
+        <div style="background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 22px rgba(77,7,128,0.13);">
+          <p style="background: rgba(19,184,173,0.16); color: #4d0780; padding: 13px 22px; font-family: 'Montserrat', sans-serif; font-size: 0.74rem; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase;">Adultes</p>
+          <div style="padding: 8px 22px 16px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 0;">
+              <span style="font-size: 0.86rem; font-weight: 500; color: #514860;">Tarif unique</span>
+              <span style="font-family: 'Montserrat', sans-serif; font-size: 1.25rem; font-weight: 800; color: #4d0780;">310 €</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 18px; background: rgba(123,44,191,0.09); border-radius: 16px; padding: 16px 22px; font-size: 0.9rem; font-weight: 600; color: #4d0780;">Tarif dégressif pour les familles ou pour plusieurs cours.</p>
+
+      <!-- Inscriptions en ligne -->
+      <div style="margin-top: 18px; background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 22px rgba(77,7,128,0.13);">
+        <p style="background: rgba(19,184,173,0.16); color: #4d0780; padding: 12px 22px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Inscriptions en ligne</p>
+        <p style="padding: 18px 22px; font-size: 0.92rem; line-height: 1.65; color: #514860;">Les inscriptions se font <strong style="color: #1A1225;">exclusivement en ligne</strong> sur une plateforme 100 % sécurisée.</p>
+      </div>
+
+      <!-- Familles -->
+      <p style="margin-top: 18px; background: #FFFFFF; border-left: 4px solid #f5c310; border-radius: 0 16px 16px 0; padding: 18px 22px; font-size: 0.92rem; line-height: 1.7; color: #514860; box-shadow: 0 4px 18px rgba(77,7,128,0.1);">Pour les familles souhaitant faire <strong style="color: #1A1225;">3 inscriptions ou plus</strong>, merci de nous contacter par mail à <a href="mailto:inscription@heman.fr">inscription@heman.fr</a> afin que nous vous expliquions les possibilités d'échelonnement de votre paiement sur <strong style="color: #1A1225;">4, 5 ou 6 mois</strong>.</p>
+
+      <!-- Modalités de règlement -->
+      <div style="margin-top: 18px; background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 22px rgba(77,7,128,0.13);">
+        <p style="background: rgba(19,184,173,0.16); color: #4d0780; padding: 12px 22px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Modalités de règlement</p>
+        <ul style="padding: 18px 22px; display: grid; gap: 12px;">
+          <li style="display: flex; gap: 12px; align-items: flex-start;"><span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 8px; border-radius: 9999px; background: #13b8ad;"></span><span style="font-size: 0.92rem; line-height: 1.6; color: #514860;"><strong style="color: #1A1225;">En 1 fois</strong> à l'inscription</span></li>
+          <li style="display: flex; gap: 12px; align-items: flex-start;"><span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 8px; border-radius: 9999px; background: #13b8ad;"></span><span style="font-size: 0.92rem; line-height: 1.6; color: #514860;"><strong style="color: #1A1225;">En 3 fois</strong> — prélèvement à l'inscription, puis le 10 octobre 2026 et le 10 novembre 2026</span></li>
+        </ul>
+      </div>
+
+      <!-- Moyens de paiement -->
+      <div style="margin-top: 18px; background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 6px 22px rgba(77,7,128,0.13);">
+        <p style="background: rgba(19,184,173,0.16); color: #4d0780; padding: 12px 22px; font-family: 'Montserrat', sans-serif; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.18em; text-transform: uppercase;">Moyens de paiement acceptés</p>
+        <ul style="padding: 18px 22px; display: grid; gap: 12px;">
+          <li style="display: flex; gap: 12px; align-items: flex-start;"><span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 8px; border-radius: 9999px; background: #13b8ad;"></span><span style="font-size: 0.92rem; color: #514860;">En ligne — CB ou prélèvement</span></li>
+          <li style="display: flex; gap: 12px; align-items: flex-start;"><span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 8px; border-radius: 9999px; background: #13b8ad;"></span><span style="font-size: 0.92rem; color: #514860;">Pass'Loisirs par la CAF</span></li>
+          <li style="display: flex; gap: 12px; align-items: flex-start;"><span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 8px; border-radius: 9999px; background: #13b8ad;"></span><span style="font-size: 0.92rem; color: #514860;">Chèques vacances / Chèques vacances Connect</span></li>
+          <li style="display: flex; gap: 12px; align-items: flex-start;"><span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 8px; border-radius: 9999px; background: #13b8ad;"></span><span style="font-size: 0.92rem; color: #514860;">Coupon Sport</span></li>
+        </ul>
+      </div>
+
+      <p style="margin-top: 18px; text-align: center; font-size: 0.82rem; font-style: italic; color: #7b2cbf;">Nous sommes non éligible au Pass'port du 93</p>
+    </div>
+  </section>
+
+  <!-- Comment s'inscrire -->
+  <section style="background: #0b4f6c; padding: 96px 0;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <div style="max-width: 38rem; margin-bottom: 52px;">
+        <h2 style="font-family: 'Montserrat', sans-serif; font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; color: #FAF8FC; line-height: 1;">Inscription</h2>
+        <p style="margin-top: 14px; font-size: 1.05rem; font-weight: 500; color: #f5c310;">Trois étapes, dix minutes</p>
+      </div>
+      <ol style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 26px; margin: 0; padding: 0; list-style: none;">
+        <sc-for list="{{ etapes }}" as="e" hint-placeholder-count="3">
+          <li style="background: rgba(250,248,252,0.07); border-radius: 16px; padding: 30px 28px; border: 1px solid rgba(250,248,252,0.14);">
+            <span style="display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border-radius: 9999px; background: #13b8ad; color: #1A1225; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.25rem; margin-bottom: 18px;">{{ e.num }}</span>
+            <h3 style="font-size: 1.35rem; font-weight: 700; color: #FAF8FC;">{{ e.titre }}</h3>
+            <p style="margin-top: 10px; font-size: 0.96rem; line-height: 1.65; color: rgba(250,248,252,0.8);">{{ e.texte }}</p>
+          </li>
+        </sc-for>
+      </ol>
+      <div style="margin-top: 44px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+        <a href="{{ inscriptionUrl }}" target="_blank" rel="noopener" style="background: #f5c310; color: #1A1225; font-weight: 700; font-size: 1.02rem; padding: 16px 38px; border-radius: 9999px; box-shadow: 0 4px 16px rgba(245,195,16,0.4);" style-hover="transform: translateY(-2px); color: #1A1225;">Accéder au formulaire d'inscription</a>
+        <a href="./index.html#contact" style="color: #13b8ad; font-weight: 600; font-size: 1.02rem; padding: 14px 30px; border: 2px solid #13b8ad; border-radius: 9999px;" style-hover="background: #13b8ad; color: #1A1225;">Une question avant de s'engager</a>
+      </div>
+      
+    </div>
+  </section>
+
+  <!-- Questions fréquentes -->
+  <section style="padding: 96px 0;">
+    <div style="max-width: 900px; margin: 0 auto; padding: 0 24px;">
+      <h2 style="font-size: clamp(1.8rem, 4.2vw, 2.4rem); font-weight: 700; color: #1A1225; margin-bottom: 36px;">Questions fréquentes</h2>
+      <div style="display: grid; gap: 14px;">
+        <sc-for list="{{ faq }}" as="q" hint-placeholder-count="5">
+          <details style="background: #FFFFFF; border-radius: 16px; padding: 22px 26px; box-shadow: 0 4px 18px rgba(77,7,128,0.1);">
+            <summary style="font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1.2rem; color: #4d0780; cursor: pointer; list-style: none;">{{ q.question }}</summary>
+            <p style="margin-top: 14px; font-size: 0.98rem; line-height: 1.7; color: #514860;">{{ q.reponse }}</p>
+          </details>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="PiedDePage" hint-size="100%,420px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;inscriptionUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://viviarto.com/organisateurs-ateliers-cours-artistiques/heman-danse/planning&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    // Masque les images dont l'URL provisoire ne répond pas (capture globale : fonctionne aussi dans les boucles)
+    document.addEventListener('error', (e) => {
+      const cible = e.target;
+      if (cible && cible.tagName === 'IMG') cible.style.display = 'none';
+    }, true);
+  }
+
+  state = { jour: 'Tous', age: 'Tous' };
+
+  // Planning provisoire — à remplacer par les horaires réels de l'école
+  cours = [
+    { jour: 'Lundi', heure: '18h00 – 19h00', discipline: 'Hip Hop 6-7 ans', prof: 'Soussaba', niveau: 'Tous niveaux', age: 'Enfants', complet: true },
+    { jour: 'Lundi', heure: '18h00 – 19h00', discipline: 'Hip Hop 8-10 ans', prof: 'Leïla', niveau: 'Tous niveaux', age: 'Enfants', complet: true },
+    { jour: 'Lundi', heure: '19h00 – 20h00', discipline: 'Hip Hop 11-13 ans', prof: 'Leïla', niveau: 'Débutant', age: 'Enfants' },
+    { jour: 'Lundi', heure: '19h00 – 20h00', discipline: 'Hip Hop 11-13 ans+', prof: 'Soussaba', niveau: 'Sur sélection', age: 'Enfants' },
+    { jour: 'Lundi', heure: '20h00 – 21h15', discipline: 'Hip Hop 14-17 ans', prof: 'Leïla', niveau: 'Tous niveaux', age: 'Ados' },
+    { jour: 'Lundi', heure: '20h00 – 21h30', discipline: 'Young Light', prof: 'Soussaba', niveau: 'Sur sélection — Interm.', age: 'Groupes' },
+    { jour: 'Lundi', heure: '19h00 – 20h15', discipline: 'Nissi', prof: 'Cressence', niveau: 'Sur sélection', age: 'Groupes' },
+    { jour: 'Lundi', heure: '20h15 – 21h45', discipline: "Judith's", prof: 'Cressence', niveau: 'Sur sélection — Interm.+', age: 'Groupes' },
+    { jour: 'Mercredi', heure: '18h00 – 18h45', discipline: 'Éveil 4-5 ans', prof: 'Elisabeth', niveau: 'Tous niveaux', age: 'Éveil', complet: true },
+    { jour: 'Mercredi', heure: '18h00 – 19h00', discipline: 'Hip Hop 8-10 ans', prof: 'Soussaba', niveau: 'Tous niveaux', age: 'Enfants', complet: true },
+    { jour: 'Mercredi', heure: '18h45 – 20h15', discipline: 'Hip Hop 14-17 ans', prof: 'Elisabeth', niveau: 'Tous niveaux', age: 'Ados', complet: true },
+    { jour: 'Mercredi', heure: '19h00 – 20h30', discipline: 'Young Star', prof: 'Soussaba', niveau: 'Sur sélection — Interm.', age: 'Groupes' },
+    { jour: 'Mercredi', heure: '20h00 – 21h30', discipline: 'Hip Hop adulte', prof: 'Danika', niveau: 'Débutant — Intermédiaire', age: 'Adultes' },
+    { jour: 'Mercredi', heure: '20h45 – 21h45', discipline: 'Jazz-Rock', prof: 'Richard', niveau: 'Intermédiaire', age: 'Adultes' },
+    { jour: 'Jeudi', heure: '17h45 – 19h00', discipline: 'Modern Jazz ados / adultes', prof: 'Lorna', niveau: 'Débutant ado / adulte', age: 'Ados & adultes' },
+    { jour: 'Jeudi', heure: '18h00 – 19h00', discipline: 'Hip Hop 6-7 ans', prof: 'Elisabeth', niveau: 'Tous niveaux', age: 'Enfants' },
+    { jour: 'Jeudi', heure: '19h00 – 20h30', discipline: 'Afro Beat', prof: 'Elisabeth', niveau: 'Débutant ado / adulte', age: 'Adultes' },
+    { jour: 'Jeudi', heure: '19h00 – 20h15', discipline: 'Hip Hop adulte', prof: 'Cressence', niveau: 'Débutant', age: 'Adultes' },
+    { jour: 'Jeudi', heure: '20h30 – 22h00', discipline: 'Jedi', prof: 'Claise', niveau: 'Intermédiaire', age: 'Groupes' },
+    { jour: 'Samedi', heure: '11h00 – 12h30', discipline: 'Break ados', prof: 'Leïla', niveau: 'Sur sélection', age: 'Ados' },
+    { jour: 'Samedi', heure: '11h00 – 12h00', discipline: 'Cardio fitness 100% femmes', prof: 'Coach Soso', niveau: 'Tous niveaux', age: 'Adultes' }
+  ];
+
+
+  bouton(actif) {
+    return actif
+      ? { bg: '#4d0780', fg: '#FAF8FC', bordure: '#4d0780' }
+      : { bg: '#FFFFFF', fg: '#4d0780', bordure: 'rgba(123,44,191,0.25)' };
+  }
+
+  renderVals() {
+    const { jour, age } = this.state;
+    const jours = ['Tous', 'Lundi', 'Mercredi', 'Jeudi', 'Samedi'];
+    const ages = ['Tous', 'Éveil', 'Enfants', 'Ados', 'Adultes', 'Groupes'];
+
+    const coursFiltres = this.cours.filter(c =>
+      (jour === 'Tous' || c.jour === jour) &&
+      (age === 'Tous' || c.age.toLowerCase().indexOf(age.toLowerCase()) !== -1)
+    );
+
+    return {
+      coursFiltres,
+      aucunResultat: coursFiltres.length === 0,
+      nbCoursTexte: coursFiltres.length === this.cours.length
+        ? this.cours.length + ' cours par semaine, du lundi au samedi.'
+        : coursFiltres.length + ' cours correspondent à votre sélection.',
+      filtresJour: jours.map(j => Object.assign({ label: j, actif: j === jour, onClick: () => this.setState({ jour: j }) }, this.bouton(j === jour))),
+      filtresAge: ages.map(a => Object.assign({ label: a, actif: a === age, onClick: () => this.setState({ age: a }) }, this.bouton(a === age))),
+      inscriptionUrl: this.props.inscriptionUrl ?? 'https://viviarto.com/organisateurs-ateliers-cours-artistiques/heman-danse/planning',
+      etapes: [
+        { num: '1', titre: 'Choisissez votre créneau', texte: 'Repérez le cours qui correspond à l\u2019âge et au niveau du danseur dans le planning ci-dessus.' },
+        { num: '2', titre: 'Remplissez le dossier en ligne', texte: 'Coordonnées, certificat médical et autorisation parentale pour les mineurs, sur notre plateforme sécurisée.' },
+        { num: '3', titre: 'Réglez la cotisation', texte: 'Paiement en une ou plusieurs fois. Vous recevez votre confirmation par e-mail immédiatement.' }
+      ],
+      faq: [
+        { question: 'Mon enfant n\u2019a jamais dansé, est-ce un problème ?', reponse: 'Aucun. Les groupes sont constitués par âge et par niveau, et tous nos cours accueillent des débutants complets. Les trois stages de découverte gratuits du 6 septembre sont conçus exactement pour ça.' },
+        { question: 'Quels sont les tarifs de la saison ?', reponse: "L'adhésion est de 50 € et s'ajoute à la cotisation : 220 € pour un cours enfant de 45 min à 1h, 235 € de 1h à 1h30, 310 € en tarif unique adulte. Un tarif dégressif s'applique aux familles et à la pratique de plusieurs cours. Le détail figure dans la section Inscriptions & Tarifs ci-dessus." },
+        { question: 'Peut-on essayer un cours avant de s\u2019engager ?', reponse: 'Oui, un cours d\u2019essai est possible en début de saison selon les places disponibles. Contactez-nous pour le programmer.' },
+        { question: 'Y a-t-il un spectacle de fin d\u2019année ?', reponse: 'Oui. La participation au spectacle est proposée mais jamais imposée : certains élèves viennent uniquement pour la pratique hebdomadaire.' },
+        { question: 'Où se déroulent les cours ?', reponse: 'Tous les cours ont lieu au 3 rue Marcel Dassault, ZI des Renouillères, 93360 Neuilly-Plaisance. Arrêt de bus 114 Georges Pompidou à proximité immédiate.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

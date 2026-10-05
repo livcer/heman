@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div>
+  <!-- Bandeau anniversaire : fil rouge de la saison 2026-2027 -->
+  <div style="background: #13b8ad; display: flex; align-items: center; gap: 20px; padding-right: 20px; border-bottom: 1px solid #f5c310;">
+    <div style="flex: 0 0 auto; display: flex; align-items: center; gap: 14px; background: #4d0780; padding: 8px 26px 8px 20px; clip-path: polygon(0 0, 100% 0, calc(100% - 22px) 100%, 0 100%);">
+      <img src="./assets/logo-20-ans-trim.png" alt="Héman fête ses 20 ans à Neuilly-Plaisance" style="height: 76px; width: auto;" />
+      <span style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: #FAF8FC; line-height: 1.35; max-width: {{ largeurLabel }};">20 ans à Neuilly-Plaisance</span>
+    </div>
+    <div style="flex: 1 1 auto; min-width: 0; overflow: hidden; white-space: nowrap; display: {{ afficheTicker }};">
+      <div style="display: inline-flex; gap: 44px; animation: hemanDefile 30s linear infinite; will-change: transform;">
+        <span style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: #f5c310; letter-spacing: 0.06em; text-transform: uppercase;">Saison 2026-2027 · inscriptions ouvertes</span>
+        <span style="font-family: 'Permanent Marker', cursive; font-size: 0.95rem; color: #f5c310;">Rejoins la famille !</span>
+        <span style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: #f5c310; letter-spacing: 0.06em; text-transform: uppercase;">Stages découverte gratuits le 6 septembre</span>
+        <span style="font-family: 'Permanent Marker', cursive; font-size: 0.95rem; color: #f5c310;">Hip Hop Family</span>
+        <span style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: #f5c310; letter-spacing: 0.06em; text-transform: uppercase;">Saison 2026-2027 · inscriptions ouvertes</span>
+        <span style="font-family: 'Permanent Marker', cursive; font-size: 0.95rem; color: #f5c310;">Rejoins la famille !</span>
+        <span style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 0.82rem; color: #f5c310; letter-spacing: 0.06em; text-transform: uppercase;">Stages découverte gratuits le 6 septembre</span>
+        <span style="font-family: 'Permanent Marker', cursive; font-size: 0.95rem; color: #f5c310;">Hip Hop Family</span>
+      </div>
+    </div>
+  </div>
+
+  <header style="position: sticky; top: 0; z-index: 60; background: #4d0780; border-bottom: 1px solid #f5c310; box-shadow: 0 2px 18px rgba(26,18,37,0.25);">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 20px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+      <a href="./index.html" style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;" aria-label="Héman Danse — accueil">
+        <img src="./assets/logo-heman.png" alt="Héman Danse, Neuilly Plaisance — Hip Hop Family" style="height: 56px; width: auto;" />
+      </a>
+
+      <!-- Navigation étendue (écrans larges) -->
+      <sc-if value="{{ bureau }}" hint-placeholder-val="{{ true }}">
+        <nav aria-label="Navigation principale" style="display: flex; align-items: center; gap: 6px;">
+          <ul style="display: flex; gap: 2px; align-items: center;">
+            <sc-for list="{{ liens }}" as="l" hint-placeholder-count="6">
+              <li><a href="{{ l.href }}" style="display: block; padding: 9px 11px; font-size: 0.86rem; font-weight: 500; color: {{ l.couleur }}; border-radius: 9999px; white-space: nowrap;" style-hover="background: rgba(250,248,252,0.12);">{{ l.label }}</a></li>
+            </sc-for>
+          </ul>
+          <a href="{{ inscriptionUrl }}" style="margin-left: 8px; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.88rem; padding: 11px 20px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35); white-space: nowrap;" style-hover="transform: translateY(-2px); box-shadow: 0 6px 20px rgba(19,184,173,0.45); color: #1A1225;">Je m'inscris</a>
+        </nav>
+      </sc-if>
+
+      <!-- Barre compacte (tablette et mobile) : CTA + bouton menu 44px -->
+      <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <a href="{{ inscriptionUrl }}" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.85rem; padding: 12px 18px; border-radius: 9999px; white-space: nowrap;" style-hover="color: #1A1225;">Je m'inscris</a>
+          <button type="button" onClick="{{ basculer }}" aria-expanded="{{ ouvert }}" aria-label="{{ ariaMenu }}" style="width: 46px; height: 46px; flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; background: transparent; border: 2px solid rgba(250,248,252,0.35); border-radius: 9999px; cursor: pointer;" style-hover="border-color: #f5c310;">
+            <span style="display: block; width: 18px; height: 2px; background: #FAF8FC; border-radius: 2px;"></span>
+            <span style="display: block; width: 18px; height: 2px; background: #FAF8FC; border-radius: 2px;"></span>
+            <span style="display: block; width: 18px; height: 2px; background: #FAF8FC; border-radius: 2px;"></span>
+          </button>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- Panneau déroulant mobile -->
+    <sc-if value="{{ panneau }}" hint-placeholder-val="{{ false }}">
+      <nav aria-label="Navigation principale" style="background: #3d0668; border-top: 1px solid rgba(250,248,252,0.14);">
+        <ul style="max-width: 1240px; margin: 0 auto; padding: 10px 20px 18px; display: grid; gap: 2px;">
+          <sc-for list="{{ liens }}" as="l" hint-placeholder-count="6">
+            <li><a href="{{ l.href }}" onClick="{{ fermer }}" style="display: block; padding: 14px 16px; min-height: 46px; font-size: 1rem; font-weight: 500; color: {{ l.couleur }}; border-radius: 12px;" style-hover="background: rgba(250,248,252,0.1);">{{ l.label }}</a></li>
+          </sc-for>
+        </ul>
+      </nav>
+    </sc-if>
+  </header>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1240,&quot;height&quot;:140},&quot;active&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;&quot;,&quot;disciplines&quot;,&quot;planning&quot;,&quot;histoire&quot;,&quot;location&quot;,&quot;family&quot;,&quot;boutique&quot;,&quot;presse&quot;,&quot;contact&quot;],&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;inscriptionUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://viviarto.com/organisateurs-ateliers-cours-artistiques/heman-danse/planning&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { largeur: 1280, ouvert: false };
+
+  componentDidMount() {
+    // Bascule desktop / mobile pilotée en JS : les styles inline ne portent pas de media queries
+    this.mesurer = () => {
+      const l = window.innerWidth || 1280;
+      this.setState(s => ({ largeur: l, ouvert: l >= 1024 ? false : s.ouvert }));
+    };
+    this.mesurer();
+    window.addEventListener('resize', this.mesurer);
+  }
+
+  componentWillUnmount() {
+    if (this.mesurer) window.removeEventListener('resize', this.mesurer);
+  }
+
+  renderVals() {
+    const active = this.props.active ?? '';
+    const mobile = this.state.largeur < 1024;
+    const liens = [
+      { label: 'Planning', href: './planning.html', cle: 'planning' },
+      { label: 'Histoire & équipe', href: './histoire-equipe.html', cle: 'histoire' },
+      { label: 'Disciplines', href: './disciplines.html', cle: 'disciplines' },
+      { label: 'Location de salles', href: './location-salles.html', cle: 'location' },
+      { label: 'Boutique', href: './boutique.html', cle: 'boutique' },
+      { label: 'Presse', href: './presse.html', cle: 'presse' },
+      { label: 'Héman Family', href: './heman-family.html', cle: 'family', jaune: true },
+      { label: 'Contact', href: './contact.html', cle: 'contact' }
+    ].map(l => Object.assign({}, l, {
+      // Page courante en turquoise ; Héman Family reste jaune en permanence
+      couleur: l.cle === active ? '#13b8ad' : (l.jaune ? '#f5c310' : '#FAF8FC')
+    }));
+
+    return {
+      liens,
+      bureau: !mobile,
+      mobile,
+      // Sous 768px : la pastille 20 ans occupe toute la ligne, le texte défilant est masqué
+      afficheTicker: this.state.largeur < 768 ? 'none' : 'block',
+      largeurLabel: this.state.largeur < 768 ? 'none' : '8rem',
+      ouvert: this.state.ouvert,
+      panneau: mobile && this.state.ouvert,
+      ariaMenu: this.state.ouvert ? 'Fermer le menu' : 'Ouvrir le menu',
+      basculer: () => this.setState(s => ({ ouvert: !s.ouvert })),
+      fermer: () => this.setState({ ouvert: false }),
+      inscriptionUrl: this.props.inscriptionUrl ?? './planning.html'
+    };
+  }
+}
+</script>
+</body>
+</html>

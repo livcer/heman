@@ -1,0 +1,7 @@
+# Tant que heman.fr tourne sur l'ancien site, ce domaine reste hors des moteurs.
+# À la bascule : supprimer les deux lignes Disallow ci-dessous et remplacer
+# l'adresse du sitemap par https://www.heman.fr/sitemap.xml
+User-agent: *
+Disallow: /
+
+Sitemap: https://www.heman.fr/sitemap.xml

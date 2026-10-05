@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png" />
+
+<meta name="robots" content="noindex, nofollow" />
+<title>Héman Family — la vie de l'école de danse à Neuilly-Plaisance</title>
+<meta name="description" content="Photos du spectacle, stages, soirées, goûters et coulisses : la vie du Centre de Danses Urbaines Héman à Neuilly-Plaisance, racontée par la famille Héman.">
+<meta name="keywords" content="école danse Neuilly-Plaisance actualités, spectacle danse urbaine 93, stage hip hop Seine-Saint-Denis, H Quality, vie associative danse">
+<link rel="canonical" href="https://www.heman.fr/heman-family">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Héman — Centre de Danses Urbaines">
+<meta property="og:title" content="Héman Family — la vie de l'école">
+<meta property="og:description" content="Photos du spectacle, stages, soirées et coulisses : la vie du Centre de Danses Urbaines Héman à Neuilly-Plaisance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&amp;family=Poppins:wght@400;500;600&amp;family=Permanent+Marker&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Poppins', system-ui, sans-serif; color: #1A1225; background: #FAF8FC; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  img { max-width: 100%; display: block; }
+  a { color: #7b2cbf; text-decoration: none; }
+  a:hover { color: #4d0780; }
+  h1, h2, h3 { font-family: 'Montserrat', system-ui, sans-serif; margin: 0; line-height: 1.1; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  button { font-family: inherit; }
+  :focus-visible { outline: 3px solid #13b8ad; outline-offset: 3px; }
+  html { scroll-behavior: smooth; }
+  @keyframes hemanDefile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes hemanFondu { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #FAF8FC;">
+  <dc-import name="Entete" active="family" hint-size="100%,140px"></dc-import>
+
+  <!-- Titre de page -->
+  <section style="background: #4d0780; padding: 76px 0 84px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <p style="font-family: 'Permanent Marker', cursive; font-size: 1.25rem; color: #13b8ad; margin-bottom: 10px;">Rejoins la famille !</p>
+      <h1 style="font-size: clamp(2.6rem, 8vw, 4.6rem); font-weight: 800; letter-spacing: -0.02em; text-transform: uppercase; color: #FAF8FC;">Héman Family</h1>
+      <p style="margin-top: 22px; font-size: 1.08rem; line-height: 1.8; color: rgba(250,248,252,0.86); max-width: 44rem;">Le spectacle, les stages, les goûters, les battles, les soirées et tout ce qui se passe entre deux cours. Ici on partage la vie de l'école, en photos, en vidéos et en mots.</p>
+      <a href="https://www.instagram.com/heman_danceschool/" target="_blank" rel="noopener" style="margin-top: 30px; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 16px; background: rgba(19,184,173,0.16); border: 1px solid #13b8ad; border-radius: 16px; padding: 18px 26px; max-width: 44rem;" style-hover="background: rgba(19,184,173,0.28); color: #FAF8FC;">
+        <span style="font-size: 1rem; line-height: 1.6; color: #FAF8FC;">Encore plus de contenus exclusifs sur notre Instagram : coulisses, stories et vidéos que vous ne verrez nulle part ailleurs. Abonnez-vous !</span>
+        <span style="flex: 0 0 auto; font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.92rem; color: #f5c310;">@heman_danceschool →</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- Filtres par catégorie -->
+  <section style="position: sticky; top: 72px; z-index: 40; background: rgba(250,248,252,0.94); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(123,44,191,0.14); padding: 18px 0;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <ul role="list" style="display: flex; flex-wrap: wrap; gap: 10px;">
+        <sc-for list="{{ filtres }}" as="f" hint-placeholder-count="6">
+          <li>
+            <button type="button" onClick="{{ f.onClick }}" aria-pressed="{{ f.actif }}" style="min-height: 44px; padding: 11px 22px; font-size: 0.9rem; font-weight: 600; color: {{ f.couleurTexte }}; background: {{ f.fond }}; border: 1px solid {{ f.bordure }}; border-radius: 9999px; cursor: pointer; transition: transform 0.18s ease;" style-hover="transform: translateY(-2px);">{{ f.label }}</button>
+          </li>
+        </sc-for>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Billet à la une -->
+  <sc-if value="{{ afficheUne }}" hint-placeholder-val="{{ true }}">
+    <section style="padding: 64px 0 0;">
+      <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+        <article style="background: #FFFFFF; border-radius: 20px; overflow: hidden; box-shadow: 0 14px 44px rgba(77,7,128,0.16); display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+          <div style="position: relative; min-height: 320px; background: #eee6f5;">
+            <img src="{{ une.image }}" alt="{{ une.alt }}" style="width: 100%; height: 100%; object-fit: cover;">
+            <span style="position: absolute; top: 18px; left: 18px; background: #f5c310; color: #1A1225; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px; border-radius: 9999px;">À la une</span>
+          </div>
+          <div style="padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; justify-content: center; gap: 16px;">
+            <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+              <span style="font-size: 0.76rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0b4f6c;">{{ une.categorie }}</span>
+              <span aria-hidden="true" style="width: 4px; height: 4px; border-radius: 9999px; background: #b9aec9;"></span>
+              <span style="font-size: 0.86rem; color: #7a7089;">{{ une.date }}</span>
+            </div>
+            <h2 style="font-size: clamp(1.6rem, 3.6vw, 2.2rem); font-weight: 800; color: #1A1225;">{{ une.titre }}</h2>
+            <p style="font-size: 1.02rem; line-height: 1.8; color: #514860;">{{ une.extrait }}</p>
+            <button type="button" onClick="{{ une.onClick }}" style="align-self: start; margin-top: 8px; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.96rem; padding: 14px 32px; border: none; border-radius: 9999px; cursor: pointer; box-shadow: 0 4px 14px rgba(19,184,173,0.32);" style-hover="transform: translateY(-2px);">Lire le billet</button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </sc-if>
+
+  <!-- Grille des billets -->
+  <section style="padding: 56px 0 96px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <p style="font-size: 0.86rem; color: #7a7089; margin-bottom: 28px;">{{ compteur }}</p>
+      <ul style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px;">
+        <sc-for list="{{ billets }}" as="b" hint-placeholder-count="6">
+          <li style="display: flex;">
+            <article style="background: #FFFFFF; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 26px rgba(77,7,128,0.12); display: flex; flex-direction: column; width: 100%; transition: transform 0.2s ease, box-shadow 0.2s ease;" style-hover="transform: translateY(-5px); box-shadow: 0 16px 38px rgba(77,7,128,0.2);">
+              <div style="position: relative; aspect-ratio: 4 / 3; background: #eee6f5;">
+                <img src="{{ b.image }}" alt="{{ b.alt }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                <span style="position: absolute; top: 14px; left: 14px; background: rgba(26,18,37,0.82); color: #f5c310; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 15px; border-radius: 9999px;">{{ b.categorie }}</span>
+                <sc-if value="{{ b.aVideo }}" hint-placeholder-val="{{ false }}">
+                  <span aria-label="Contient une vidéo" style="position: absolute; bottom: 14px; right: 14px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: rgba(19,184,173,0.94); border-radius: 9999px;">
+                    <span aria-hidden="true" style="display: block; width: 0; height: 0; margin-left: 4px; border-left: 13px solid #1A1225; border-top: 8px solid transparent; border-bottom: 8px solid transparent;"></span>
+                  </span>
+                </sc-if>
+              </div>
+              <div style="padding: 26px 26px 28px; display: flex; flex-direction: column; gap: 12px; flex: 1;">
+                <span style="font-size: 0.82rem; color: #7a7089;">{{ b.date }}</span>
+                <h3 style="font-size: 1.24rem; font-weight: 700; color: #1A1225; line-height: 1.3;">{{ b.titre }}</h3>
+                <p style="font-size: 0.95rem; line-height: 1.7; color: #514860;">{{ b.extrait }}</p>
+                <button type="button" onClick="{{ b.onClick }}" style="margin-top: auto; align-self: start; padding: 12px 0 0; background: none; border: none; font-size: 0.92rem; font-weight: 600; color: #7b2cbf; cursor: pointer;" style-hover="color: #4d0780;">Lire le billet →</button>
+              </div>
+            </article>
+          </li>
+        </sc-for>
+      </ul>
+
+      <sc-if value="{{ aucunBillet }}" hint-placeholder-val="{{ false }}">
+        <p style="padding: 60px 0; text-align: center; font-size: 1.05rem; color: #7a7089;">Aucun billet dans cette catégorie pour le moment.</p>
+      </sc-if>
+    </div>
+  </section>
+
+  <!-- Invitation à contribuer -->
+  <section style="background: #0b4f6c; padding: 80px 0;">
+    <div style="max-width: 900px; margin: 0 auto; padding: 0 24px; text-align: center;">
+      <p style="font-family: 'Permanent Marker', cursive; font-size: 1.3rem; color: #f5c310;">Une photo, une vidéo, un souvenir ?</p>
+      <h2 style="margin-top: 14px; font-size: clamp(1.7rem, 4.2vw, 2.3rem); font-weight: 800; color: #FAF8FC;">La famille, ça se raconte à plusieurs</h2>
+      <p style="margin-top: 18px; font-size: 1.03rem; line-height: 1.8; color: rgba(250,248,252,0.85);">Vous avez filmé le spectacle, immortalisé un goûter ou capturé un moment de stage ? Envoyez-nous vos images, on les publiera ici.</p>
+      <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 14px; justify-content: center;">
+        <a href="mailto:contact@heman.fr?subject=Photos%20pour%20H%C3%A9man%20Family" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1rem; padding: 16px 34px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">Envoyer mes photos</a>
+        <a href="https://www.instagram.com/heman_danceschool/" target="_blank" rel="noopener" style="color: #f5c310; font-weight: 600; font-size: 1rem; padding: 14px 30px; border: 2px solid #f5c310; border-radius: 9999px;" style-hover="background: #f5c310; color: #1A1225;">@heman_danceschool</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lecture d'un billet -->
+  <sc-if value="{{ billetOuvert }}" hint-placeholder-val="{{ false }}">
+    <div role="dialog" aria-modal="true" aria-label="Billet" onClick="{{ fermer }}" style="position: fixed; inset: 0; z-index: 100; background: rgba(26,18,37,0.8); display: flex; align-items: center; justify-content: center; padding: 24px;">
+      <div onClick="{{ stop }}" style="background: #FAF8FC; border-radius: 18px; max-width: 760px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 70px rgba(26,18,37,0.5); animation: hemanFondu 0.24s ease;">
+        <div style="position: relative; aspect-ratio: 16 / 9; background: #1A1225;">
+          <sc-if value="{{ ouvertVideo }}" hint-placeholder-val="{{ false }}">
+            <iframe src="{{ ouvertVideoUrl }}" title="{{ ouvertTitre }}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" loading="lazy" style="width: 100%; height: 100%; border: 0; display: block;"></iframe>
+          </sc-if>
+          <sc-if value="{{ ouvertPhoto }}" hint-placeholder-val="{{ true }}">
+            <img src="{{ ouvertImage }}" alt="{{ ouvertAlt }}" style="width: 100%; height: 100%; object-fit: cover; object-position: {{ ouvertCadrage }};">
+          </sc-if>
+        </div>
+        <div style="padding: clamp(26px, 4vw, 42px);">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px;">
+            <span style="font-size: 0.74rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0b4f6c;">{{ ouvertCategorie }}</span>
+            <span aria-hidden="true" style="width: 4px; height: 4px; border-radius: 9999px; background: #b9aec9;"></span>
+            <span style="font-size: 0.86rem; color: #7a7089;">{{ ouvertDate }}</span>
+          </div>
+          <h2 style="margin-top: 12px; font-size: clamp(1.5rem, 3.6vw, 2.1rem); font-weight: 800; color: #1A1225;">{{ ouvertTitre }}</h2>
+          <div style="margin-top: 22px; display: grid; gap: 16px;">
+            <sc-for list="{{ ouvertTexte }}" as="p" hint-placeholder-count="0">
+              <p style="font-size: 1.02rem; line-height: 1.85; color: #514860;">{{ p }}</p>
+            </sc-for>
+            <sc-for list="{{ ouvertIntro }}" as="p" hint-placeholder-count="0">
+              <p style="font-size: 1.02rem; line-height: 1.85; color: #514860;">{{ p }}</p>
+            </sc-for>
+          </div>
+          <sc-if value="{{ ouvertVideoVerticale }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top: 26px; display: flex; flex-direction: column; align-items: center;">
+              <div style="aspect-ratio: 9 / 16; width: 100%; max-width: 340px; border-radius: 12px; overflow: hidden; background: #1A1225;">
+                <iframe src="{{ ouvertVideoVerticaleUrl }}" title="Vidéo récapitulative" allow="autoplay; fullscreen" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade" loading="lazy" style="width: 100%; height: 100%; border: 0; display: block;"></iframe>
+              </div>
+              <a href="{{ ouvertVideoVerticaleLien }}" target="_blank" rel="noopener" style="display: inline-block; margin-top: 12px; font-size: 0.88rem; font-weight: 600; color: #7b2cbf;" style-hover="color: #4d0780;">Ouvrir la vidéo dans un nouvel onglet</a>
+            </div>
+          </sc-if>
+
+          <!-- Carnet de bord : une journée de stage par onglet -->
+          <sc-if value="{{ ouvertCarnet }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top: 34px; padding-top: 30px; border-top: 2px solid rgba(123,44,191,0.15);">
+              <p style="font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #7b2cbf; margin-bottom: 16px;">Carnet de bord — jour par jour</p>
+              <ul role="list" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <sc-for list="{{ onglets }}" as="t" hint-placeholder-count="4">
+                  <li>
+                    <button type="button" onClick="{{ t.onClick }}" aria-pressed="{{ t.actif }}" style="min-height: 44px; padding: 11px 20px; font-size: 0.88rem; font-weight: 600; color: {{ t.couleurTexte }}; background: {{ t.fond }}; border: 1px solid {{ t.bordure }}; border-radius: 9999px; cursor: pointer;" style-hover="transform: translateY(-2px);">{{ t.jour }}</button>
+                  </li>
+                </sc-for>
+              </ul>
+
+              <div style="margin-top: 26px; background: #FFFFFF; border-radius: 14px; padding: clamp(20px, 3vw, 30px); box-shadow: 0 6px 22px rgba(77,7,128,0.1);">
+                <h3 style="font-size: 1.3rem; font-weight: 800; color: #4d0780;">{{ jourTitre }}</h3>
+                <p style="margin-top: 6px; font-size: 0.88rem; font-weight: 600; color: #0b4f6c;">{{ jourTheme }}</p>
+                <div style="margin-top: 20px; display: grid; gap: 14px;">
+                  <sc-for list="{{ jourTexte }}" as="p" hint-placeholder-count="3">
+                    <p style="font-size: 1rem; line-height: 1.8; color: #514860;">{{ p }}</p>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ jourVideo }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top: 24px; display: flex; flex-direction: column; align-items: center;">
+                    <div style="aspect-ratio: 9 / 16; width: 100%; max-width: 340px; border-radius: 12px; overflow: hidden; background: #1A1225;">
+                      <iframe src="{{ jourVideoUrl }}" title="Vidéo du stage" allow="autoplay; fullscreen" allowfullscreen="" referrerpolicy="no-referrer-when-downgrade" loading="lazy" style="width: 100%; height: 100%; border: 0; display: block;"></iframe>
+                    </div>
+                    <a href="{{ jourVideoLien }}" target="_blank" rel="noopener" style="display: inline-block; margin-top: 12px; font-size: 0.88rem; font-weight: 600; color: #7b2cbf;" style-hover="color: #4d0780;">La vidéo ne se lance pas ? L'ouvrir dans un nouvel onglet →</a>
+                  </div>
+                </sc-if>
+                <sc-if value="{{ jourAImage }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ jourImage }}" alt="Photo du stage Hip-Hop Explorer" loading="lazy" style="margin-top: 24px; width: 100%; height: auto; border-radius: 12px;">
+                </sc-if>
+              </div>
+            </div>
+          </sc-if>
+          <button type="button" onClick="{{ fermer }}" style="margin-top: 32px; background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.95rem; padding: 14px 32px; border: none; border-radius: 9999px; cursor: pointer;" style-hover="transform: translateY(-2px);">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <dc-import name="PiedDePage" hint-size="100%,420px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{}">
+class Component extends DCLogic {
+  state = { categorie: 'Tout', ouvert: -1, jour: 0 };
+
+  // Billets d'exemple : structure à remplir avec les vrais contenus de l'école
+  donnees = [
+    {
+      une: true,
+      titre: 'Audition des 11-13 ans : des groupes à la bonne mesure',
+      categorie: 'Cours', date: 'Publié le 17 septembre 2026',
+      image: './assets/family-audition-11-13.png',
+      alt: "Les danseuses de 11-13 ans en ligne dans le studio Héman pendant l'audition, les autres élèves regardent",
+      cadrage: '50% 40%',
+      videoVerticale: 'https://drive.google.com/file/d/1JqM7GQ9hhn0NKbyZEFeR6bF6zZUL6c92/preview',
+      extrait: "Passer devant les profs pour être placé dans le bon groupe : l'audition des 11-13 ans permet à chacun de progresser à son rythme.",
+      texte: [
+        "Les 11-13 ans sont passés devant les professeurs en début de saison. L'idée n'était pas de trier, mais de répartir.",
+        "À cet âge, les écarts de niveau sont importants d'un élève à l'autre : certains dansent depuis cinq ans, d'autres arrivent tout juste. Mélanger les deux dans le même cours freine les uns et décourage les autres.",
+        "L'audition a donc servi à constituer des groupes homogènes, où chacun avance avec des danseurs de son niveau. Les profs peuvent pousser la technique là où c'est possible et prendre le temps de poser les bases là où c'est nécessaire.",
+        "Bravo à tous ceux qui sont passés : ce n'est jamais évident de danser devant les autres. Les groupes sont désormais constitués et le travail de l'année peut commencer."
+      ]
+    },
+    {
+      titre: 'Audition Nissi et Judith\'s : les groupes de Cressence se composent',
+      categorie: 'Compagnie', date: 'Publié le 17 septembre 2026',
+      image: './assets/family-audition-cressence.png',
+      alt: "Les danseurs alignés dans le studio Héman pendant l'audition, devant la banderole Héman Danse",
+      cadrage: '50% 45%',
+      videoVerticale: 'https://drive.google.com/file/d/1hzkJZHbn7fqeg4jCb3ussEiaY1Qmj3Fo/preview',
+      extrait: "Lundi dernier, les danseurs sont passés devant Cressence pour intégrer Nissi et Judith's. Retour en vidéo sur l'audition.",
+      texte: [
+        "Lundi dernier, le studio était rempli pour l'audition des groupes Nissi et Judith's, entraînés par Cressence.",
+        "Le casting était ouvert à tous les danseurs de niveau intermédiaire, souhaitant se développer, progresser et approfondir leur danse dans l'univers et le style de Cressence.",
+        "Chorégraphe depuis 1997 et professeure depuis 2001, Cressence évolue dans le Hip-Hop depuis plus de vingt-cinq ans. Rejoindre l'un de ses groupes, c'est travailler la technique, mais aussi la présence, l'écoute et l'engagement d'un collectif qui répète toute l'année et monte sur scène.",
+        "Les répétitions ont lieu le lundi soir : Nissi à 19h00, Judith's à 20h15.",
+        "Bravo à tous ceux qui sont venus se présenter. La vidéo ci-dessous donne une idée de l'ambiance de la soirée."
+      ]
+    },
+    {
+      titre: 'Jazzy !',
+      categorie: 'Cours', date: 'Publié le 17 septembre 2026',
+      image: './assets/family-jazz-rock-richard.png',
+      alt: "Richard M'Passi en costume rouge et chapeau haut de forme, en pleine figure de Jazz Rock",
+      cadrage: '50% 15%',
+      videoVerticale: 'https://drive.google.com/file/d/1aeej4BNDCelBikLTNPscZIZ0KnvNbnGx/preview',
+      extrait: "Jeux de jambes virtuoses, musicalité chirurgicale : le Jazz Rock se danse le mercredi soir avec Richard, l'un de ses créateurs.",
+      texte: [
+        "Le Jazz Rock est né dans les clubs parisiens à la fin des années 1970, au Bataclan et au Rex, porté par les communautés antillaises et africaines. Des jeux de jambes empruntés aux claquettes, une vitesse d'exécution bluffante, une musicalité au millimètre sur les basses et les cuivres. Un joyau made in France, encore assez rare à trouver en cours.",
+        "Chez Héman, c'est Richard M'Passi qui l'enseigne. Autrement dit l'un de ceux qui ont inventé la discipline, aux côtés d'Alex Benth, Robert Modestine ou Dominique Lesdema. Cofondateur de l'école, il transmet le style à sa source, avec son exigence et son vocabulaire de pionnier.",
+        "Le cours est ouvert aux ados et aux adultes, le mercredi de 20h45 à 21h45, niveau intermédiaire. Si vous avez déjà une base en danse et l'envie de travailler la précision rythmique, c'est le bon endroit.",
+        "La vidéo ci-dessous donne le ton. L'interview de Lorna, qui s'est formée au jazz rock auprès de Richard, est à retrouver sur notre compte Instagram @heman_danceschool.",
+        "Un cours d'essai est possible : écrivez-nous et nous vous réservons une place."
+      ]
+    },
+    {
+      titre: 'Modern Jazz : venez essayer un cours avec Lorna',
+      categorie: 'Cours', date: 'Publié le 17 septembre 2026',
+      image: './assets/discipline-modern-jazz.png',
+      alt: 'Danseuse de Modern Jazz, bras levé en diagonale',
+      videoVerticale: 'https://drive.google.com/file/d/1U-sMDvcZ1HvF97TUajrABywzz35TVXSP/preview',
+      extrait: "Le stage de découverte en vidéo, et un cours ados / adultes le jeudi soir. Aucun niveau requis pour venir voir.",
+      texte: [
+        "Le modern jazz, c'est l'énergie du jazz, la rigueur du classique et la liberté du contemporain dans la même heure de cours. Une danse rythmée, expressive, qui laisse de la place au feeling et au caractère de chacun.",
+        "Lorna, qui enseigne la discipline à Héman, s'est formée à l'institut Rick Odums puis à Steps on Broadway à New York. Diplômée d'État, intermittente du spectacle, elle a dansé pour plusieurs compagnies avant de choisir de transmettre. C'est cette exigence-là, et cette bienveillance-là, que retrouvent ses élèves le jeudi soir.",
+        "Le cours est ouvert aux ados et aux adultes, le jeudi de 17h45 à 19h00, niveau débutant. Pas besoin d'avoir déjà dansé : on vient en tenue souple, on suit, et on voit ce que ça donne.",
+        "La vidéo ci-dessous est un aperçu du stage de découverte. L'interview de Lorna, où elle raconte son parcours et sa façon d'enseigner, est à retrouver sur notre compte Instagram @heman_danceschool.",
+        "Un premier cours d'essai est possible : écrivez-nous et nous vous réservons une place."
+      ]
+    },
+    {
+      titre: 'Merci pour votre visite à la Fête du Parc',
+      categorie: 'Événement', date: 'Publié le 6 septembre 2026',
+      image: './assets/family-fete-du-parc-2026.png',
+      alt: 'La Team Héman en maillots turquoise et violet devant le stand de la Fête du Parc',
+      videoVerticale: 'https://drive.google.com/file/d/1sKN8S-Vi58lmpBR7UqZQMcGnw78Abf3A/preview',
+      extrait: "Vous êtes venus nombreux nous voir sur le stand samedi. Adhérents de longue date, familles curieuses, voisins de passage : merci.",
+      texte: [
+        "Vous êtes venus nombreux nous voir sur le stand samedi, à la Fête du Parc. Adhérents de longue date, anciens élèves, familles curieuses, voisins de passage : merci d'être passés dire bonjour.",
+        "Merci pour vos questions sur les cours, pour votre patience quand nous étions trois à parler en même temps, et pour les applaudissements à 14h quand élèves et professeurs sont montés sur scène ensemble.",
+        "Un merci particulier à ceux qui ne connaissaient pas encore l'école et qui se sont arrêtés au stand par simple curiosité.",
+        "Merci enfin à la Ville de Neuilly-Plaisance et aux associations présentes pour cette journée, et à toute la Team Héman qui a tenu le stand du matin au soir.",
+        "La saison est lancée. Les inscriptions restent ouvertes, et il y a de la place dans plusieurs cours. À très vite en salle."
+      ]
+    },
+    {
+      titre: 'Photo de famille : la Team 2026',
+      categorie: 'Coulisses', date: 'Publié le 18 août 2026',
+      image: './assets/family-team-2026.png',
+      alt: 'Photo de groupe de la Team Héman en maillots turquoise et violet, saison 2026-2027',
+      extrait: "Professeurs, équipe administrative et danseurs de la compagnie réunis pour la photo officielle de la saison.",
+      texte: [
+        "Professeurs, équipe administrative et danseurs de la compagnie réunis pour la photo officielle de la saison.",
+        "Seize personnes, une matinée de shooting, et beaucoup de fous rires entre deux prises."
+      ]
+    },
+    {
+      titre: 'Hip-Hop Explorer : le carnet de bord de la semaine',
+      categorie: 'Stage', date: 'Publié le 29 juin 2026',
+      image: './assets/stage-explorer-dj.png',
+      alt: 'Atelier DJing du stage Hip-Hop Explorer : trois enfants aux platines avec l\u2019intervenant',
+      extrait: "Cinq jours d'immersion pour les 8-10 ans : écriture, studio d'enregistrement, danse et spectacle final. Le récit jour par jour.",
+      intro: [
+        "Porté par le Centre de Danse Héman sous la direction de Claise M'Passi, en collaboration avec la compagnie Azaria, le projet Hip-Hop Explorer invite les enfants de 8 à 10 ans à découvrir l'univers riche et dynamique du hip-hop. À travers la danse, le DJing et le rap, les participants explorent une culture porteuse de valeurs fortes telles que le respect, la créativité et la coopération. Inclusif et accessible, ce programme propose une approche ludique et participative, souvent absente des parcours scolaires classiques."
+      ],
+      journal: [
+        {
+          jour: 'Lundi', theme: 'Écriture et premier passage en studio',
+          texte: [
+            "Première journée de stage avec les enfants du CME des Renouilleres ! 🙌",
+            "Le matin, découverte de la culture hip-hop et atelier d'écriture pour créer leur premier texte de rap. ✍️",
+            "L'après-midi, les jeunes artistes ont peaufiné leurs paroles avant de passer en studio pour enregistrer leur morceau sur une composition de Claise M'PASSI 🎙️🔥",
+            "Bravo à tous pour leur créativité et leur implication !",
+            "Merci à Leïla et Cressence de la compagnie Azaria pour leur accompagnement. ❤️"
+          ],
+          video: 'https://drive.google.com/file/d/1RXt0SC25ZFFOTrD7zlhaVYeYaYcGSPyt/preview'
+        },
+        {
+          jour: 'Mardi', theme: 'Enregistrement et session danse',
+          texte: [
+            "Aujourd'hui, nos jeunes talents sont passés derrière le micro !",
+            "🎙️ Séance studio pour enregistrer leur morceau, écrit la veille, guidés par les regards bienveillants de Cressence et Leila. Concentration, émotion et fierté au rendez-vous !",
+            "L'après-midi ? 💃🔥",
+            "Place à une session 100% danse avec Élisabeth et Soussaba ! Énergie, coordination et créativité pour préparer le show final de vendredi. Ça bosse dur, mais toujours avec le smile 😄",
+            "La scène les attend… et ils seront prêts 🎭"
+          ],
+          video: 'https://drive.google.com/file/d/1dfuzcMJLXTUntFCD1PK9tfyrFNY18RsP/preview'
+        },
+        {
+          jour: 'Mercredi et jeudi', theme: 'Répétitions, la dernière ligne droite',
+          texte: [
+            "Hier et aujourd'hui, c'était journées 100 % danse !",
+            "Les enfants ont répété avec énergie et concentration afin de peaufiner leur chorégraphie et leur rap en vue du spectacle de vendredi à la Salle des Fêtes. Une dernière ligne droite où chacun prend confiance et donne le meilleur de lui-même.",
+            "Hâte de partager le résultat avec vous !"
+          ],
+          video: 'https://drive.google.com/file/d/1pEdziPXlhSBZwHwI_FBeO_Qyq94ZNlLe/preview'
+        },
+        {
+          jour: 'Vendredi', theme: 'Spectacle à la Salle des Fêtes',
+          texte: [
+            "Ce vendredi, les jeunes des stages Danse Ô Musée et Hip Hop Explorer se sont retrouvés à la Salle des Fêtes de Neuilly Plaisance pour présenter le fruit de leur travail devant le public. Sur une musique originale de Claise M'PASSI.",
+            "Après une semaine d'ateliers mêlant culture hip-hop, danse, écriture, musique, patrimoine et création artistique, ils sont montés sur scène avec énergie, fierté et émotion. Une belle démonstration de leur engagement et de leur progression tout au long du stage.",
+            "Pour clôturer cette journée, le public a également eu le plaisir de découvrir un spectacle de la Compagnie Azaria, offrant un moment fort où les jeunes ont pu partager la scène avec des artistes professionnels et célébrer ensemble la richesse de la culture hip-hop.",
+            "Un immense bravo à tous les participants pour leur investissement, ainsi qu'aux intervenants, aux familles et à nos partenaires pour leur confiance et leur soutien. Rendez-vous très bientôt pour de nouvelles aventures artistiques !"
+          ],
+          video: 'https://drive.google.com/file/d/1f8CM7W5nQgsHvV1kUyfLjPzhueUOn_Rf/preview'
+        }
+      ]
+    },
+    {
+      titre: 'Danse Ô Musée : le carnet de bord de la semaine',
+      categorie: 'Stage', date: 'Publié le 29 juin 2026',
+      image: './assets/stage-dom-scene.png',
+      alt: 'Les adolescents du stage Danse Ô Musée sur scène à la Salle des Fêtes de Neuilly-Plaisance',
+      video: 'https://www.youtube.com/embed/hIYgQfeB1o0',
+      extrait: "Une semaine entre patrimoine et hip-hop pour les ados : visite de la Grande Galerie de l'Évolution, création chorégraphique et spectacle final.",
+      intro: [
+        "Danse Ô Musée est un stage artistique destiné aux adolescents, organisé en partenariat avec la Ville de Neuilly-Plaisance. Il propose une rencontre originale entre la danse hip-hop et le patrimoine culturel, en invitant les jeunes de la MCj des Renouilleres à transformer leurs découvertes en création chorégraphique.",
+        "Après une immersion à la Grande Galerie de l'Évolution du Jardin des Plantes, où ils explorent les formes, les mouvements et la richesse du vivant, les participants poursuivent tout au long de la semaine un travail de recherche et de création en danse. Guidés par les chorégraphes de la Compagnie Azaria, ils traduisent leurs observations, leurs émotions et leur imaginaire en une œuvre collective présentée lors d'un spectacle de restitution à la Salle des Fêtes de Neuilly-Plaisance.",
+        "Ce stage favorise la créativité, l'ouverture culturelle, l'expression corporelle et le travail collectif, tout en offrant aux jeunes une expérience artistique immersive et enrichissante."
+      ],
+      journal: [
+        {
+          jour: 'Lundi et mardi', theme: 'Création, expression et cohésion',
+          texte: [
+            "Les jeunes de la MCJ des Renouillères ont vécu 2 journées entièrement dédiée à la danse, dans un cadre inspirant et riche en découvertes.",
+            "Aux côtés de nos intervenantes Soussaba et Elisabeth de la Compagnie Azaria, ils ont poursuivi leur travail de création, d'expression et de cohésion en préparation du spectacle de vendredi. Entre ateliers, répétitions et immersion culturelle, cette journée a permis à chacun de nourrir son interprétation et de faire grandir le projet artistique.",
+            "Une belle étape avant la scène… Rendez-vous vendredi pour découvrir le fruit de leur engagement et de leur créativité ! 💃🕺"
+          ],
+          video: 'https://drive.google.com/file/d/1saUrzbuRMPL26iMnLJx-ezF186TGM3D0/preview'
+        },
+        {
+          jour: 'Mercredi', theme: 'Grande Galerie de l\u2019Évolution',
+          texte: [
+            "Aujourd'hui, nos jeunes de la MCJ des Renouilleres de NeuillyPlaisance danseurs ont quitté le studio pour partir à la découverte de la Grande Galerie de l'Évolution au Jardin des Plantes. Une immersion fascinante au cœur du vivant, où chaque espace, chaque animal et chaque mise en scène sont devenus une source d'inspiration pour leur créativité.",
+            "L'après-midi, retour à la danse supervisé par Soussaba et Elisabeth ! Les émotions, les formes, les mouvements et les ambiances observés au musée ont nourri les ateliers chorégraphiques. Une belle manière de transformer le regard en geste et de faire dialoguer patrimoine culturel et expression artistique sur des compositions musicales de Claise M'PASSI.",
+            "Une journée riche en découvertes, en imagination et en création collective. ✨"
+          ],
+          video: 'https://drive.google.com/file/d/1s7wRL9vBT7mt7wPHzB1Hz_eQHRgwZcEm/preview'
+        },
+        {
+          jour: 'Jeudi', theme: 'Finalisation du spectacle',
+          texte: [
+            "Place à une journée 100 % danse pour nos participants !",
+            "En cette dernière ligne droite avant la représentation, les jeunes ont consacré leur journée à la finalisation du spectacle : répétitions, ajustements chorégraphiques, travail des transitions et mise en espace des différentes séquences créées tout au long de la semaine.",
+            "Après avoir puisé leur inspiration dans la visite de la Grande Galerie de l'Évolution, il est maintenant temps de donner vie à cette création collective sur scène.",
+            "📅 Ils seront demain à la Salle des Fêtes de Neuilly-Plaisance pour faire découvrir aux autres enfants de la MCJ et du CME le fruit de leur travail et de leur engagement tout au long de cette belle aventure artistique.",
+            "✨ Une journée intense, riche en concentration, en partage et en créativité."
+          ],
+          video: 'https://drive.google.com/file/d/1m3a_jfE5ATfoG7NEixdbIoIhhhGfOZqK/preview'
+        },
+        {
+          jour: 'Vendredi', theme: 'Restitution à la Salle des Fêtes',
+          texte: [
+            "Ce vendredi, les jeunes des stages Danse Ô Musée et Hip Hop Explorer se sont retrouvés à la Salle des Fêtes de Neuilly Plaisance pour présenter le fruit de leur travail devant le public. Sur une musique originale de Claise M'PASSI.",
+            "Après une semaine d'ateliers mêlant culture hip-hop, danse, écriture, musique, patrimoine et création artistique, ils sont montés sur scène avec énergie, fierté et émotion. Une belle démonstration de leur engagement et de leur progression tout au long du stage.",
+            "Pour clôturer cette journée, le public a également eu le plaisir de découvrir un spectacle de la Compagnie Azaria, offrant un moment fort où les jeunes ont pu partager la scène avec des artistes professionnels et célébrer ensemble la richesse de la culture hip-hop.",
+            "Un immense bravo à tous les participants pour leur investissement, ainsi qu'aux intervenants, aux familles et à nos partenaires pour leur confiance et leur soutien. Rendez-vous très bientôt pour de nouvelles aventures artistiques !"
+          ],
+          video: 'https://drive.google.com/file/d/1f8CM7W5nQgsHvV1kUyfLjPzhueUOn_Rf/preview'
+        }
+      ]
+    },
+    {
+      titre: 'Retour sur le spectacle Héman 2026',
+      categorie: 'Spectacle', date: 'Publié le 07 juin 2026',
+      image: './assets/family-spectacle-2026.png',
+      alt: 'Les élèves d\u2019Héman sur scène devant le logo de l\u2019école lors du spectacle 2026',
+      video: 'https://www.youtube.com/embed/LXY0z8yvOU8',
+      extrait: "Deux heures de scène, tous les groupes de l'école réunis, de nos lionceaux en 4-5 ans à la compagnie Héman. Retour en images sur une soirée qui a rempli la salle.",
+      texte: [
+        "🔥 UN GRAND MERCI À TOUS NOS ADHÉRENTS ET À LEURS FAMILLES POUR LEUR CONFIANCE !",
+        "Un immense merci à nos professeurs bénévoles pour leur engagement, leur disponibilité et leur passion tout au long de l'année.",
+        "🙏 Un remerciement tout particulier à Claise, fondateur et visionnaire de l'école Héman. Merci pour cette vision, cette énergie et cet engagement qui permettent à cette belle aventure humaine et artistique de grandir année après année.",
+        "Voir nos élèves progresser, s'épanouir et prendre confiance en eux est notre plus belle récompense. Notre mission reste la même : partager une passion et transmettre les véritables valeurs de la culture Hip-Hop.",
+        "✨ Les inscriptions pour la prochaine saison sont d'ores et déjà ouvertes !",
+        "Réservez votre place dès maintenant pour une nouvelle saison qui s'annonce exceptionnelle.",
+        "Merci à notre partenaire Schimea Création.",
+        "Un grand merci également à nos équipes Éden pour la buvette et l'accueil, aux équipes backstage ainsi qu'à notre sécurité pour leur travail et leur implication.",
+        "Merci à la mairie de Neuilly-Plaisance pour son soutien",
+        "❤️ TEAM HÉMAN"
+      ]
+    }
+  ];
+
+  renderVals() {
+    const cat = this.state.categorie;
+    const categories = ['Tout'].concat(
+      this.donnees.map(b => b.categorie).filter((c, i, t) => t.indexOf(c) === i)
+    );
+
+    const filtres = categories.map(c => {
+      const actif = c === cat;
+      return {
+        label: c, actif,
+        fond: actif ? '#4d0780' : 'transparent',
+        couleurTexte: actif ? '#FAF8FC' : '#4d0780',
+        bordure: actif ? '#4d0780' : 'rgba(123,44,191,0.3)',
+        onClick: () => this.setState({ categorie: c })
+      };
+    });
+
+    const visibles = this.donnees
+      .map((b, i) => Object.assign({}, b, {
+        aVideo: !!(b.video || b.videoVerticale || b.journal),
+        onClick: () => this.setState({ ouvert: i, jour: 0 })
+      }))
+      .filter(b => cat === 'Tout' || b.categorie === cat);
+
+    // Le billet à la une n'apparaît qu'en vue « Tout », les autres passent dans la grille
+    const surTout = cat === 'Tout';
+    const une = visibles.find(b => b.une) || null;
+    const grille = surTout && une ? visibles.filter(b => b !== une) : visibles;
+
+    const o = this.state.ouvert >= 0 ? this.donnees[this.state.ouvert] : null;
+    const n = grille.length;
+
+    // Carnet de bord : navigation par onglets entre les journées du stage
+    const carnet = o && o.journal ? o.journal : null;
+    const iJour = carnet ? Math.min(this.state.jour, carnet.length - 1) : 0;
+    const jourActif = carnet ? carnet[iJour] : null;
+    const onglets = carnet ? carnet.map((j, i) => {
+      const actif = i === iJour;
+      return {
+        jour: j.jour, actif,
+        fond: actif ? '#4d0780' : '#FFFFFF',
+        couleurTexte: actif ? '#FAF8FC' : '#4d0780',
+        bordure: actif ? '#4d0780' : 'rgba(123,44,191,0.28)',
+        onClick: () => this.setState({ jour: i })
+      };
+    }) : [];
+
+    return {
+      filtres,
+      afficheUne: surTout && !!une,
+      une: une || {},
+      billets: grille,
+      aucunBillet: visibles.length === 0,
+      compteur: n === 0 ? '' : (n + (n > 1 ? ' billets' : ' billet') + (surTout ? '' : ' · ' + cat)),
+      billetOuvert: o !== null,
+      ouvertTitre: o ? o.titre : '',
+      ouvertCategorie: o ? o.categorie : '',
+      ouvertDate: o ? o.date : '',
+      ouvertImage: o ? o.image : '',
+      ouvertAlt: o ? o.alt : '',
+      ouvertCadrage: o && o.cadrage ? o.cadrage : '50% 50%',
+      ouvertTexte: o ? o.texte : [],
+      ouvertVideoVerticale: !!(o && o.videoVerticale),
+      ouvertVideoVerticaleUrl: o && o.videoVerticale ? o.videoVerticale : '',
+      ouvertVideoVerticaleLien: o && o.videoVerticale ? o.videoVerticale.replace('/preview', '/view') : '',
+      ouvertVideo: !!(o && o.video),
+      ouvertVideoUrl: o && o.video ? o.video : '',
+      ouvertPhoto: !!(o && !o.video),
+      ouvertIntro: o && o.intro ? o.intro : [],
+      // Carnet de bord
+      ouvertCarnet: !!carnet,
+      onglets,
+      jourTitre: jourActif ? jourActif.jour : '',
+      jourTheme: jourActif ? jourActif.theme : '',
+      jourTexte: jourActif ? jourActif.texte : [],
+      jourVideo: !!(jourActif && jourActif.video),
+      jourVideoUrl: jourActif && jourActif.video ? jourActif.video : '',
+      // Repli : Drive bloque parfois la lecture intégrée, on propose l'ouverture directe
+      jourVideoLien: jourActif && jourActif.video ? jourActif.video.replace('/preview', '/view') : '',
+      jourImage: jourActif && jourActif.image ? jourActif.image : '',
+      jourAImage: !!(jourActif && jourActif.image),
+      fermer: () => this.setState({ ouvert: -1 }),
+      stop: (e) => e.stopPropagation()
+    };
+  }
+}
+</script>
+</body>
+</html>

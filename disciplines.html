@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./assets/favicon-16.png">
+<link rel="shortcut icon" href="./favicon.ico">
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon-180.png" />
+
+<meta name="robots" content="noindex, nofollow" />
+<title>Disciplines — Hip Hop, New Style, Breaking, Locking, Popping, Jazz Rock, Modern Jazz | Héman</title>
+<meta name="description" content="Les dix disciplines enseignées au Centre de Danses Urbaines Héman à Neuilly-Plaisance : Éveil 4-5 ans, Hip Hop, Hip Hop New Style, Break Dance, Locking, Popping, Afro Beat, Jazz Rock, Modern Jazz et cardio fitness 100% femmes." />
+<meta name="keywords" content="cours hip hop Neuilly-Plaisance, breaking 93, locking popping Noisy-le-Grand, jazz rock Paris, modern jazz Neuilly-sur-Marne, cardio fitness femmes 93" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600&family=Permanent+Marker&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; font-family: 'Poppins', system-ui, sans-serif; color: #1A1225; background: #FAF8FC; -webkit-font-smoothing: antialiased; text-wrap: pretty; }
+  img { max-width: 100%; display: block; }
+  a { color: #7b2cbf; text-decoration: none; }
+  a:hover { color: #4d0780; }
+  h1, h2, h3 { font-family: 'Montserrat', system-ui, sans-serif; margin: 0; line-height: 1.1; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  button { font-family: inherit; }
+  iframe { border: 0; }
+  :focus-visible { outline: 3px solid #13b8ad; outline-offset: 3px; }
+  html { scroll-behavior: smooth; }
+  @keyframes hemanDefile { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+</style>
+</helmet>
+
+<div style="min-height: 100vh; background: #FAF8FC;">
+  <dc-import name="Entete" active="disciplines" hint-size="100%,140px"></dc-import>
+
+  <section style="background: linear-gradient(140deg, #4d0780 0%, #7b2cbf 100%); padding: 80px 0 88px;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
+      <p style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #f5c310; margin-bottom: 14px;">Nos disciplines</p>
+      <h1 style="font-size: clamp(2.3rem, 7vw, 3.6rem); font-weight: 800; color: #FAF8FC; max-width: 34rem; letter-spacing: -0.01em;">Dix disciplines, une même culture</h1>
+      <p style="margin-top: 22px; font-size: 1.08rem; line-height: 1.75; color: rgba(250,248,252,0.85); max-width: 44rem;">De l'éveil à 4 ans au Jazz Rock, chaque cours est enseigné par un professeur formé dans la lignée de l'école. Débutant complet ou danseur confirmé, il existe un groupe adapté à votre âge et à votre niveau.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px;">
+        <sc-for list="{{ ancres }}" as="a" hint-placeholder-count="10">
+          <a href="{{ a.href }}" style="font-size: 0.84rem; font-weight: 500; color: #FAF8FC; border: 2px solid rgba(250,248,252,0.28); padding: 9px 20px; border-radius: 9999px;" style-hover="border-color: #13b8ad; color: #13b8ad;">{{ a.nom }}</a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fiches disciplines -->
+  <section style="padding: 96px 0 60px;">
+    <div style="max-width: 1100px; margin: 0 auto; padding: 0 24px; display: grid; gap: 100px;">
+      <sc-for list="{{ disciplines }}" as="d" hint-placeholder-count="0">
+        <article id="{{ d.id }}" style="scroll-margin-top: 100px;">
+
+          <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px;">
+            <span style="background: rgba(19,184,173,0.14); color: #0b4f6c; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 16px; border-radius: 9999px;">{{ d.age }}</span>
+            <span style="background: rgba(123,44,191,0.1); color: #4d0780; font-size: 0.74rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 7px 16px; border-radius: 9999px;">{{ d.origine }}</span>
+          </div>
+
+          <h2 style="font-size: clamp(1.9rem, 4.6vw, 2.7rem); font-weight: 800; color: #1A1225; letter-spacing: -0.01em;">{{ d.nom }}</h2>
+
+          <div style="margin-top: 26px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 34px; align-items: start;">
+            <div style="display: grid; gap: 18px;">
+              <sc-for list="{{ d.paragraphes }}" as="p" hint-placeholder-count="4">
+                <p style="font-size: 1.02rem; line-height: 1.8; color: #514860;">{{ p }}</p>
+              </sc-for>
+
+              <sc-if value="{{ d.aPoints }}" hint-placeholder-val="{{ false }}">
+                <ul style="display: grid; gap: 12px; padding: 24px 26px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 4px 18px rgba(77,7,128,0.1);">
+                  <sc-for list="{{ d.points }}" as="pt" hint-placeholder-count="3">
+                    <li style="display: flex; gap: 12px; align-items: flex-start;">
+                      <span style="flex: 0 0 auto; width: 8px; height: 8px; margin-top: 9px; border-radius: 9999px; background: #13b8ad;"></span>
+                      <span style="font-size: 0.98rem; line-height: 1.65; color: #514860;">{{ pt }}</span>
+                    </li>
+                  </sc-for>
+                </ul>
+              </sc-if>
+
+              <sc-for list="{{ d.paragraphesFin }}" as="p" hint-placeholder-count="0">
+                <p style="font-size: 1.02rem; line-height: 1.8; color: #514860;">{{ p }}</p>
+              </sc-for>
+
+              <sc-if value="{{ d.aSource }}" hint-placeholder-val="{{ false }}">
+                <p style="font-size: 0.86rem; color: #7b2cbf;">{{ d.source }} — <a href="{{ d.sourceUrl }}" target="_blank" rel="noopener">{{ d.sourceUrl }}</a></p>
+              </sc-if>
+            </div>
+
+            <div style="display: grid; gap: 18px;">
+              <!-- Photo de la discipline -->
+              <div style="position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 3 / 4; max-height: 460px; width: 100%; max-width: 345px; margin: 0 auto; background: #f0e9f7; box-shadow: 0 10px 30px rgba(77,7,128,0.15);">
+                <img src="{{ d.image }}" alt="{{ d.alt }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;" />
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px;">
+            <a href="./planning.html" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 0.95rem; padding: 14px 30px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); box-shadow: 0 6px 20px rgba(19,184,173,0.45); color: #1A1225;">Voir les créneaux</a>
+            <a href="./index.html#contact" style="color: #7b2cbf; font-weight: 600; font-size: 0.95rem; padding: 12px 26px; border: 2px solid #7b2cbf; border-radius: 9999px;" style-hover="background: #7b2cbf; color: #FAF8FC;">Poser une question</a>
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section style="background: #0b4f6c; padding: 88px 0;">
+    <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px; text-align: center;">
+      <p style="font-family: 'Permanent Marker', cursive; font-size: 1.4rem; color: #f5c310; margin-bottom: 16px;">Jamais dansé ? Parfait.</p>
+      <h2 style="font-size: clamp(1.85rem, 4.4vw, 2.5rem); font-weight: 800; color: #FAF8FC; max-width: 34rem; margin: 0 auto; letter-spacing: -0.01em;">Tous nos cours accueillent des débutants complets</h2>
+      <p style="margin: 20px auto 0; font-size: 1.05rem; line-height: 1.75; color: rgba(250,248,252,0.85); max-width: 40rem;">Les groupes sont constitués par âge et par niveau. Trois stages de découverte gratuits ouvrent la saison le 6 septembre.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-top: 36px;">
+        <a href="{{ inscriptionUrl }}" target="_blank" rel="noopener" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1.02rem; padding: 16px 38px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); color: #1A1225;">Je m'inscris pour la saison</a>
+        <a href="./index.html#stages" style="color: #f5c310; font-weight: 600; font-size: 1.02rem; padding: 14px 32px; border: 2px solid #f5c310; border-radius: 9999px;" style-hover="background: #f5c310; color: #1A1225;">Les stages gratuits du 6 septembre</a>
+      </div>
+    </div>
+  </section>
+
+  <dc-import name="PiedDePage" hint-size="100%,420px"></dc-import>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;inscriptionUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;https://viviarto.com/organisateurs-ateliers-cours-artistiques/heman-danse/planning&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  componentDidMount() {
+    document.addEventListener('error', (e) => {
+      const cible = e.target;
+      if (cible && cible.tagName === 'IMG') cible.style.display = 'none';
+    }, true);
+    this.rejoindreAncre();
+  }
+
+  rejoindreAncre() {
+    const id = (window.location.hash || '').slice(1);
+    if (!id) return;
+    let essais = 0;
+    const viser = () => {
+      const cible = document.getElementById(id);
+      if (cible) {
+        const y = cible.getBoundingClientRect().top + window.pageYOffset - 100;
+        window.scrollTo({ top: y, behavior: 'auto' });
+        return;
+      }
+      if (essais++ < 40) setTimeout(viser, 50);
+    };
+    setTimeout(viser, 60);
+  }
+
+  renderVals() {
+    // Textes fournis par l'école, repris mot pour mot
+    const brut = [
+      {
+        id: 'eveil', nom: "L'ÉVEIL", age: '4 – 5 ans', origine: 'Initiation à la danse',
+        image: './assets/discipline-eveil.png',
+        alt: "Enfant en tenue turquoise pendant le cours d'éveil à la danse au Centre Héman",
+        paragraphes: [
+          "L'Éveil est la première rencontre avec la danse. À 4 et 5 ans, le cours ne cherche pas la performance : il installe les fondations sur lesquelles tout le reste se construira ensuite.",
+          "Le travail porte d'abord sur le rythme — reconnaître une pulsation, marcher dessus, s'arrêter avec elle — et sur les repères dans l'espace : avancer, reculer, tourner, occuper la salle, se situer par rapport aux autres.",
+          "Tout passe par le jeu, l'imitation et des séquences courtes, adaptées à la concentration des tout-petits. À la fin de l'année, les enfants rejoignent naturellement le cours de Hip Hop enfants."
+        ]
+      },
+      {
+        id: 'hip-hop', nom: 'LE HIP HOP', age: 'Enfants, ados & adultes', origine: 'South Bronx, fin des années 1960',
+        image: './assets/discipline-hip-hop.png',
+        alt: "Danseuse de Hip Hop en casquette et pantalon camouflage, bras en garde",
+        paragraphes: [
+          "Le Hip Hop est bien plus qu'une danse : c'est un mouvement culturel né à la toute fin des années 1960 dans le South Bronx, à New York. Il réunit 5 disciplines fondatrices : le rap, le DJing, le graffiti, le beatboxing, et bien sûr la danse.",
+          "Issue des quartiers populaires noirs et latinos de New York, cette culture urbaine va conquérir le monde entier dès les années 1980-90, jusqu'à devenir l'une des cultures les plus influentes de notre époque.",
+          "Côté danse, le Hip Hop se divise en deux grandes familles : la danse au sol, avec le Breaking (ou b-boying), et la danse debout, qui regroupe les styles funk comme le Locking et le Popping, ainsi que le New Style, plus urbain et musical. Une danse vivante, en perpétuelle évolution, qui puise sa force dans l'improvisation, le rythme et l'expression personnelle.",
+          "Aujourd'hui, danser Hip Hop, c'est bien plus que reproduire des pas : c'est s'approprier une histoire, un groove, une attitude  et la faire sienne sur chaque beat."
+        ]
+      },
+      {
+        id: 'new-style', nom: 'LE HIP HOP NEWSTYLE', age: 'Ados & adultes', origine: 'Culture hip-hop actuelle',
+        image: './assets/discipline-new-style.png',
+        alt: "Danseuse de Hip Hop Newstyle en t-shirt Héman Danse, bras ouverts",
+        paragraphes: [
+          "Le Hip Hop New Style est une discipline issue de la culture hip-hop qui rassemble et fait évoluer les différentes influences de la danse urbaine. Elle se caractérise par sa musicalité, son groove, sa précision et sa créativité. À travers des chorégraphies dynamiques, les danseurs développent leur sens du rythme, leur coordination, leur technique et leur capacité d’interprétation.",
+          "Accessible à tous les niveaux, le Hip Hop New Style permet d’acquérir des bases solides tout en laissant une place importante à l’expression personnelle et au style de chacun. Cette discipline évolue constamment au rythme des influences musicales et des nouvelles tendances de la scène hip-hop."
+        ]
+      },
+      {
+        id: 'break-dance', nom: 'LE BREAK DANCE', age: 'Ados — initiation', origine: 'New York, années 1970',
+        image: './assets/discipline-break-dance.png',
+        alt: "Danseur de Break Dance en appui, casquette à la main",
+        paragraphes: [
+          "Le Breaking, aussi appelé B-boying ou B-girling, est né à New York dans les années 1970. C'est LA discipline danse du Hip Hop originel : mouvements de corps saccadés, prouesses acrobatiques et figures au sol spectaculaires. On y devient B-boy ou B-girl.",
+          "Fait moins connu : si son essor est américain, des formes de danse très proches du Breaking étaient déjà pratiquées dès les années 1950 à Kaduna, au Nigéria — preuve que cette énergie a des racines bien plus larges qu'on ne le pense.",
+          "Au début des années 1980, la presse découvre cette culture et regroupe sous le terme unique de « breakdance » toute une constellation de danses qui lui sont pourtant distinctes : le Locking, le Popping, le Hip Hop New Style, le Krump... Autant de styles qui ont souvent cohabité avec le Breaking sur les mêmes dancefloors et dans les mêmes battles.",
+          "Le Breaking se structure autour de plusieurs éléments techniques :"
+        ],
+        points: [
+          "Le Footwork (ou passe-passe) : jeux de jambes au sol, rapides et techniques",
+          "La Coupole : rotations circulaires sur le dos ou les épaules",
+          "L'Envolée : mouvements aériens et transitions dynamiques",
+          "La Vrille : rotations rapides sur une seule partie du corps"
+        ],
+        paragraphesFin: [
+          "Une danse exigeante, physique et impressionnante, où technique et créativité se répondent à chaque passage.",
+          "À Héman, le Break est actuellement proposé sous forme d'un cours d'initiation, réservé aux ados."
+        ]
+      },
+      {
+        id: 'locking', nom: 'LE LOCKING', age: 'Ados & adultes', origine: 'Los Angeles, début des années 1970',
+        image: './assets/discipline-locking.png',
+        alt: "Danseuse de Locking en tenue violette Héman Danse, jambe levée",
+        paragraphes: [
+          "Le Locking est né au début des années 1970 à Los Angeles, sous l'impulsion de Don Campbell : une figure fondatrice de la culture Hip Hop et des funk styles, aux côtés du Popping.",
+          "L'histoire est presque un clin d'œil du destin : à l'époque, Don Campbell tente de reproduire des pas de danse qu'on lui montre, sans y parvenir totalement. Plutôt que d'abandonner, il transforme ses « erreurs » en signature : des arrêts nets, des blocages soudains dans le mouvement ; d'où le nom locking, littéralement « verrouiller ». Ce style prend racine dans les soirées Social Dance Party du mythique club Maverick's Flat, et puise son inspiration dans la danse soul, ainsi que dans l'énergie explosive des Nicholas Brothers et de James Brown.",
+          "Aujourd'hui, le Locking reste l'une des danses funk les plus festives et communicatives du Hip Hop : jeux de bras marqués, pointés, poses figées et surtout beaucoup de fun et de complicité avec le public. Une discipline énergique et généreuse, parfaite pour qui veut danser avec le sourire !"
+        ]
+      },
+      {
+        id: 'poppin', nom: 'LE POPPIN', age: 'Ados & adultes', origine: 'Californie, fin des années 1970',
+        image: './assets/discipline-poppin.png',
+        alt: "Danseuse de Popping en pantalon camouflage, bras tendu",
+        paragraphes: [
+          "Le Popping (aussi appelé Electric Boogaloo, ou « Smurf » en France) est né à la fin des années 1970 en Californie, popularisé par le mythique groupe des Electric Boogaloos. Son principe : contracter puis relâcher les muscles en rythme, créant ces mouvements saccadés si reconnaissables :une véritable conversation entre le corps et la musique.",
+          "Diffusé au monde entier grâce à l'émission Soul Train, le Popping s'est d'abord dansé sur le Funk et le G-Funk, avant de conquérir le Rap, le Hip Hop, le Crunk ou encore le Dancehall. En France, il prendra le nom de « Smurf » dans les années 80 — un clin d'œil resté dans le langage courant.",
+          "Le Popping repose sur trois fondamentaux :"
+        ],
+        points: [
+          "Les hits : des contractions musculaires placées avec précision sur les temps forts de la musique",
+          "L'isolation : la capacité à activer une seule partie du corps indépendamment des autres (bras, tête, épaules...), pour un effet visuel saisissant",
+          "Les angles : des placements de membres travaillés avec esthétique, pour sublimer chaque mouvement"
+        ],
+        paragraphesFin: [
+          "Cette danse regroupe aujourd'hui de nombreux styles : l'Animation (effet stop-motion), le Ticking (saccades ultra-précises), le Robot (gestuelle mécanique), le Waving (ondulations fluides) ou encore le Boogaloo (mouvements ronds et groovy du bassin et des hanches). Autant de facettes d'une danse aussi technique que spectaculaire !"
+        ]
+      },
+      {
+        id: 'afro-beat', nom: "L'AFRO BEAT", age: 'Ados & adultes', origine: 'Danses afro actuelles',
+        image: './assets/discipline-afro-beat.png',
+        alt: "Danseuse d'Afro Beat en appui au sol, tenue noire et jaune",
+        paragraphes: [
+          "L'Afro Beat rassemble les danses afro actuelles, celles qui circulent aujourd'hui entre les scènes africaines et les scènes urbaines européennes. Le vocabulaire évolue vite, au rythme des morceaux et des chorégraphies qui tournent.",
+          "Le cours travaille l'ancrage au sol, la dissociation du buste et du bassin, et une énergie franchement collective : on danse ensemble, face au miroir comme en cercle. C'est physique, très cardio, et le plaisir prime sur la performance.",
+          "Ouvert aux débutants ados et adultes, sans prérequis technique."
+        ]
+      },
+      {
+        id: 'jazz-rock', nom: 'LE JAZZ ROCK', age: 'Ados & adultes', origine: 'Paris, fin des années 1970',
+        image: './assets/discipline-jazz-rock.png',
+        alt: "Danseur de Jazz Rock en t-shirt violet, main au chapeau",
+        source: 'source LaMona.Paris', sourceUrl: 'https://lamona.paris/posts/jazz-rock-danse',
+        paragraphes: [
+          "Le Jazz Rock est un style de danse né à Paris à la fin des années 1970, profondément enraciné dans les communautés antillaises et africaines. Véritable joyau made in France, il puise ses inspirations dans les danses afro-américaines des années 1930, notamment les claquettes, auxquelles il emprunte les jeux de jambes virtuoses… mais sans les frappes.",
+          "Cette danse se distingue par une rapidité d’exécution bluffante, une musicalité chirurgicale et une technique d’une rare exigence. Chaque mouvement épouse les rythmes jazz, funk ou soul, suivant au millimètre les basses, les cuivres et les percussions. On y retrouve l’élégance et la flamboyance des tap dancers comme les Nicholas Brothers, mais aussi l’attitude de la street arboré avec fierté.",
+          "Ce style unique a été inventé et sublimé par des figures incontournables comme Alex Benth, Robert Modestine, Moossa Sethouane, Dominique Lesdema, Christian Truand, Jean-Claude Marignale ou encore Richard M'Passi, véritables pionniers ayant façonné la danse entre héritage et innovation.",
+          "Le Jazz Rock a marqué les nuits parisiennes à partir de 1982/1983, notamment dans des lieux cultes comme le Bataclan ou le REX, où les danseurs venaient déployer leurs plus belles combinaisons de pas, dans une ambiance électrique.",
+          "Bien plus qu’une simple danse, le Jazz Rock est un pont vivant entre les danses afro-descendantes, le Jazz et le Hip Hop français."
+        ]
+      },
+      {
+        id: 'modern-jazz', nom: 'LE MODERN JAZZ', age: 'Ados & adultes', origine: 'Culture musicale jazz',
+        image: './assets/discipline-modern-jazz.png',
+        alt: "Danseuse de Modern Jazz, bras levé en diagonale",
+        paragraphes: [
+          "Le modern jazz est une forme de danse énergique et rythmée, profondément enracinée dans la culture musicale jazz. Elle se distingue par sa spontanéité, sa vitalité et son expressivité, offrant une grande liberté de mouvement et de créativité.",
+          "C'est une forme multiculturelle, rassemblant plusieurs danses (classique, moderne, africaine, jazz, caraïbe, indienne, latino-americaine, danses de société, hip hop).",
+          "Il exclut pas les nuances, le senti, le ressenti, le feeling."
+        ]
+      },
+      {
+        id: 'cardio-fitness', nom: 'CARDIO FITNESS 100% femmes', age: 'Adultes — 100% femmes', origine: 'Préparation physique des danseurs de l’école',
+        image: './assets/discipline-cardio-fitness.png',
+        alt: "Danseuse en montée de genou pendant le cours de cardio fitness",
+        paragraphes: [
+          "Membre actif depuis des années au sein de l’école, Coach Soso officiait dans l’ombre. En effet, elle s’occupe de la préparation physique de nos danseurs professionnels.",
+          "Suite à de très nombreuses demandes, notre Coach a commencé à donner des stages de cardio training au grand public début 2013, puis devant l’enthousiasme général, elle s’est laissée convaincre pour en donner plus régulièrement, au minimum une fois pas mois.",
+          "Pendant 1 heure, les participants apprennent à repousser leurs limites sur le terrain et grâce à la pédagogie de Soso, l'envie de se surpasser.",
+          "Footing, abdominaux, steps, renforcement musculaire, endurance etc... La palette d’exercices pratiqués permet à tous de sortir de la salle en étant heureux d’être fatigué ! Peu importe le niveau et la condition physique, Coach Soso saura s’adapter à chacun, alors aucune raison de fuir, nous vous attendons !",
+          "La préparation physique vise  3 bases essentielles pour le bien être du mental et du corps : l'endurance, la puissance, l'agilité.",
+          "Elle est toujours personnalisée car elle dépend du niveau et de l'objectif du sportif. Il n'y a pas une préparation physique mais  plusieurs et qui varient en fonction de l'athlète.",
+          "Les programmes d’entraînement sont multiples car les compétences et les vécus de chacun imposent des adaptations particulières."
+        ],
+        points: [
+          "L'endurance et les ressources cardio-vasculaires sont indispensables puisque les deux tiers des muscles sont sollicités le temps d'une séance ; La course à pied est à ce titre le sport privilégié.",
+          "La puissance inclut la force et la vitesse, ce qui justifie l'utilisation de la musculation quel que soit le sport pratiqué.",
+          "L'adresse ou l'agilité peut être spécifiquement développée mais elle est le plus souvent perfectionnée dans la pratique des techniques sportives vécues en compétition."
+        ],
+        paragraphesFin: [
+          "Coach Soso apprend surtout aux sportifs a repousser leurs  limites sur le terrain et donne a tous l'envie de se surpasser."
+        ]
+      }
+    ];
+
+    const disciplines = brut.map(d => Object.assign({}, d, {
+      points: d.points || [],
+      aPoints: Array.isArray(d.points) && d.points.length > 0,
+      paragraphesFin: d.paragraphesFin || [],
+      aSource: !!d.source,
+      source: d.source || '',
+      sourceUrl: d.sourceUrl || ''
+    }));
+
+    return {
+      disciplines,
+      ancres: disciplines.map(d => ({ nom: d.nom, href: '#' + d.id })),
+      inscriptionUrl: this.props.inscriptionUrl ?? './planning.html'
+    };
+  }
+}
+</script>
+</body>
+</html>
