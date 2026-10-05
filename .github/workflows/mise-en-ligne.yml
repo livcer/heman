@@ -1,0 +1,55 @@
+# Mise en ligne automatique du site chez Infomaniak
+#
+# À chaque modification de la branche main, GitHub envoie les fichiers
+# modifiés sur le serveur par FTP sécurisé (FTPS). Seuls les fichiers qui ont
+# changé depuis le dernier envoi sont transférés.
+#
+# Identifiants à renseigner une fois dans GitHub :
+#   Settings → Secrets and variables → Actions → New repository secret
+#     FTP_SERVEUR       ex. xxxx.ftp.infomaniak.com
+#     FTP_UTILISATEUR
+#     FTP_MOT_DE_PASSE
+#
+# Ne sont JAMAIS envoyés (ils vivent uniquement sur le serveur) :
+#   - config.php                : contient les mots de passe
+#   - donnees/reservations.php  : les réservations en cours
+#   - diagnostic.php            : outil de test, à ne pas laisser en ligne
+
+name: Mise en ligne
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Une seule mise en ligne à la fois : la suivante attend la fin de la précédente
+concurrency:
+  group: mise-en-ligne
+  cancel-in-progress: false
+
+jobs:
+  envoi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le site
+        uses: actions/checkout@v4
+
+      - name: Envoyer sur Infomaniak
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVEUR }}
+          username: ${{ secrets.FTP_UTILISATEUR }}
+          password: ${{ secrets.FTP_MOT_DE_PASSE }}
+          protocol: ftps
+          port: 21
+          # Dossier du site, vu depuis la racine de l'utilisateur FTP
+          server-dir: sites/heman.website/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            .github/**
+            config.php
+            diagnostic.php
+            donnees/reservations.php
+            LISEZ-MOI.md
+            assets/LISEZ-MOI.md
