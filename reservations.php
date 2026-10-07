@@ -23,12 +23,15 @@
  * Les données sont stockées dans donnees/reservations.php : un fichier PHP qui
  * s'arrête dès sa première ligne, donc illisible depuis le web, doublé d'un
  * donnees/.htaccess. Aucune base de données à créer.
+ * Les stages de l'école sont déclarés dans creneaux-fixes.php : ajoutés à la
+ * lecture comme réservations validées, jamais écrits dans le fichier.
  * Chaque jour, avant la première modification, une copie est rangée dans
  * donnees/sauvegardes/ (30 derniers jours conservés).
  */
 
 require __DIR__ . '/config.php';
 require __DIR__ . '/smtp.php';
+require __DIR__ . '/creneaux-fixes.php';
 
 date_default_timezone_set('Europe/Paris');
 header('Content-Type: application/json; charset=utf-8');
@@ -155,18 +158,54 @@ function avec_donnees($traitement)
         erreur('Le service de réservation est indisponible.', 500);
     }
 
+    $liste = array_merge($liste, creneaux_fixes());
     $resultat = $traitement($liste);
 
     if (is_array($resultat) && array_key_exists('liste', $resultat)) {
+        // Les créneaux fixes viennent de creneaux-fixes.php : jamais enregistrés ici
+        $aEcrire = array_values(array_filter($resultat['liste'], function ($r) {
+            return empty($r['fixe']);
+        }));
         copie_du_jour($brut);
         ftruncate($f, 0);
         rewind($f);
-        fwrite($f, ENTETE_DONNEES . json_encode(array_values($resultat['liste']), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
+        fwrite($f, ENTETE_DONNEES . json_encode($aEcrire, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
         fflush($f);
     }
     flock($f, LOCK_UN);
     fclose($f);
     return is_array($resultat) && array_key_exists('retour', $resultat) ? $resultat['retour'] : null;
+}
+
+/** Stages de creneaux-fixes.php, au format des réservations (validées, internes). */
+function creneaux_fixes()
+{
+    global $CRENEAUX_FIXES, $SALLES;
+    $sortie = array();
+    foreach ((isset($CRENEAUX_FIXES) && is_array($CRENEAUX_FIXES) ? $CRENEAUX_FIXES : array()) as $c) {
+        $debut = minutes(isset($c['debut']) ? $c['debut'] : '');
+        $fin = minutes(isset($c['fin']) ? $c['fin'] : '');
+        if (!isset($c['salle'], $SALLES[$c['salle']]) || !date_valide(isset($c['date']) ? $c['date'] : '') || $debut < 0 || $fin <= $debut) {
+            error_log('Héman/Réservations : créneau fixe ignoré (salle, date ou horaires invalides).');
+            continue;
+        }
+        $libelle = isset($c['libelle']) ? $c['libelle'] : 'Stage';
+        $sortie[] = array(
+            'id'       => 'fixe-' . substr(md5($c['salle'] . $c['date'] . $debut), 0, 12),
+            'salle'    => $c['salle'],
+            'date'     => $c['date'],
+            'debut'    => $debut,
+            'fin'      => $fin,
+            'statut'   => 'validee',
+            'interne'  => true,
+            'fixe'     => true,
+            'nom'      => $libelle,
+            'email'    => '',
+            'tel'      => '',
+            'activite' => $libelle,
+        );
+    }
+    return $sortie;
 }
 
 /**
@@ -412,6 +451,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     );
     if ($admin) {
         // Toutes les demandes en attente, quelle que soit la semaine affichée
+        $reponse['alertes'] = avec_donnees(function ($liste) {
+            $alertes = array();
+            foreach ($liste as $r) {
+                if (empty($r['fixe'])) {
+                    continue;
+                }
+                foreach ($liste as $autre) {
+                    if (!empty($autre['fixe']) || $autre['salle'] !== $r['salle'] || $autre['date'] !== $r['date']
+                        || !in_array($autre['statut'], array('attente', 'validee'), true)) {
+                        continue;
+                    }
+                    if ($autre['debut'] < $r['fin'] && $r['debut'] < $autre['fin']) {
+                        $alertes[] = vue_admin($autre) + array('stage' => $r['nom']);
+                    }
+                }
+            }
+            return array('retour' => $alertes);
+        });
         $reponse['enAttente'] = avec_donnees(function ($liste) {
             $sortie = array();
             foreach ($liste as $r) {
@@ -493,7 +550,7 @@ if ($action === 'demande') {
             erreur('Vous avez envoyé beaucoup de demandes : merci de patienter ou de nous écrire à contact@heman.fr.', 429);
         }
         if (conflit($liste, $salle, $date, $debut, $fin)) {
-            erreur('Ce créneau vient d\'être demandé par quelqu\'un d\'autre. Choisissez un autre horaire ou une autre salle.', 409);
+            erreur('Ce créneau n\'est plus disponible. Choisissez un autre horaire ou une autre salle.', 409);
         }
         $r = array(
             'id'           => bin2hex(random_bytes(8)),
@@ -771,6 +828,9 @@ if ($action === 'supprimer') {
         }
         if (!$cible) {
             erreur('Réservation introuvable.', 404);
+        }
+        if (!empty($cible['fixe'])) {
+            erreur('Ce stage est programmé dans le site (creneaux-fixes.php) : il ne se supprime pas d\'ici.', 409);
         }
         $nombre = 0;
         foreach ($liste as $i => $r) {

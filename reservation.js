@@ -478,7 +478,7 @@
         ['Salle', infoSalle.nom],
         ['Date', dateLongue(r.date)],
         ['Horaire', heure(r.debut) + ' – ' + (r.fin === 1440 ? 'minuit' : heure(r.fin))],
-        ['Statut', r.statut === 'attente' ? 'En attente de validation' : (r.interne ? 'Créneau bloqué par l’équipe' + (r.serie ? ' (récurrent)' : '') : 'Validée')]
+        ['Statut', r.statut === 'attente' ? 'En attente de validation' : (r.fixe ? 'Stage programmé dans le site' : r.interne ? 'Créneau bloqué par l’équipe' + (r.serie ? ' (récurrent)' : '') : 'Validée')]
       ];
       if (!r.interne) {
         lignes.push(['Montant', r.prix || '']);
@@ -518,13 +518,15 @@
             h('button', { key: 'c', type: 'button', className: 'hr-btn hr-btn-danger', disabled: envoi, onClick: function () { agir('refuser', { motif: motif }); } }, 'Confirmer le refus'),
             h('button', { key: 'a', type: 'button', className: 'hr-btn', onClick: function () { setRefus(false); } }, 'Retour')
           ] : null,
-          r.statut === 'validee' ? h('button', {
+          r.fixe ? h('p', { style: { margin: 0, fontSize: '.88rem', color: '#514860', lineHeight: 1.6 } },
+            'Ce stage est inscrit dans le site : pour le modifier ou l’annuler, demandez la mise à jour de la liste des stages.') : null,
+          r.statut === 'validee' && !r.fixe ? h('button', {
             type: 'button', className: 'hr-btn hr-btn-danger', disabled: envoi,
             onClick: function () {
               if (window.confirm('Supprimer ce créneau du calendrier ?' + (r.interne ? '' : ' Aucun e-mail n’est envoyé : prévenez le client vous-même.'))) agir('supprimer');
             }
           }, r.interne ? (r.serie ? 'Supprimer ce créneau seulement' : 'Supprimer le créneau') : 'Annuler la réservation') : null,
-          r.statut === 'validee' && r.serie ? h('button', {
+          r.statut === 'validee' && r.serie && !r.fixe ? h('button', {
             type: 'button', className: 'hr-btn hr-btn-danger', disabled: envoi,
             onClick: function () {
               if (window.confirm('Supprimer ce créneau et tous les suivants de la série « ' + r.nom + ' » ? Les séances passées restent affichées.')) agir('supprimer', { serie: true });
@@ -762,6 +764,17 @@
       }
       if (erreur) {
         enfants.push(h('div', { key: 'err', className: 'hr-message hr-erreur', role: 'alert' }, erreur));
+      }
+
+      if (admin && donnees && donnees.alertes && donnees.alertes.length) {
+        enfants.push(h('div', { key: 'alertes', className: 'hr-message hr-erreur', role: 'alert' },
+          h('strong', null, 'Conflit avec un stage : '),
+          donnees.alertes.map(function (a) {
+            var s = salles.filter(function (x) { return x.id === a.salle; })[0] || { nom: a.salle };
+            return s.nom + ', ' + dateLongue(a.date) + ', ' + heure(a.debut) + ' – ' + heure(a.fin) + ' (' + (a.nom || '') +
+              (a.statut === 'attente' ? ', en attente' : '') + ') chevauche « ' + a.stage + ' »';
+          }).join(' ; '),
+          '. Contactez la personne concernée, puis refusez ou annulez sa réservation.'));
       }
 
       if (admin && donnees && donnees.enAttente) {

@@ -130,6 +130,9 @@ sans message d'erreur.
   En cochant « Répéter chaque semaine », on choisit les jours et une date de fin (un an
   maximum) : tous les créneaux sont créés d'un coup, les dates déjà occupées sont sautées.
   Une série se supprime d'un clic à partir d'une séance (les séances passées restent).
+- **Stages de l'école** : déclarés dans `creneaux-fixes.php` (salle, date, horaires). Ils
+  s'affichent « Réservé » et bloquent les demandes ; ils ne se suppriment pas depuis l'admin.
+  Si une réservation existante les chevauche, l'admin affiche une alerte en rouge.
 - **Règles** : pas de réservation pour le jour même, durée minimale 1 h, par pas de 30 min,
   jusqu'à 180 jours à l'avance. Les visiteurs ne voient jamais le nom des autres clients.
 - **Tarifs et salles** : modifiables dans `config.php` (tableau `$SALLES`).
