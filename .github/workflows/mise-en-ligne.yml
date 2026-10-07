@@ -13,6 +13,7 @@
 # Ne sont JAMAIS envoyés (ils vivent uniquement sur le serveur) :
 #   - config.php                : contient les mots de passe
 #   - donnees/reservations.php  : les réservations en cours
+#   - donnees/sauvegardes/      : les copies quotidiennes des réservations
 #   - diagnostic.php            : outil de test, à ne pas laisser en ligne
 
 name: Mise en ligne
@@ -51,5 +52,6 @@ jobs:
             config.php
             diagnostic.php
             donnees/reservations.php
+            donnees/sauvegardes/**
             LISEZ-MOI.md
             assets/LISEZ-MOI.md

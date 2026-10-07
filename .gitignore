@@ -1,5 +1,6 @@
 # Réservations des clients : uniquement sur le serveur, jamais sur GitHub
 donnees/reservations.php
+donnees/sauvegardes/
 
 # Fichiers système
 .DS_Store

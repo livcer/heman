@@ -77,7 +77,6 @@ Vérifiez aussi que le dossier `donnees` a bien été déposé avec son fichier 
 (fichier caché : activez l'affichage des fichiers cachés dans FileZilla). Le site y
 enregistre les réservations dans `donnees/reservations.php`, créé automatiquement à
 la première demande. **Ne supprimez jamais ce fichier** : il contient tout le planning.
-Pensez à le télécharger de temps en temps pour en garder une copie.
 
 ## 5. Vérifier
 
@@ -134,6 +133,16 @@ sans message d'erreur.
 - **Règles** : pas de réservation pour le jour même, durée minimale 1 h, par pas de 30 min,
   jusqu'à 180 jours à l'avance. Les visiteurs ne voient jamais le nom des autres clients.
 - **Tarifs et salles** : modifiables dans `config.php` (tableau `$SALLES`).
+
+### Sauvegarde des réservations
+
+- **Automatique** : chaque jour, avant la première modification, le site range une copie
+  dans `donnees/sauvegardes/` (30 derniers jours conservés, illisibles depuis le web).
+- **Manuelle** : dans la page admin, **Exporter (Excel)** télécharge un tableau de toutes les
+  réservations, et **Sauvegarde** une copie complète (fichier .json). À faire régulièrement
+  et à ranger hors du serveur (ordinateur, kDrive).
+- **Restaurer** : envoyer à Claude (ou au développeur) le fichier de sauvegarde ou une copie
+  de `donnees/sauvegardes/` ; il est remis à la place de `donnees/reservations.php`.
 
 ## Points à savoir
 

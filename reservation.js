@@ -134,6 +134,7 @@
     '.hr-nav{display:flex;gap:6px;align-items:center;}',
     '.hr-btn{border:0;cursor:pointer;border-radius:9999px;font-weight:600;font-size:.9rem;padding:10px 18px;background:#eee6f5;color:#4d0780;transition:background .15s,transform .15s;}',
     '.hr-btn:hover{background:#e0d2ee;}',
+    'a.hr-btn{text-decoration:none;display:inline-block;}',
     '.hr-btn:disabled{opacity:.5;cursor:default;}',
     '.hr-btn-rond{width:40px;height:40px;padding:0;font-size:1.2rem;line-height:1;}',
     '.hr-btn-plein{background:#13b8ad;color:#1A1225;box-shadow:0 4px 14px rgba(19,184,173,.3);}',
@@ -740,6 +741,8 @@
         h('div', { className: 'hr-bascule', role: 'group', 'aria-label': 'Affichage' },
           h('button', { type: 'button', 'aria-pressed': vue === 'jour', onClick: function () { changerVue('jour'); } }, 'Jour'),
           h('button', { type: 'button', 'aria-pressed': vue === 'semaine', onClick: function () { changerVue('semaine'); } }, 'Semaine')),
+        admin ? h('a', { className: 'hr-btn', href: API + '?export=excel', download: '', title: 'Toutes les réservations, à ouvrir dans Excel ou Numbers' }, 'Exporter (Excel)') : null,
+        admin ? h('a', { className: 'hr-btn', href: API + '?export=sauvegarde', download: '', title: 'Copie complète, à garder en lieu sûr' }, 'Sauvegarde') : null,
         admin ? h('button', { type: 'button', className: 'hr-btn', onClick: function () {
           appel('POST', API, { action: 'deconnexion' }).then(function () { setConnecte(false); }, function () { setConnecte(false); });
         } }, 'Se déconnecter') : null));

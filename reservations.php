@@ -7,6 +7,8 @@
  *   GET  reservations.php?debut=AAAA-MM-JJ&fin=AAAA-MM-JJ
  *        → créneaux en attente et validés de la période.
  *          Visiteur : salle, date et horaires seulement. Admin connecté : tout.
+ *   GET  reservations.php?export=excel       → admin : tableau de toutes les réservations
+ *   GET  reservations.php?export=sauvegarde  → admin : copie complète du fichier de données
  *   POST reservations.php  (JSON, champ "action")
  *        demande      → un visiteur demande un créneau (statut « attente »)
  *        connexion    → ouverture de la session admin
@@ -21,6 +23,8 @@
  * Les données sont stockées dans donnees/reservations.php : un fichier PHP qui
  * s'arrête dès sa première ligne, donc illisible depuis le web, doublé d'un
  * donnees/.htaccess. Aucune base de données à créer.
+ * Chaque jour, avant la première modification, une copie est rangée dans
+ * donnees/sauvegardes/ (30 derniers jours conservés).
  */
 
 require __DIR__ . '/config.php';
@@ -33,6 +37,8 @@ header('Cache-Control: no-store');
 define('FICHIER_DONNEES', __DIR__ . '/donnees/reservations.php');
 // Première ligne du fichier de données : bloque toute lecture depuis le web
 define('ENTETE_DONNEES', "<?php http_response_code(404); exit; ?>\n");
+define('DOSSIER_SAUVEGARDES', __DIR__ . '/donnees/sauvegardes');
+define('SAUVEGARDES_CONSERVEES', 30);
 
 session_set_cookie_params(array(
     'lifetime' => 0,
@@ -152,6 +158,7 @@ function avec_donnees($traitement)
     $resultat = $traitement($liste);
 
     if (is_array($resultat) && array_key_exists('liste', $resultat)) {
+        copie_du_jour($brut);
         ftruncate($f, 0);
         rewind($f);
         fwrite($f, ENTETE_DONNEES . json_encode(array_values($resultat['liste']), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT));
@@ -160,6 +167,48 @@ function avec_donnees($traitement)
     flock($f, LOCK_UN);
     fclose($f);
     return is_array($resultat) && array_key_exists('retour', $resultat) ? $resultat['retour'] : null;
+}
+
+/**
+ * Garde l'état des réservations tel qu'il était avant la première modification
+ * du jour. Une copie par jour, les plus anciennes au-delà de 30 sont effacées.
+ * Les copies gardent la première ligne PHP : illisibles depuis le web.
+ */
+function copie_du_jour($brut)
+{
+    if (trim($brut) === '') {
+        return;
+    }
+    if (!is_dir(DOSSIER_SAUVEGARDES) && !@mkdir(DOSSIER_SAUVEGARDES, 0750, true)) {
+        error_log('Héman/Réservations : impossible de créer ' . DOSSIER_SAUVEGARDES);
+        return;
+    }
+    $copie = DOSSIER_SAUVEGARDES . '/reservations-' . date('Y-m-d') . '.php';
+    if (file_exists($copie)) {
+        return;
+    }
+    if (strpos($brut, ENTETE_DONNEES) !== 0) {
+        $brut = ENTETE_DONNEES . $brut;
+    }
+    if (@file_put_contents($copie, $brut) === false) {
+        error_log('Héman/Réservations : sauvegarde du jour impossible.');
+        return;
+    }
+    $copies = glob(DOSSIER_SAUVEGARDES . '/reservations-*.php');
+    sort($copies);
+    while (count($copies) > SAUVEGARDES_CONSERVEES) {
+        @unlink(array_shift($copies));
+    }
+}
+
+/** Neutralise les formules dans une cellule exportée (=, +, -, @ en tête). */
+function cellule($v)
+{
+    $v = str_replace(array("\r\n", "\r", "\n"), ' ', (string) $v);
+    if ($v !== '' && strpos('=+-@', $v[0]) !== false) {
+        $v = "'" . $v;
+    }
+    return $v;
 }
 
 /** Créneau qui chevauche [debut, fin) dans la même salle, parmi les créneaux actifs. */
@@ -264,6 +313,64 @@ function signature()
 /* =====================================================================
    Lecture du calendrier
    ===================================================================== */
+
+if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['export'])) {
+    exiger_admin();
+    $tout = avec_donnees(function ($liste) {
+        return array('retour' => $liste);
+    });
+    $horodatage = date('Y-m-d');
+
+    if ($_GET['export'] === 'sauvegarde') {
+        // Fichier de données complet, sans les empreintes de connexion
+        foreach ($tout as $i => $r) {
+            unset($tout[$i]['ip']);
+        }
+        header('Content-Type: application/json; charset=utf-8');
+        header('Content-Disposition: attachment; filename="heman-reservations-sauvegarde-' . $horodatage . '.json"');
+        echo json_encode($tout, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        exit;
+    }
+
+    if ($_GET['export'] === 'excel') {
+        usort($tout, function ($a, $b) {
+            return strcmp($a['date'] . sprintf('%04d', $a['debut']) . $a['salle'], $b['date'] . sprintf('%04d', $b['debut']) . $b['salle']);
+        });
+        $statuts = array('attente' => 'En attente', 'validee' => 'Validée', 'refusee' => 'Refusée', 'annulee' => 'Annulée');
+        header('Content-Type: text/csv; charset=utf-8');
+        header('Content-Disposition: attachment; filename="heman-reservations-' . $horodatage . '.csv"');
+        $sortie = fopen('php://output', 'w');
+        fwrite($sortie, "\xEF\xBB\xBF"); // pour qu'Excel lise bien les accents
+        fputcsv($sortie, array('Date', 'Début', 'Fin', 'Salle', 'Statut', 'Type', 'Nom / libellé', 'Structure',
+            'E-mail', 'Téléphone', 'Activité', 'Personnes', 'Montant', 'Message', 'Demandé le', 'Traité le', 'Motif du refus'), ';');
+        foreach ($tout as $r) {
+            $d = DateTime::createFromFormat('!Y-m-d', $r['date']);
+            fputcsv($sortie, array_map('cellule', array(
+                $d ? $d->format('d/m/Y') : $r['date'],
+                str_replace('h', ':', heure_lisible($r['debut'])) . (($r['debut'] % 60) ? '' : '00'),
+                str_replace('h', ':', heure_lisible($r['fin'])) . (($r['fin'] % 60) ? '' : '00'),
+                isset($SALLES[$r['salle']]) ? $SALLES[$r['salle']]['nom'] : $r['salle'],
+                isset($statuts[$r['statut']]) ? $statuts[$r['statut']] : $r['statut'],
+                !empty($r['interne']) ? (!empty($r['serie']) ? 'Équipe (récurrent)' : 'Équipe') : 'Demande en ligne',
+                $r['nom'],
+                isset($r['structure']) ? $r['structure'] : '',
+                $r['email'],
+                $r['tel'],
+                isset($r['activite']) ? $r['activite'] : '',
+                isset($r['participants']) ? $r['participants'] : '',
+                !empty($r['interne']) ? '' : prix($r),
+                isset($r['message']) ? $r['message'] : '',
+                isset($r['creeLe']) ? date('d/m/Y H:i', strtotime($r['creeLe'])) : '',
+                isset($r['traiteLe']) ? date('d/m/Y H:i', strtotime($r['traiteLe'])) : '',
+                isset($r['motif']) ? $r['motif'] : '',
+            )), ';');
+        }
+        fclose($sortie);
+        exit;
+    }
+
+    erreur('Export inconnu.', 400);
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $debut = isset($_GET['debut']) ? $_GET['debut'] : '';
