@@ -95,7 +95,6 @@
         <p style="font-family: 'Permanent Marker', cursive; font-size: 1.35rem; color: #13b8ad; margin-bottom: 18px; transform: rotate(-1.5deg);">Rejoins la famille !</p>
         <h1 style="font-size: clamp(2.5rem, 8vw, 4.25rem); font-weight: 800; color: #FAF8FC; letter-spacing: -0.01em; font-family: 'Montserrat', 'Montserrat', system-ui, sans-serif">HÉMAN DANSE</h1>
         <p style="margin-top: 26px; font-size: 1.1rem; line-height: 1.7; color: rgba(250,248,252,0.86); max-width: 30rem;">Le Centre de Danses Urbaines Héman a été fondé par les frères M'Passi, pionniers du Hip Hop en France. À Neuilly-Plaisance depuis 2007, l'école transmet la danse avec sérieux et bienveillance — sans barrière d'âge ni de niveau.</p>
-        <p style="display: inline-flex; align-items: center; gap: 12px; margin-top: 30px; background: rgba(250,248,252,0.1); border: 1px solid #f5c310; border-radius: 9999px; padding: 10px 22px;"><span style="font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #f5c310;">Rentrée</span><span style="font-size: 0.95rem; font-weight: 500; color: #FAF8FC;">Lundi 14 septembre</span></p>
         <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 26px;">
           <a href="{{ inscriptionUrl }}" style="background: #13b8ad; color: #1A1225; font-weight: 600; font-size: 1.05rem; padding: 17px 40px; border-radius: 9999px; box-shadow: 0 4px 14px rgba(19,184,173,0.35);" style-hover="transform: translateY(-2px); box-shadow: 0 6px 20px rgba(19,184,173,0.45); color: #1A1225;">S'inscrire pour la saison</a>
           <a href="./planning.html" style="background: transparent; color: #f5c310; font-weight: 600; font-size: 1.05rem; padding: 15px 34px; border: 2px solid #f5c310; border-radius: 9999px;" style-hover="background: #f5c310; color: #1A1225;">Voir le planning</a>
@@ -122,14 +121,14 @@
     </div>
   </section>
 
-  <!-- ======= APPEL À L'INSCRIPTION (rentrée) ======= -->
+  <!-- ======= APPEL À L'INSCRIPTION ======= -->
   <section id="inscription" style="padding: 96px 0 0;">
     <div style="max-width: 1240px; margin: 0 auto; padding: 0 24px;">
       <div style="position: relative; overflow: hidden; border-radius: 20px; background: linear-gradient(135deg, #4d0780 0%, #7b2cbf 62%, #0b4f6c 100%); padding: clamp(36px, 5vw, 64px); display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 44px; align-items: center;">
         <img src="./assets/deco-spray-v2.png" alt="" aria-hidden="true" style="position: absolute; top: -8%; left: 58%; width: 44%; min-width: 300px; height: auto; opacity: 0.22; mix-blend-mode: plus-lighter; pointer-events: none;">
         <div style="position: relative;">
           <p style="font-size: 0.78rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #13b8ad; margin-bottom: 14px;">Inscriptions ouvertes</p>
-          <h2 style="font-size: clamp(1.8rem, 4.4vw, 2.5rem); font-weight: 700; color: #FAF8FC; line-height: 1.15;">La rentrée, c'est le lundi 14 septembre</h2>
+          <h2 style="font-size: clamp(1.8rem, 4.4vw, 2.5rem); font-weight: 700; color: #FAF8FC; line-height: 1.15;">La saison a repris : il est encore temps de nous rejoindre</h2>
           <p style="margin-top: 18px; font-size: 1.05rem; line-height: 1.75; color: rgba(250,248,252,0.86); max-width: 34rem;">Consultez le planning complet par jour, par discipline et par tranche d'âge, puis réservez votre place pour la saison 2026-2027.</p>
         </div>
         <div style="position: relative; display: flex; flex-direction: column; gap: 20px;">
@@ -528,12 +527,6 @@ class Component extends DCLogic {
           description: "Trois cours d'essai ouverts à tous, sans inscription payante : 15h00 cardio fitness (100% femmes), 16h00 modern jazz ados / adultes, 17h00 jazz rock.",
           image: './assets/evenement-stages-decouverte.png', alt: 'Affiche : stages découverte gratuits, dimanche 6 septembre',
           ctaLabel: 'Réserver ma place', ctaHref: '#contact'
-        },
-        {
-          titre: 'Rentrée de la saison', fin: '2026-09-20', date: 'Semaine du 14 septembre', heure: 'selon votre créneau', badge: 'Saison 2026-2027', aBadge: true, fit: 'cover',
-          description: "Les cours reprennent la semaine du lundi 14 septembre, aux horaires du planning. Inscriptions ouvertes en ligne.",
-          image: './assets/evenement-rentree.jpeg', alt: "Élève du cours enfants du Centre Héman, pouce levé dans le studio",
-          ctaLabel: "Je m'inscris", ctaHref: './planning.html'
         }
       ]);
 
