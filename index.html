@@ -492,15 +492,48 @@ class Component extends DCLogic {
   }
 
 
-  // Un événement disparaît le lendemain de sa date de fin (fin: 'AAAA-MM-JJ')
+  // Un événement disparaît le lendemain de sa date de fin (fin: 'AAAA-MM-JJ').
+  // Un stage à plusieurs dates (seances: [{ jour: 'AAAA-MM-JJ', heure }]) affiche
+  // sa prochaine séance et les dates suivantes, puis disparaît après la dernière.
   aVenir(liste) {
     const limite = new Date();
     limite.setHours(0, 0, 0, 0);
-    return liste.filter((e) => {
-      if (!e.fin) return true;
-      const d = new Date(e.fin + 'T00:00:00');
-      return isNaN(d) ? true : d >= limite;
-    });
+    const jour = (s) => new Date(s + 'T00:00:00');
+    return liste
+      .map((e) => {
+        if (!e.seances) return e;
+        const restantes = e.seances.filter((x) => jour(x.jour) >= limite);
+        if (!restantes.length) return null;
+        const suivantes = restantes.slice(1).map((x) => this.dateCourte(x.jour));
+        return Object.assign({}, e, {
+          fin: restantes[restantes.length - 1].jour,
+          prochaine: restantes[0].jour,
+          date: this.dateLongue(restantes[0].jour),
+          heure: restantes[0].heure,
+          description: e.description + (suivantes.length ? ' Dates suivantes : ' + suivantes.join(', ') + '.' : '')
+        });
+      })
+      .filter((e) => {
+        if (!e) return false;
+        if (!e.fin) return true;
+        const d = jour(e.fin);
+        return isNaN(d) ? true : d >= limite;
+      })
+      .sort((a, b) => (a.prochaine || a.fin || '').localeCompare(b.prochaine || b.fin || ''));
+  }
+
+  // « Dimanche 1er novembre »
+  dateLongue(s) {
+    const d = new Date(s + 'T00:00:00');
+    const jours = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+    return jours[d.getDay()] + ' ' + this.dateCourte(s);
+  }
+
+  // « 1er novembre », « 13 décembre »
+  dateCourte(s) {
+    const d = new Date(s + 'T00:00:00');
+    const mois = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+    return (d.getDate() === 1 ? '1er' : d.getDate()) + ' ' + mois[d.getMonth()];
   }
 
 
@@ -521,6 +554,32 @@ class Component extends DCLogic {
           description: "Venez nous dire bonjour à la Fête du Parc, aux côtés des associations de Neuilly-Plaisance. À 14h, élèves et professeurs montent sur scène ensemble. Le reste de la journée, on discute, on répond à vos questions sur la saison, et on danse un peu avec ceux qui en ont envie.",
           image: './assets/evenement-fete-du-parc.jpg', alt: "Affiche : la Team Héman à la Fête du Parc, samedi 5 septembre dès 11h30",
           ctaLabel: 'Nous y retrouver', ctaHref: '#contact'
+        },
+        {
+          titre: 'Stage de Modern Jazz avec Lorna', badge: '', aBadge: false, fit: 'cover',
+          seances: [
+            { jour: '2026-11-01', heure: '14h30 – 16h00' },
+            { jour: '2026-12-05', heure: '12h00 – 13h30' }
+          ],
+          description: "Une heure et demie de modern jazz avec Lorna, professeure de l'école. 15 € le stage.",
+          image: './assets/stage-modern-jazz-lorna.jpg', alt: 'Affiche : stages de modern jazz avec Lorna, dimanche 1er novembre et samedi 5 décembre, 15 €',
+          ctaLabel: 'Réserver ma place', ctaHref: '#contact'
+        },
+        {
+          titre: 'Stage de Jazz Rock avec Richard MP Style', badge: '', aBadge: false, fit: 'cover',
+          seances: [
+            { jour: '2026-11-08', heure: '15h30 – 17h00' },
+            { jour: '2026-12-13', heure: '15h30 – 17h00' },
+            { jour: '2027-01-10', heure: '15h30 – 17h00' },
+            { jour: '2027-02-07', heure: '15h30 – 17h00' },
+            { jour: '2027-03-07', heure: '15h30 – 17h00' },
+            { jour: '2027-04-04', heure: '15h30 – 17h00' },
+            { jour: '2027-05-02', heure: '15h30 – 17h00' },
+            { jour: '2027-06-06', heure: '15h30 – 17h00' }
+          ],
+          description: "Un stage par mois avec Richard MP Style, cofondateur de l'école et créateur de la technique Jazz Rock. 15 € le stage.",
+          image: './assets/stage-jazz-rock-richard.jpg', alt: 'Affiche : stages de jazz rock avec Richard MP Style, un dimanche par mois de novembre à juin, 15h30 – 17h00, 15 €',
+          ctaLabel: 'Réserver ma place', ctaHref: '#contact'
         }
       ]);
 
