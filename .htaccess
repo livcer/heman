@@ -1,0 +1,15 @@
+# Héman — mise en cache des fichiers
+#
+# Pages, composants (.dc.html), scripts et styles : le navigateur redemande
+# toujours au serveur s'il existe une version plus récente (réponse rapide
+# « inchangé » sinon). Ainsi, une mise à jour publiée depuis GitHub est vue
+# immédiatement par tous les visiteurs, sans vider leur cache.
+<IfModule mod_headers.c>
+    <FilesMatch "\.(html?|js|css|php|json|xml|txt)$">
+        Header set Cache-Control "no-cache"
+    </FilesMatch>
+    # Images et polices : gardées une semaine
+    <FilesMatch "\.(png|jpe?g|gif|webp|svg|ico|woff2?)$">
+        Header set Cache-Control "public, max-age=604800"
+    </FilesMatch>
+</IfModule>
