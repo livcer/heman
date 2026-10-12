@@ -11,18 +11,9 @@
  * salle : heman1, heman2 ou galilee — date : AAAA-MM-JJ — debut / fin : HH:MM
  */
 
+// Les stages de Lorna et de Richard (novembre 2026 – juin 2027) sont saisis
+// directement dans la page admin : ils n'ont pas à figurer ici en double.
 $CRENEAUX_FIXES = array(
-    // Stages de Modern Jazz avec Lorna
-    array('salle' => 'heman2', 'date' => '2026-11-01', 'debut' => '14:30', 'fin' => '16:00', 'libelle' => 'Stage Modern Jazz — Lorna'),
-    array('salle' => 'heman2', 'date' => '2026-12-05', 'debut' => '12:00', 'fin' => '13:30', 'libelle' => 'Stage Modern Jazz — Lorna'),
-
-    // Stages de Jazz Rock avec Richard MP Style
-    array('salle' => 'heman2', 'date' => '2026-11-08', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2026-12-13', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2027-01-10', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2027-02-07', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2027-03-07', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2027-04-04', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2027-05-02', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
-    array('salle' => 'heman2', 'date' => '2027-06-06', 'debut' => '15:30', 'fin' => '17:00', 'libelle' => 'Stage Jazz Rock — Richard MP Style'),
+    // Exemple :
+    // array('salle' => 'heman2', 'date' => '2027-01-17', 'debut' => '14:00', 'fin' => '16:00', 'libelle' => 'Stage …'),
 );

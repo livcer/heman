@@ -458,7 +458,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     continue;
                 }
                 foreach ($liste as $autre) {
-                    if (!empty($autre['fixe']) || $autre['salle'] !== $r['salle'] || $autre['date'] !== $r['date']
+                    if (!empty($autre['fixe']) || !empty($autre['interne']) || $autre['salle'] !== $r['salle'] || $autre['date'] !== $r['date']
                         || !in_array($autre['statut'], array('attente', 'validee'), true)) {
                         continue;
                     }
