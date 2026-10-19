@@ -460,6 +460,7 @@
       var _rf = useState(false), refus = _rf[0], setRefus = _rf[1];
       var _e = useState(false), envoi = _e[0], setEnvoi = _e[1];
       var _er = useState(''), erreur = _er[0], setErreur = _er[1];
+      var _ed = useState(false), edition = _ed[0], setEdition = _ed[1];
 
       function agir(action, extra) {
         setEnvoi(true);
@@ -498,6 +499,13 @@
         ? chevauche(props.reservations.filter(function (x) { return x.statut === 'validee'; }), r.salle, r.date, r.debut, r.fin, r.id)
         : null;
 
+      if (edition) {
+        return h(EditionCreneau, {
+          reservation: r, salles: salles, regles: props.regles,
+          onFermer: props.onFermer, onRetour: function () { setEdition(false); }, onFait: props.onFait
+        });
+      }
+
       return h(Modale, { titre: 'Réservation', onFermer: props.onFermer },
         h('h3', null, r.interne ? r.nom : (r.statut === 'attente' ? 'Demande à traiter' : 'Réservation validée')),
         h('dl', { className: 'hr-fiche' }, lignes.map(function (l, i) {
@@ -518,6 +526,7 @@
             h('button', { key: 'c', type: 'button', className: 'hr-btn hr-btn-danger', disabled: envoi, onClick: function () { agir('refuser', { motif: motif }); } }, 'Confirmer le refus'),
             h('button', { key: 'a', type: 'button', className: 'hr-btn', onClick: function () { setRefus(false); } }, 'Retour')
           ] : null,
+          !r.fixe && !refus ? h('button', { type: 'button', className: 'hr-btn hr-btn-violet', disabled: envoi, onClick: function () { setEdition(true); } }, 'Modifier') : null,
           r.fixe ? h('p', { style: { margin: 0, fontSize: '.88rem', color: '#514860', lineHeight: 1.6 } },
             'Ce stage est inscrit dans le site : pour le modifier ou l’annuler, demandez la mise à jour de la liste des stages.') : null,
           r.statut === 'validee' && !r.fixe ? h('button', {
@@ -532,6 +541,91 @@
               if (window.confirm('Supprimer ce créneau et tous les suivants de la série « ' + r.nom + ' » ? Les séances passées restent affichées.')) agir('supprimer', { serie: true });
             }
           }, 'Supprimer la série à partir d’ici') : null));
+    }
+
+    /* ---------------- Modification d'un créneau (admin) ---------------- */
+
+    function EditionCreneau(props) {
+      var r = props.reservation, salles = props.salles, regles = props.regles;
+      var _s = useState(r.salle), salle = _s[0], setSalle = _s[1];
+      var _d = useState(r.date), date = _d[0], setDate = _d[1];
+      var _db = useState(r.debut), debut = _db[0], setDebut = _db[1];
+      var _f = useState(r.fin), fin = _f[0], setFin = _f[1];
+      var _l = useState(r.interne ? r.nom : ''), libelle = _l[0], setLibelle = _l[1];
+      var _p = useState('un'), portee = _p[0], setPortee = _p[1];
+      var _pv = useState(true), prevenir = _pv[0], setPrevenir = _pv[1];
+      var _e = useState(false), envoi = _e[0], setEnvoi = _e[1];
+      var _er = useState(''), erreur = _er[0], setErreur = _er[1];
+
+      var pas = regles.pas, dureeMin = regles.dureeMin;
+      var debuts = [], fins = [];
+      for (var m = 0; m <= 1440 - dureeMin; m += pas) debuts.push(m);
+      for (var n = debut + dureeMin; n <= 1440; n += pas) fins.push(n);
+      var enSerie = r.serie && portee === 'serie';
+      var client = !r.interne;
+      var change = salle !== r.salle || date !== r.date || debut !== r.debut || fin !== r.fin || (r.interne && libelle !== r.nom);
+
+      function changerDebut(v) {
+        var d = +v;
+        setDebut(d);
+        if (fin < d + dureeMin) setFin(Math.min(1440, d + Math.max(dureeMin, fin - debut)));
+      }
+
+      function enregistrer(e) {
+        e.preventDefault();
+        setEnvoi(true);
+        setErreur('');
+        appel('POST', API, {
+          action: 'modifier', id: r.id, salle: salle, date: enSerie ? r.date : date,
+          debut: heureChamp(debut), fin: heureChamp(fin), libelle: libelle,
+          serie: enSerie, prevenir: client && prevenir
+        }).then(function (j) {
+          var nomSalle = (salles.filter(function (x) { return x.id === salle; })[0] || {}).nom;
+          props.onFait((j.modifies > 1 ? j.modifies + ' créneaux modifiés' : 'Créneau modifié') + ' : ' + nomSalle + ', ' +
+            heure(debut) + ' – ' + heure(fin) + (enSerie ? ', à partir du ' : ', ') + dateLongue(enSerie ? r.date : date) + '.' +
+            (client && prevenir ? (j.clientPrevenu ? ' Le client a été prévenu par e-mail.' : ' Attention : l’e-mail au client n’a pas pu partir, prévenez-le vous-même.') : ''),
+            enSerie ? r.date : date);
+        }).catch(function (err) {
+          setEnvoi(false);
+          setErreur(err.message);
+        });
+      }
+
+      return h(Modale, { titre: 'Modifier le créneau', onFermer: props.onFermer },
+        h('h3', null, 'Modifier le créneau'),
+        h('p', { style: { margin: 0, color: '#514860', fontSize: '.92rem', lineHeight: 1.6 } },
+          client ? r.nom + (r.activite ? ' · ' + r.activite : '') : 'Créneau de l’équipe'),
+        h('form', { className: 'hr-form', onSubmit: enregistrer },
+          r.serie ? h('div', { className: 'hr-recurrence' },
+            h('label', { className: 'hr-case-a-cocher' },
+              h('input', { type: 'radio', name: 'portee', checked: portee === 'un', onChange: function () { setPortee('un'); } }),
+              h('span', null, 'Ce créneau seulement')),
+            h('label', { className: 'hr-case-a-cocher' },
+              h('input', { type: 'radio', name: 'portee', checked: portee === 'serie', onChange: function () { setPortee('serie'); } }),
+              h('span', null, 'Ce créneau et tous les suivants de la série (salle, horaires et libellé ; les dates restent les mêmes)'))) : null,
+          h('div', { className: 'hr-ligne' },
+            h(Champ, { libelle: 'Salle' },
+              h('select', { value: salle, onChange: function (e) { setSalle(e.target.value); } },
+                salles.map(function (x) { return h('option', { key: x.id, value: x.id }, x.nom); }))),
+            h(Champ, { libelle: 'Date' },
+              h('input', { type: 'date', required: true, value: enSerie ? r.date : date, disabled: enSerie,
+                onChange: function (e) { if (e.target.value) setDate(e.target.value); } }))),
+          h('div', { className: 'hr-ligne' },
+            h(Champ, { libelle: 'Début' },
+              h('select', { value: debut, onChange: function (e) { changerDebut(e.target.value); } },
+                debuts.map(function (v) { return h('option', { key: v, value: v }, heure(v)); }))),
+            h(Champ, { libelle: 'Fin' },
+              h('select', { value: fin, onChange: function (e) { setFin(+e.target.value); } },
+                fins.map(function (v) { return h('option', { key: v, value: v }, v === 1440 ? 'minuit' : heure(v)); })))),
+          r.interne ? h(Champ, { libelle: 'Libellé' },
+            h('input', { required: true, maxLength: 120, value: libelle, onChange: function (e) { setLibelle(e.target.value); } })) : null,
+          client ? h('label', { className: 'hr-case-a-cocher' },
+            h('input', { type: 'checkbox', checked: prevenir, onChange: function (e) { setPrevenir(e.target.checked); } }),
+            h('span', null, 'Prévenir le client par e-mail (ancien et nouvel horaire)')) : null,
+          erreur ? h('div', { className: 'hr-message hr-erreur', role: 'alert' }, erreur) : null,
+          h('div', { className: 'hr-actions' },
+            h('button', { type: 'submit', className: 'hr-btn hr-btn-plein', disabled: envoi || !change }, envoi ? 'Enregistrement…' : 'Enregistrer'),
+            h('button', { type: 'button', className: 'hr-btn', onClick: props.onRetour }, 'Retour'))));
     }
 
     /* ---------------- Grille du calendrier ---------------- */
@@ -829,9 +923,14 @@
 
       if (bloc && admin) {
         enfants.push(h(FicheReservation, {
-          key: 'fiche-' + bloc.id, reservation: bloc, salles: salles, reservations: reservations,
+          key: 'fiche-' + bloc.id, reservation: bloc, salles: salles, reservations: reservations, regles: regles,
           onFermer: function () { setBloc(null); },
-          onFait: function () { setBloc(null); charger(); }
+          onFait: function (message, date) {
+            setBloc(null);
+            if (message) setSucces(message);
+            if (date) allerA(date);
+            charger();
+          }
         }));
       }
 

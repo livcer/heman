@@ -130,6 +130,11 @@ sans message d'erreur.
   En cochant « Répéter chaque semaine », on choisit les jours et une date de fin (un an
   maximum) : tous les créneaux sont créés d'un coup, les dates déjà occupées sont sautées.
   Une série se supprime d'un clic à partir d'une séance (les séances passées restent).
+- **Modifier** : en cliquant sur un créneau dans l'admin, « Modifier » permet de changer la salle,
+  la date, les horaires ou le libellé. Pour une série, on choisit « ce créneau seulement » ou
+  « ce créneau et les suivants » (les dates restent les mêmes). Pour la réservation d'un client,
+  une case permet de le prévenir par e-mail. La modification est refusée si elle chevauche un
+  autre créneau.
 - **Stages de l'école** : déclarés dans `creneaux-fixes.php` (salle, date, horaires). Ils
   s'affichent « Réservé » et bloquent les demandes ; ils ne se suppriment pas depuis l'admin.
   Si une réservation de client les chevauche, l'admin affiche une alerte en rouge.

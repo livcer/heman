@@ -17,6 +17,8 @@
  *        refuser      → admin : le créneau est retiré du calendrier
  *        bloquer      → admin : ajoute directement un créneau validé (cours, stage…),
  *                       éventuellement répété chaque semaine jusqu'à une date
+ *        modifier     → admin : change la salle, la date, les horaires ou le libellé
+ *                       d'un créneau (ou de la suite d'une série)
  *        supprimer    → admin : retire un créneau validé (annulation), ou la suite
  *                       d'une série à partir de ce créneau
  *
@@ -814,6 +816,107 @@ if ($action === 'bloquer') {
         return array('liste' => $liste, 'retour' => array('crees' => $crees, 'ignorees' => $ignorees));
     });
     repondre(array('ok' => true, 'crees' => count($resultat['crees']), 'ignorees' => $resultat['ignorees']));
+}
+
+if ($action === 'modifier') {
+    $id = texte(isset($data['id']) ? $data['id'] : '', 32);
+    list($salle, $date, $debut, $fin) = lire_creneau($data, false);
+    $toute = !empty($data['serie']);
+    $libelle = texte(isset($data['libelle']) ? $data['libelle'] : '', 120);
+    $prevenir = !empty($data['prevenir']);
+
+    $resultat = avec_donnees(function ($liste) use ($id, $salle, $date, $debut, $fin, $toute, $libelle) {
+        $cible = null;
+        foreach ($liste as $r) {
+            if ($r['id'] === $id && in_array($r['statut'], array('attente', 'validee'), true)) {
+                $cible = $r;
+            }
+        }
+        if (!$cible) {
+            erreur('Réservation introuvable.', 404);
+        }
+        if (!empty($cible['fixe'])) {
+            erreur('Ce stage est programmé dans le site (creneaux-fixes.php) : il ne se modifie pas d\'ici.', 409);
+        }
+        if (!empty($cible['interne']) && $libelle === '') {
+            erreur('Indiquez un libellé.');
+        }
+        $enSerie = $toute && !empty($cible['serie']);
+        if ($enSerie && $date !== $cible['date']) {
+            erreur('Pour changer la date, modifiez les séances une par une (ou supprimez la série et recréez-la).');
+        }
+
+        // Créneaux concernés : celui-ci, ou toute la série à partir de celui-ci
+        $vises = array();
+        foreach ($liste as $i => $r) {
+            if ($r['id'] === $id
+                || ($enSerie && isset($r['serie']) && $r['serie'] === $cible['serie']
+                    && $r['date'] >= $cible['date'] && $r['statut'] === 'validee')) {
+                $vises[$i] = true;
+            }
+        }
+
+        // Tout ou rien : la moindre date en conflit annule la modification
+        $conflits = array();
+        foreach ($vises as $i => $_) {
+            $d = $enSerie ? $liste[$i]['date'] : $date;
+            foreach ($liste as $j => $autre) {
+                if (isset($vises[$j]) || $autre['salle'] !== $salle || $autre['date'] !== $d
+                    || !in_array($autre['statut'], array('attente', 'validee'), true)) {
+                    continue;
+                }
+                if ($debut < $autre['fin'] && $autre['debut'] < $fin) {
+                    $conflits[] = date_lisible($d) . ' (' . heure_lisible($autre['debut']) . '–' . heure_lisible($autre['fin']) . ')';
+                }
+            }
+        }
+        if ($conflits) {
+            erreur('Modification impossible, le créneau chevauche : ' . implode(', ', array_unique($conflits)) . '.', 409);
+        }
+
+        $avant = $cible;
+        foreach ($vises as $i => $_) {
+            $liste[$i]['salle'] = $salle;
+            $liste[$i]['debut'] = $debut;
+            $liste[$i]['fin'] = $fin;
+            if (!$enSerie) {
+                $liste[$i]['date'] = $date;
+            }
+            if (!empty($liste[$i]['interne'])) {
+                $liste[$i]['nom'] = $libelle;
+                $liste[$i]['activite'] = $libelle;
+            }
+            $liste[$i]['modifieLe'] = date('c');
+        }
+        $apres = null;
+        foreach ($liste as $r) {
+            if ($r['id'] === $id) {
+                $apres = $r;
+            }
+        }
+        return array('liste' => $liste, 'retour' => array('nombre' => count($vises), 'avant' => $avant, 'apres' => $apres));
+    });
+
+    // Client prévenu par e-mail si l'équipe le souhaite
+    $avant = $resultat['avant'];
+    $apres = $resultat['apres'];
+    $envoye = false;
+    if ($prevenir && empty($apres['interne']) && $apres['email'] !== ''
+        && resume_creneau($avant) !== resume_creneau($apres)) {
+        $mail = array_merge(array(
+            'Bonjour ' . $apres['nom'] . ',',
+            '',
+            'Votre ' . ($apres['statut'] === 'attente' ? 'demande de location' : 'réservation') . ' a été modifiée :',
+            '',
+            '   Avant : ' . resume_creneau($avant),
+            '   Après : ' . resume_creneau($apres),
+            '   Montant : ' . prix($apres),
+            '',
+            'Si ce nouvel horaire ne vous convient pas, répondez simplement à ce message.',
+        ), signature());
+        $envoye = smtp_envoyer($apres['email'], 'Votre réservation a été modifiée — Héman', implode("\r\n", $mail), DESTINATAIRE_DEFAUT, 'Héman');
+    }
+    repondre(array('ok' => true, 'modifies' => $resultat['nombre'], 'clientPrevenu' => $envoye));
 }
 
 if ($action === 'supprimer') {
