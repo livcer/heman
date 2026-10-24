@@ -173,6 +173,22 @@
               <p style="font-size: 1.02rem; line-height: 1.85; color: #514860;">{{ p }}</p>
             </sc-for>
           </div>
+
+          <!-- Galerie : vignettes carrées, clic pour ouvrir la photo en grand -->
+          <sc-if value="{{ ouvertGalerie }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top: 34px; padding-top: 30px; border-top: 2px solid rgba(123,44,191,0.15);">
+              <p style="font-size: 0.76rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #7b2cbf; margin-bottom: 16px;">En images</p>
+              <ul role="list" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+                <sc-for list="{{ galerie }}" as="g" hint-placeholder-count="4">
+                  <li>
+                    <a href="{{ g.src }}" target="_blank" rel="noopener" aria-label="Voir la photo en grand : {{ g.alt }}" style="display: block; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden; background: #1A1225;">
+                      <img src="{{ g.src }}" alt="{{ g.alt }}" loading="lazy" style="width: 100%; height: 100%; object-fit: cover; object-position: {{ g.cadrage }}; transition: transform 0.3s ease;" style-hover="transform: scale(1.04);">
+                    </a>
+                  </li>
+                </sc-for>
+              </ul>
+            </div>
+          </sc-if>
           <sc-if value="{{ ouvertVideoVerticale }}" hint-placeholder-val="{{ false }}">
             <div style="margin-top: 26px; display: flex; flex-direction: column; align-items: center;">
               <div style="aspect-ratio: 9 / 16; width: 100%; max-width: 340px; border-radius: 12px; overflow: hidden; background: #1A1225;">
@@ -306,6 +322,12 @@ class Component extends DCLogic {
           ],
           video: 'https://drive.google.com/file/d/1-O403z5ll7killqTMD1B-nCEk5qcqOQn/preview'
         }
+      ],
+      galerie: [
+        { src: './assets/creaclip-photo-danse.jpg', cadrage: '50% 62%', alt: 'Cinq danseuses en pleine chorégraphie sur le plateau, devant un fond bleu, blanc et rouge' },
+        { src: './assets/creaclip-photo-plateau-rouge.jpg', cadrage: '50% 50%', alt: 'Le plateau de tournage baigné de lumière rouge, l\u2019équipe en pleine prise' },
+        { src: './assets/creaclip-photo-salle-studio.jpg', cadrage: '50% 55%', alt: 'Les jeunes réunis dans la salle du studio d\u2019enregistrement, sourires et signes de la main' },
+        { src: './assets/creaclip-photo-vitre-studio.jpg', cadrage: '50% 50%', alt: 'Un jeune enregistre au micro derrière la vitre du studio, entouré de trois camarades' }
       ]
     },
     {
@@ -580,6 +602,8 @@ class Component extends DCLogic {
       ouvertVideoUrl: o && o.video ? o.video : '',
       ouvertPhoto: !!(o && !o.video),
       ouvertIntro: o && o.intro ? o.intro : [],
+      ouvertGalerie: !!(o && o.galerie && o.galerie.length),
+      galerie: o && o.galerie ? o.galerie : [],
       // Carnet de bord
       ouvertCarnet: !!carnet,
       onglets,
