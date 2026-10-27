@@ -283,6 +283,50 @@ class Component extends DCLogic {
     },
     {
       une: true,
+      titre: 'Héman en Italie !',
+      categorie: 'Voyage', date: 'Publié le 27 octobre 2026',
+      image: './assets/rimini-couverture-plage.jpg',
+      alt: 'Les jeunes danseurs et l’équipe Héman réunis sur la plage de Rimini au clair de lune, signes de victoire et sourires',
+      cadrage: '50% 50%',
+      extrait: "Huit jeunes danseurs d'Héman s'envolent une semaine pour Rimini, aux côtés de l'école de danse Anca Ardelean. Le récit jour par jour, en vidéo.",
+      intro: [
+        "C'est parti pour une semaine de danse, de partage et de découvertes en Italie !",
+        "Grâce au partenariat avec la ville de Neuilly-Plaisance, un groupe de 8 jeunes danseurs de l'école HEMAN s'envole vers une nouvelle aventure artistique à Rimini !",
+        "L'objectif ? Perfectionner leur danse, enrichir leur technique, découvrir de nouvelles approches et vivre une expérience humaine et artistique unique, en collaboration avec l'école de danse Anca Ardelean de Rimini.",
+        "Nos jeunes sont accompagnés de Claise, directeur du Centre de danse HEMAN, et de la Compagnie, pour une semaine placée sous le signe du travail, de la transmission et de la passion ! 🔥",
+        "Un immense merci à Eric Perasi pour son accueil et toute l'organisation logistique sur place, ainsi qu'à l'école Anca Ardelean pour son accueil, son engagement et cette belle collaboration artistique qui promet de riches échanges entre nos danseurs !",
+        "Merci également à la Ville de Neuilly-Plaisance pour son soutien et sa confiance dans ce projet qui permet à nos jeunes de s'ouvrir à de nouveaux horizons. ❤️",
+        "Que la semaine commence ! Au programme : danse, rencontres, dépassement de soi, échanges culturels et souvenirs inoubliables !",
+        "Rimini, nous voilà ! 🇮🇹🔥"
+      ],
+      // Une entrée par jour : ajouter mardi, mercredi… au fil de la semaine
+      journal: [
+        {
+          jour: 'Lundi', theme: 'Le départ pour Rimini',
+          texte: [
+            "Valises bouclées, embarquement à l'aéroport et cap sur l'Italie ! Arrivée à Rimini, installation, premier dîner tous ensemble et balade au clair de lune sur la plage. Le récap de cette première journée en vidéo. ✈️🇮🇹"
+          ],
+          video: 'https://drive.google.com/file/d/1oYo00SGFinOW3qgolW820RgPVyhTn-BZ/preview'
+        }
+      ],
+      // Album photo : ajouter les nouvelles photos à la suite
+      galerie: [
+        { src: './assets/rimini-couverture-plage.jpg', cadrage: '50% 45%', alt: 'Photo de groupe sur la plage de Rimini, de nuit, sous la lune' },
+        { src: './assets/rimini-depart-aeroport.jpg', cadrage: '50% 35%', alt: 'Les jeunes danseurs au dépôt des bagages de l’aéroport, prêts pour le départ' },
+        { src: './assets/rimini-avion.jpg', cadrage: '50% 40%', alt: 'Un jeune danseur fait le signe de la victoire depuis son siège dans l’avion' },
+        { src: './assets/rimini-diner.jpg', cadrage: '50% 45%', alt: 'Deux membres de l’équipe Héman tout sourire au restaurant à Rimini' },
+        { src: './assets/rimini-soiree-groupe.jpg', cadrage: '50% 55%', alt: 'Le groupe réuni autour des tables pour la première soirée' },
+        { src: './assets/rimini-soiree-detente.jpg', cadrage: '50% 50%', alt: 'Moment de détente et de rires entre danseurs le premier soir' },
+        { src: './assets/rimini-selfie.jpg', cadrage: '50% 40%', alt: 'Selfie de trois membres du groupe, signes de victoire, dans les rues de Rimini' },
+        { src: './assets/rimini-bus.jpg', cadrage: '50% 45%', alt: 'Deux jeunes danseurs discutent dans le bus en route vers le studio' },
+        { src: './assets/rimini-bus-sourires.jpg', cadrage: '50% 45%', alt: 'Deux danseuses sourient et saluent depuis le bus' },
+        { src: './assets/rimini-stadium.jpg', cadrage: '50% 50%', alt: 'Le groupe arrive devant le bâtiment Stadium de Rimini sous le soleil' },
+        { src: './assets/rimini-studio-danseur.jpg', cadrage: '50% 55%', alt: 'Un jeune danseur en chapeau à paillettes en pleine figure dans le studio' },
+        { src: './assets/rimini-studio-cours.jpg', cadrage: '50% 60%', alt: 'Les danseurs en cours dans le grand studio de l’école Anca Ardelean' },
+        { src: './assets/rimini-studio-profs.jpg', cadrage: '50% 50%', alt: 'Deux professeurs face aux élèves dans le studio de Rimini' }
+      ]
+    },
+    {
       titre: 'Créa Clip : le carnet de bord de la semaine',
       categorie: 'Stage', date: 'Publié le 21 octobre 2026',
       image: './assets/stage-creaclip-tournage.jpg',
